@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class IngredientSpawner : MonoBehaviour
 {
+
+    [SerializeField] int m_baseIngredientNum = 10;
     [SerializeField] GameObject m_ingredientPref;
     IngredientEntity m_currentIngredient;
     [SerializeField] List<IngredientData> m_allIngredient;
@@ -17,7 +19,7 @@ public class IngredientSpawner : MonoBehaviour
 
     void Start()
     {
-        
+        Init();
     }
 
   
@@ -25,7 +27,7 @@ public class IngredientSpawner : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space)) { 
         
-            CreateIngredient();
+            CreateIngredient(false);
         
         }
         if (Input.GetKeyDown(KeyCode.Backspace))
@@ -38,13 +40,25 @@ public class IngredientSpawner : MonoBehaviour
 
 
 
-    public void CreateIngredient()
+    public void Init()
     {
-        IngredientEntity newIngredient = Instantiate(m_ingredientPref, transform).gameObject.GetComponent<IngredientEntity>();
+        for (int i = 0;i< m_baseIngredientNum;i++)
+        {
+            CreateIngredient(true);
+        }
+    }
+
+    public void CreateIngredient(bool setCurrentIngredient)
+    {
+        IngredientEntity newIngredient = Instantiate(m_ingredientPref, transform.position+new Vector3(100,0,0),transform.rotation).gameObject.GetComponent<IngredientEntity>();
+        newIngredient.transform.parent = transform;
         newIngredient.SetIngredientData(m_allIngredient[UnityEngine.Random.Range(0,m_allIngredient.Count)]);   
         OnIngredientListModified?.Invoke();
         m_ingredients = GetComponentsInChildren<IngredientEntity>().ToList();
-        SetCurrentIngredient(m_ingredients[0]);
+        if (setCurrentIngredient)
+        {
+            SetCurrentIngredient(m_ingredients[0]);
+        }
     }
 
     public void SetCurrentIngredient(IngredientEntity newCurrentIngredient)
@@ -54,10 +68,17 @@ public class IngredientSpawner : MonoBehaviour
 
     public void CutIngredient()
     {
+        //Destroy(m_currentIngredient.gameObject);
+        m_currentIngredient.gameObject.SetActive(false);
+        Destroy(m_currentIngredient.gameObject,3);
         m_ingredients.RemoveAt(0);
-        Destroy(m_currentIngredient.gameObject);
         OnIngredientListModified?.Invoke();
         SetCurrentIngredient(m_ingredients[0]);
+        if (m_ingredients.Count < m_baseIngredientNum)
+        {
+            CreateIngredient(false);
+        }
+      
         
     }
 }
