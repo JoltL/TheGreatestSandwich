@@ -17,11 +17,14 @@ public class Spawner : MonoBehaviour
 
     private GameObject _thisIngredient;
 
+    public List<GameObject> _stackedIngredient;
+
 
     [Header("Score")]
     [SerializeField] private int _ingredientCount;
 
     [SerializeField] private int _maxIngredients;
+
 
 
     private void Start()
@@ -76,6 +79,7 @@ public class Spawner : MonoBehaviour
             //ENDING
         }
     }
+
 
     public void Drop()
     {
