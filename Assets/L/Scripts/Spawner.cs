@@ -26,11 +26,16 @@ public class Spawner : MonoBehaviour
 
     [SerializeField] private int _maxIngredients;
 
+    [Header("Camera")]
+
+    private CameraFollows _camera;
+
+    private GameObject _posedIngredient;
 
 
     private void Start()
     {
-
+        _camera = FindObjectOfType<CameraFollows>();
         Spawn();
 
        
@@ -43,12 +48,27 @@ public class Spawner : MonoBehaviour
             Drop();
         }
 
+        TopIngredient();
+
+    }
+
+    void TopIngredient()
+    {
+        if (_stackedIngredient.Count == 1)
+        {
+            _stackedIngredient[0].tag = "Finish";
+            return;
+        }
+
         for (int i = 1; i < _stackedIngredient.Count; i++)
         {
 
             if (_stackedIngredient[i].transform.position.y > _stackedIngredient[i - 1].transform.position.y)
             {
                 _stackedIngredient[i].tag = "Finish";
+
+                _posedIngredient = _stackedIngredient[i];
+
                 _stackedIngredient[i - 1].tag = "Untagged";
             }
 
@@ -87,7 +107,6 @@ public class Spawner : MonoBehaviour
 
             _AllIngredient.Add(_thisIngredient);
 
-
         }
         else
         {
@@ -101,6 +120,8 @@ public class Spawner : MonoBehaviour
 
         if (_thisIngredient != null)
         {
+
+            //_camera.SetTarget(_thisIngredient.transform);
 
             _thisIngredient.GetComponentInChildren<Moving>()._isMoving = false;
 

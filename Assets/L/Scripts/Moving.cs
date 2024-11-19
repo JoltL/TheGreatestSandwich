@@ -25,10 +25,14 @@ public class Moving : MonoBehaviour
 
     private bool _isRotten;
 
+    [Header("Camera")]
+
+    private CameraFollows _camera;
+
 
     private void Start()
     {
-
+        _camera = FindObjectOfType<CameraFollows>();
         _spawner = FindObjectOfType<Spawner>();
 
         if (_pointA != null && _pointB != null)
@@ -80,6 +84,30 @@ public class Moving : MonoBehaviour
 
     }
 
+
+    void CheckRotation()
+    {
+        // Obtenir la rotation autour de l'axe Z
+        float rotationZ = transform.eulerAngles.z;
+
+        // Convertir en une plage de -180 à 180 degrés pour simplifier les comparaisons
+        if (rotationZ > 180f) rotationZ -= 360f;
+
+        // Vérifier si l'objet est incliné au-delà d'un seuil (par ex. 15 degrés)
+        if (Mathf.Abs(rotationZ) > 15f)
+        {
+            // Action si l'objet est incliné
+            HandleTiltedObject();
+        }
+    }
+
+    void HandleTiltedObject()
+    {
+        Debug.Log("Ingrédient incliné !");
+        gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+    }
+
+
     private void OnTriggerEnter2D(Collider2D other)
     {
 
@@ -89,26 +117,10 @@ public class Moving : MonoBehaviour
 
             StartCoroutine(StayStable());
 
-            //Spawn with plate
-            if (other.gameObject.CompareTag("Player"))
-            {
-
-                this.gameObject.tag = "Finish";
-
-                //_spawner.Spawn();
-
-                print("Spawn by touching the plate");
-
-                _alreadyFinish = true;
-
-                return;
-            }
-
             //Spawn with tag Finish
             if (other.gameObject.CompareTag("Finish"))
             {
 
-                //_spawner.Spawn();
                 print("Spawn by touching the top ingredient");
 
                 _alreadyFinish = true;
@@ -123,11 +135,9 @@ public class Moving : MonoBehaviour
 
                 _alreadyFinish = true;
                 _spawner._stackedIngredient.Remove(this.gameObject);
-                //_spawner.Spawn();
 
                 this.gameObject.tag = "Respawn";
                 print("Spawn by touching the ground");
-
             }
         }
 
@@ -141,6 +151,7 @@ public class Moving : MonoBehaviour
 
         gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
 
+        CheckRotation();
 
         if (!_isRotten)
         {
@@ -148,37 +159,11 @@ public class Moving : MonoBehaviour
 
         }
 
+        //_camera.SetOverview();
+
         _spawner.Spawn();
-        /// <summary>
-        /// Add if rotation > so remove in the list or destroy
-        /*
-        print(gameObject.transform.rotation.z +"+" + this.gameObject);
-        if (gameObject.transform.rotation.z > 1 || gameObject.transform.rotation.z < -1)
-        {
-
-            _spawner._stackedIngredient.Remove(gameObject);
-            Destroy(gameObject);
-
-        }
-
-        ///Take the top
-        //for (int i = 1; i < _spawner._stackedIngredient.Count; i++)
-        //{
-        //    print("Tag");
-        //    if (_spawner._stackedIngredient[i].transform.position.y > _spawner._stackedIngredient[i - 1].transform.position.y)
-        //    {
-        //        _spawner._stackedIngredient[i].tag = "Finish";
-        //        _spawner._stackedIngredient[i - 1].tag = "Untagged";
-        //    }
-
-        //}
-
-        */
-
 
     }
-
-
 
     //When touching but falling after
     private void OnTriggerExit2D(Collider2D other)
@@ -191,6 +176,7 @@ public class Moving : MonoBehaviour
             {
 
                 _isRotten = true;
+
                 if (_spawner._stackedIngredient.Contains(gameObject))
                 {
                     gameObject.tag = "Finish";
