@@ -6,7 +6,6 @@ using UnityEngine;
 public class HorizontalLayer : MonoBehaviour
 {
 
-    IngredientSpawner m_ingredientSpawner;
     [Header("Layer Group Settings")]
     [SerializeField] float m_lerpSpeed = 4;
     [SerializeField] float m_spacing = 1.5f; // Espacement horizontal entre les objets
@@ -17,11 +16,7 @@ public class HorizontalLayer : MonoBehaviour
     [SerializeField] bool m_autoUpdate = true; // Mettre à jour automatiquement dans l'éditeur
 
 
-    public void Start()
-    {
-        m_ingredientSpawner = GetComponent<IngredientSpawner>();
-        m_ingredientSpawner.OnIngredientListModified += ReorganizeGroup;
-    }
+  
 
     void OnValidate()
     {
@@ -58,7 +53,7 @@ public class HorizontalLayer : MonoBehaviour
             );
 
             // Appliquer la position à l'enfant
-            children[i].localPosition = Vector3.Lerp(children[i].localPosition,newPosition,Time.deltaTime*3);
+            children[i].localPosition = Vector3.Lerp(children[i].localPosition,newPosition,Time.deltaTime*m_lerpSpeed);
 
             // Incrémenter l'index
             index++;

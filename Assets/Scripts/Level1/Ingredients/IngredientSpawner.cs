@@ -15,7 +15,7 @@ public class IngredientSpawner : MonoBehaviour
 
     List<IngredientEntity> m_ingredients;
 
-    public event Action OnIngredientListModified;
+    public event Action OnCurrentIngredientChanged;
 
     void Start()
     {
@@ -53,17 +53,13 @@ public class IngredientSpawner : MonoBehaviour
         IngredientEntity newIngredient = Instantiate(m_ingredientPref, transform.position+new Vector3(50,0,0),transform.rotation).gameObject.GetComponent<IngredientEntity>();
         newIngredient.transform.parent = transform;
         newIngredient.SetIngredientData(m_allIngredient[UnityEngine.Random.Range(0,m_allIngredient.Count)]);   
-        OnIngredientListModified?.Invoke();
+      
         m_ingredients = GetComponentsInChildren<IngredientEntity>().ToList();
         if (setCurrentIngredient)
         {
             SetCurrentIngredient(m_ingredients[0]);
+            OnCurrentIngredientChanged?.Invoke();
         }
-    }
-
-    public void SetCurrentIngredient(IngredientEntity newCurrentIngredient)
-    {
-        m_currentIngredient = newCurrentIngredient;
     }
 
 
@@ -85,14 +81,27 @@ public class IngredientSpawner : MonoBehaviour
         //Destroy(m_currentIngredient.gameObject);
         m_currentIngredient.gameObject.SetActive(false);
         Destroy(m_currentIngredient.gameObject,10);
-        m_ingredients.RemoveAt(0);
-        OnIngredientListModified?.Invoke();
+        m_ingredients.RemoveAt(0);   
         SetCurrentIngredient(m_ingredients[0]);
+        OnCurrentIngredientChanged?.Invoke();
         if (m_ingredients.Count < m_baseIngredientNum)
         {
             CreateIngredient(false);
-        }
-      
-        
+        }        
     }
+
+
+    #region ACCESSORS
+    public void SetCurrentIngredient(IngredientEntity newCurrentIngredient)
+    {
+        m_currentIngredient = newCurrentIngredient;
+    }
+
+
+    public IngredientEntity GetCurrentIngredient()
+    {
+        return m_currentIngredient;
+    }
+    #endregion
+
 }
