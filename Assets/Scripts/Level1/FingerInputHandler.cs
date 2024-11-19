@@ -16,6 +16,13 @@ public class FingerInputHandler : MonoBehaviour
         
     }
 
+
+
+
+
+
+
+
     
     void Update()
     {
@@ -35,17 +42,21 @@ public class FingerInputHandler : MonoBehaviour
             m_canTouch = true;
             m_secondPoint = pos;
             m_slideVector = (m_secondPoint - m_firstPoint).normalized;
-            Vector3 vectDebug = new Vector3(Mathf.Sign(m_slideVector.x), Mathf.Sign(m_slideVector.y));
-            float distx = (Mathf.Abs(m_firstPoint.x) - Mathf.Abs(m_secondPoint.x))*2;
-            if (distx <0.5f)
-            {
-                vectDebug.x = 0;
-            }
+            //Vector3 vectDebug = new Vector3(Mathf.Sign(m_slideVector.x), Mathf.Sign(m_slideVector.y));
            
-            Debug.Log(distx+"/"+vectDebug);
+            Debug.Log(ClampVector(m_slideVector));
         }
         
         Debug.DrawLine(m_firstPoint, m_secondPoint, Color.cyan);
 
+    }
+
+    Vector3 ClampVector(Vector3 vector)
+    {
+        // Si x ou y est inférieur à 1 (en absolu), définir à 0
+        vector.x = Mathf.Abs(vector.x) < 1 ? 0 : vector.x;
+        vector.y = Mathf.Abs(vector.y) < 1 ? 0 : vector.y;
+
+        return vector;
     }
 }
