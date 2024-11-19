@@ -50,7 +50,7 @@ public class IngredientSpawner : MonoBehaviour
 
     public void CreateIngredient(bool setCurrentIngredient)
     {
-        IngredientEntity newIngredient = Instantiate(m_ingredientPref, transform.position+new Vector3(100,0,0),transform.rotation).gameObject.GetComponent<IngredientEntity>();
+        IngredientEntity newIngredient = Instantiate(m_ingredientPref, transform.position+new Vector3(50,0,0),transform.rotation).gameObject.GetComponent<IngredientEntity>();
         newIngredient.transform.parent = transform;
         newIngredient.SetIngredientData(m_allIngredient[UnityEngine.Random.Range(0,m_allIngredient.Count)]);   
         OnIngredientListModified?.Invoke();
@@ -66,11 +66,25 @@ public class IngredientSpawner : MonoBehaviour
         m_currentIngredient = newCurrentIngredient;
     }
 
+
+    public void TryToCut(Vector2 cutVector)
+    {
+
+        if ((Vector3)cutVector == m_currentIngredient.Sign)
+        {
+            CutIngredient();
+        }
+        else {
+            Debug.Log("NoP");
+        }
+       
+    }
+
     public void CutIngredient()
     {
         //Destroy(m_currentIngredient.gameObject);
         m_currentIngredient.gameObject.SetActive(false);
-        Destroy(m_currentIngredient.gameObject,3);
+        Destroy(m_currentIngredient.gameObject,10);
         m_ingredients.RemoveAt(0);
         OnIngredientListModified?.Invoke();
         SetCurrentIngredient(m_ingredients[0]);

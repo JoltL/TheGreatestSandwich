@@ -8,12 +8,13 @@ public class HorizontalLayer : MonoBehaviour
 
     IngredientSpawner m_ingredientSpawner;
     [Header("Layer Group Settings")]
-    public float spacing = 1.5f; // Espacement horizontal entre les objets
-    public float layerOffsetY = 1.0f; // Décalage vertical entre les couches
-    public int objectsPerLayer = 150; // Nombre d'objets par couche
+    [SerializeField] float m_lerpSpeed = 4;
+    [SerializeField] float m_spacing = 1.5f; // Espacement horizontal entre les objets
+    [SerializeField] float m_layerOffsetY = 1.0f; // Décalage vertical entre les couches
+    [SerializeField] int m_objectsPerLayer = 150; // Nombre d'objets par couche
 
     [Header("Dynamic Update")]
-    public bool autoUpdate = true; // Mettre à jour automatiquement dans l'éditeur
+    [SerializeField] bool m_autoUpdate = true; // Mettre à jour automatiquement dans l'éditeur
 
 
     public void Start()
@@ -25,7 +26,7 @@ public class HorizontalLayer : MonoBehaviour
     void OnValidate()
     {
         // Réorganiser automatiquement les objets si autoUpdate est activé
-        if (autoUpdate)
+        if (m_autoUpdate)
         {
             ReorganizeGroup();
         }
@@ -46,13 +47,13 @@ public class HorizontalLayer : MonoBehaviour
         for (int i = 1; i < children.Length; i++)
         {
             // Calculer la couche et la position horizontale
-            int layer = index / objectsPerLayer; // Numéro de couche
-            int positionInLayer = index % objectsPerLayer; // Position dans la couche
+            int layer = index / m_objectsPerLayer; // Numéro de couche
+            int positionInLayer = index % m_objectsPerLayer; // Position dans la couche
 
             // Calculer la position finale
             Vector3 newPosition = new Vector3(
-                positionInLayer * spacing,   // Position en X
-                layer * layerOffsetY,       // Position en Y
+                positionInLayer * m_spacing,   // Position en X
+                layer * m_layerOffsetY,       // Position en Y
                 0                           // Position en Z
             );
 

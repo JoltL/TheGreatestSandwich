@@ -34,5 +34,12 @@ public class IngredientEntity : MonoBehaviour
     {
         Debug.Log("Cut");
     }
-    
+
+    #region ACCESSORS
+    public Vector3 Sign
+    {
+        get { return m_sign; }
+    }
+    #endregion
+
 }
