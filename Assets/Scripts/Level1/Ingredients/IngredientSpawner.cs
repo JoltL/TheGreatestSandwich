@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class IngredientSpawner : MonoBehaviour
@@ -22,25 +23,28 @@ public class IngredientSpawner : MonoBehaviour
   
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) { 
+        if (Input.GetKeyDown(KeyCode.Space)) { 
         
             CreateIngredient();
         
         }
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+
+            CutIngredient();
+
+        }
     }
 
-    public void AddIngredientToList(IngredientEntity ingredient)
-    {
-        m_ingredients.Add(ingredient);
-    }
+
 
     public void CreateIngredient()
     {
         IngredientEntity newIngredient = Instantiate(m_ingredientPref, transform).gameObject.GetComponent<IngredientEntity>();
         newIngredient.SetIngredientData(m_allIngredient[UnityEngine.Random.Range(0,m_allIngredient.Count)]);   
         OnIngredientListModified?.Invoke();
-        m_ingredients.Add(newIngredient.gameObject.GetComponent<IngredientEntity>());
-        //AddIngredientToList(newIngredient);
+        m_ingredients = GetComponentsInChildren<IngredientEntity>().ToList();
+        SetCurrentIngredient(m_ingredients[0]);
     }
 
     public void SetCurrentIngredient(IngredientEntity newCurrentIngredient)
@@ -51,7 +55,9 @@ public class IngredientSpawner : MonoBehaviour
     public void CutIngredient()
     {
         m_ingredients.RemoveAt(0);
-        SetCurrentIngredient(m_ingredients[0]);
+        Destroy(m_currentIngredient.gameObject);
         OnIngredientListModified?.Invoke();
+        SetCurrentIngredient(m_ingredients[0]);
+        
     }
 }

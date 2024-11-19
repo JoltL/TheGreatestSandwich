@@ -31,6 +31,11 @@ public class HorizontalLayer : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        ReorganizeGroup();
+    }
+
     public void ReorganizeGroup()
     {
         // Obtenir tous les enfants
@@ -52,7 +57,7 @@ public class HorizontalLayer : MonoBehaviour
             );
 
             // Appliquer la position à l'enfant
-            children[i].localPosition = newPosition;
+            children[i].localPosition = Vector3.Lerp(children[i].localPosition,newPosition,Time.deltaTime*3);
 
             // Incrémenter l'index
             index++;
