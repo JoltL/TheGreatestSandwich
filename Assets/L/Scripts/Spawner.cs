@@ -19,6 +19,7 @@ public class Spawner : MonoBehaviour
 
     public List<GameObject> _stackedIngredient;
 
+    public List<GameObject> _AllIngredient;
 
     [Header("Score")]
     [SerializeField] private int _ingredientCount;
@@ -41,6 +42,18 @@ public class Spawner : MonoBehaviour
         {
             Drop();
         }
+
+        for (int i = 1; i < _stackedIngredient.Count; i++)
+        {
+
+            if (_stackedIngredient[i].transform.position.y > _stackedIngredient[i - 1].transform.position.y)
+            {
+                _stackedIngredient[i].tag = "Finish";
+                _stackedIngredient[i - 1].tag = "Untagged";
+            }
+
+        }
+
     }
 
     public void Spawn()
@@ -71,6 +84,8 @@ public class Spawner : MonoBehaviour
 
 
             _thisIngredient = thisRandomIngredient;
+
+            _AllIngredient.Add(_thisIngredient);
 
 
         }
