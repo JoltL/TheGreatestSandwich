@@ -16,6 +16,7 @@ public class IngredientSpawner : MonoBehaviour
     List<IngredientEntity> m_ingredients;
 
     public event Action OnCurrentIngredientChanged;
+    public event Action OnIngredientCut;
 
     void Start()
     {
@@ -84,6 +85,7 @@ public class IngredientSpawner : MonoBehaviour
         m_ingredients.RemoveAt(0);   
         SetCurrentIngredient(m_ingredients[0]);
         OnCurrentIngredientChanged?.Invoke();
+        OnIngredientCut?.Invoke();
         if (m_ingredients.Count < m_baseIngredientNum)
         {
             CreateIngredient(false);
