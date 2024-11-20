@@ -21,7 +21,7 @@ public class Moving : MonoBehaviour
 
     [Header("Stack")]
 
-    private bool _alreadyFinish = false;
+    private bool _isStacked = false;
 
     private bool _isRotten;
 
@@ -90,7 +90,7 @@ public class Moving : MonoBehaviour
         // Obtenir la rotation autour de l'axe Z
         float rotationZ = transform.eulerAngles.z;
 
-        // Convertir en une plage de -180 à 180 degrés pour simplifier les comparaisons
+        // Convertir en une plage de -180 à 180 degrés
         if (rotationZ > 180f) rotationZ -= 360f;
 
         // Vérifier si l'objet est incliné au-delà d'un seuil (par ex. 15 degrés)
@@ -111,8 +111,7 @@ public class Moving : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
 
-
-        if (!_alreadyFinish)
+        if (!_isStacked)
         {
 
             StartCoroutine(StayStable());
@@ -121,9 +120,9 @@ public class Moving : MonoBehaviour
             if (other.gameObject.CompareTag("Finish"))
             {
 
-                print("Spawn by touching the top ingredient");
+                //print("Spawn by touching the top ingredient");
 
-                _alreadyFinish = true;
+                _isStacked = true;
 
             }
 
@@ -133,7 +132,7 @@ public class Moving : MonoBehaviour
             {
                 _isRotten = true;
 
-                _alreadyFinish = true;
+                _isStacked = true;
                 _spawner._stackedIngredient.Remove(this.gameObject);
 
                 this.gameObject.tag = "Respawn";
@@ -169,7 +168,7 @@ public class Moving : MonoBehaviour
     private void OnTriggerExit2D(Collider2D other)
     {
 
-        if (_alreadyFinish)
+        if (_isStacked)
         {
 
             if (other.gameObject.CompareTag("Finish"))

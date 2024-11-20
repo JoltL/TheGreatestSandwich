@@ -8,7 +8,7 @@ public class Spawner : MonoBehaviour
 {
 
     [Header("Spawn")]
-    [SerializeField] private GameObject _ingredient;
+    [SerializeField] private GameObject[] _ingredient;
 
     [SerializeField] private Transform _pointA;
     [SerializeField] private Transform _pointB;
@@ -21,6 +21,13 @@ public class Spawner : MonoBehaviour
 
     public List<GameObject> _AllIngredient;
 
+    //A modifier avec le premier niveau
+    [SerializeField] private int _ham = 3;
+    [SerializeField] private int _cheese = 3;
+    [SerializeField] private int _tomato = 3;
+    [SerializeField] private int _salad = 3;
+
+
     [Header("Score")]
     [SerializeField] private int _ingredientCount;
 
@@ -30,12 +37,13 @@ public class Spawner : MonoBehaviour
 
     private CameraFollows _camera;
 
-    private GameObject _posedIngredient;
-
 
     private void Start()
     {
         _camera = FindObjectOfType<CameraFollows>();
+
+        _maxIngredients = _ham + _tomato + _cheese + _salad;
+
         Spawn();
 
        
@@ -67,8 +75,6 @@ public class Spawner : MonoBehaviour
             {
                 _stackedIngredient[i].tag = "Finish";
 
-                _posedIngredient = _stackedIngredient[i];
-
                 _stackedIngredient[i - 1].tag = "Untagged";
             }
 
@@ -82,11 +88,9 @@ public class Spawner : MonoBehaviour
         {
             //Random position
             Vector2 position = new Vector2(0f, 0f);
+            
+            int randomPosition = Random.Range(0, 2); //Random.Range(min, max-1)
 
-            int randomPosition = Random.Range(0, 2);
-
-
-            //Random.Range(min, max-1)
             if (randomPosition == 0)
             {
                 position = _pointA.position;
@@ -96,22 +100,44 @@ public class Spawner : MonoBehaviour
                 position = _pointB.position;
             }
 
+            // Générer la liste des ingrédients et leurs quantités
+            _AllIngredient = GenerateWeightedList();
+            // Sélectionner un ingrédient aléatoire
+            int randomIndex = Random.Range(0, _AllIngredient.Count);
+            GameObject selectedIngredient = _AllIngredient[randomIndex];
+
             //Instantiate
-            GameObject thisRandomIngredient = Instantiate(_ingredient, position, transform.rotation, _parent);
+            GameObject thisRandomIngredient = Instantiate(selectedIngredient, position, transform.rotation, _parent);
 
             thisRandomIngredient.GetComponentInChildren<Moving>()._pointA = _pointA;
             thisRandomIngredient.GetComponentInChildren<Moving>()._pointB = _pointB;
 
-
             _thisIngredient = thisRandomIngredient;
 
-            _AllIngredient.Add(_thisIngredient);
+            // Mettre à jour les quantités restantes
+            if (selectedIngredient == _ingredient[0]) _ham--;
+            else if (selectedIngredient == _ingredient[1]) _cheese--;
+            else if (selectedIngredient == _ingredient[2]) _tomato--;
+            else if (selectedIngredient == _ingredient[3]) _salad--;
 
         }
         else
         {
             //ENDING
+            Debug.Log("Let's eat!");
         }
+    }
+
+    private List<GameObject> GenerateWeightedList()
+    {
+        List<GameObject> weightedList = new List<GameObject>();
+
+        for (int i = 0; i < _ham; i++) weightedList.Add(_ingredient[0]); 
+        for (int i = 0; i < _cheese; i++) weightedList.Add(_ingredient[1]); 
+        for (int i = 0; i < _tomato; i++) weightedList.Add(_ingredient[2]); 
+        for (int i = 0; i < _salad; i++) weightedList.Add(_ingredient[3]); 
+
+        return weightedList;
     }
 
 

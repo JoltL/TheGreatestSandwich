@@ -787,13 +787,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66e6e351ea931f542ab53d71dc76210a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ingredient: {fileID: 879245809779429105, guid: b8c4567bcdb1f0c449b12abeff6d8e28, type: 3}
+  _ingredient:
+  - {fileID: 879245809779429105, guid: bdf91f3906faeb84dab9e3a4013ca027, type: 3}
+  - {fileID: 879245809779429105, guid: d1feb5758ec6bef4cbfff0101952d01b, type: 3}
+  - {fileID: 879245809779429105, guid: b8c4567bcdb1f0c449b12abeff6d8e28, type: 3}
+  - {fileID: 879245809779429105, guid: 190a81d7033a5fc4c8ee6eabb068ee88, type: 3}
   _pointA: {fileID: 809028041}
   _pointB: {fileID: 2092232102}
   _parent: {fileID: 1402662016}
   _stackedIngredient: []
   _AllIngredient: []
-  _ingredientCount: 1
+  _ham: 3
+  _cheese: 3
+  _tomato: 3
+  _salad: 3
+  _ingredientCount: 0
   _maxIngredients: 50
 --- !u!114 &998522335
 MonoBehaviour:
