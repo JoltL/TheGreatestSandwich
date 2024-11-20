@@ -25,15 +25,13 @@ public class Moving : MonoBehaviour
 
     private bool _isRotten;
 
-    [Header("Camera")]
-
-    private CameraFollows _camera;
-
 
     private void Start()
     {
-        _camera = FindObjectOfType<CameraFollows>();
+
         _spawner = FindObjectOfType<Spawner>();
+
+        _moveSpeed = Random.Range(3, 10);
 
         if (_pointA != null && _pointB != null)
         {
@@ -55,7 +53,7 @@ public class Moving : MonoBehaviour
     }
     void MoveTo()
     {
-
+     
         //Speed
         float step = _moveSpeed * Time.deltaTime;
 
@@ -103,8 +101,9 @@ public class Moving : MonoBehaviour
 
     void HandleTiltedObject()
     {
-        Debug.Log("Ingrédient incliné !");
+        Debug.Log("Ingrédient incliné");
         gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+        _spawner._stackedIngredient.Remove(this.gameObject);
     }
 
 
@@ -121,7 +120,7 @@ public class Moving : MonoBehaviour
             {
 
                 //print("Spawn by touching the top ingredient");
-
+               
                 _isStacked = true;
 
             }

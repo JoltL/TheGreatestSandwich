@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 328853626}
   - component: {fileID: 328853625}
   - component: {fileID: 328853628}
-  - component: {fileID: 328853629}
+  - component: {fileID: 328853630}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -390,23 +390,24 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
---- !u!114 &328853629
+--- !u!114 &328853630
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 328853624}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d3e9bee798890742a21f02bf3240739, type: 3}
+  m_Script: {fileID: 11500000, guid: f00889b4d01565e4ebacf6c7175a05dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _followSpeed: 5
-  _zoomSpeed: 5
-  _zoom: 3
-  _overviewSize: 7
-  _transitionDuration: 2
+  _camera: {fileID: 0}
+  _offset: {x: 0, y: 0, z: -5}
+  _minZoom: 3
+  _maxZoom: 6
+  _zoomLimit: 10
+  _zoomSpeed: 0.35
 --- !u!1 &449342181
 GameObject:
   m_ObjectHideFlags: 0
@@ -797,12 +798,13 @@ MonoBehaviour:
   _parent: {fileID: 1402662016}
   _stackedIngredient: []
   _AllIngredient: []
-  _ham: 3
-  _cheese: 3
-  _tomato: 3
-  _salad: 3
+  _ham: 20
+  _cheese: 20
+  _tomato: 20
+  _salad: 20
   _ingredientCount: 0
   _maxIngredients: 50
+  _movementPos: {fileID: 1519187354}
 --- !u!114 &998522335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -897,8 +899,8 @@ Transform:
   m_GameObject: {fileID: 1022427217}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -4.5, z: 0}
-  m_LocalScale: {x: 8, y: 3, z: 1}
+  m_LocalPosition: {x: 0, y: -5.5, z: 0}
+  m_LocalScale: {x: 8, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

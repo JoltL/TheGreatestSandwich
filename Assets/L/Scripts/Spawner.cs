@@ -35,12 +35,14 @@ public class Spawner : MonoBehaviour
 
     [Header("Camera")]
 
-    private CameraFollows _camera;
+    private CameraController _camera;
+
+    [SerializeField] private GameObject _movementPos;
 
 
     private void Start()
     {
-        _camera = FindObjectOfType<CameraFollows>();
+        _camera = FindObjectOfType<CameraController>();
 
         _maxIngredients = _ham + _tomato + _cheese + _salad;
 
@@ -57,6 +59,7 @@ public class Spawner : MonoBehaviour
         }
 
         TopIngredient();
+        DistancePosition();
 
     }
 
@@ -74,6 +77,7 @@ public class Spawner : MonoBehaviour
             if (_stackedIngredient[i].transform.position.y > _stackedIngredient[i - 1].transform.position.y)
             {
                 _stackedIngredient[i].tag = "Finish";
+                _camera.AddTarget(_stackedIngredient[i].transform);
 
                 _stackedIngredient[i - 1].tag = "Untagged";
             }
@@ -114,6 +118,8 @@ public class Spawner : MonoBehaviour
 
             _thisIngredient = thisRandomIngredient;
 
+            _camera.AddTarget(thisRandomIngredient.transform);
+
             // Mettre à jour les quantités restantes
             if (selectedIngredient == _ingredient[0]) _ham--;
             else if (selectedIngredient == _ingredient[1]) _cheese--;
@@ -140,6 +146,21 @@ public class Spawner : MonoBehaviour
         return weightedList;
     }
 
+    void DistancePosition()
+    {
+        if(_ingredientCount > 15)
+        {
+
+        _movementPos.transform.position = new Vector3(0,1,0);
+
+        }
+        else if (_ingredientCount > 30)
+        {
+
+            _movementPos.transform.position = new Vector3(0, 2, 0);
+
+        }
+    }
 
     public void Drop()
     {
