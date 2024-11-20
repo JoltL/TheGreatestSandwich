@@ -1,16 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CutPhaseManager : MonoBehaviour
 {
+   
     IngredientSpawner m_ingredientSpawner;
     FingerInputsManager m_fingerInputs;
     CutPhaseScore m_cutPhaseScore;
 
+
+    bool m_timerIsActive = true;
     [SerializeField] float m_time;
     float m_timer;
-
 
     private void Start()
     {
@@ -27,12 +30,34 @@ public class CutPhaseManager : MonoBehaviour
 
     public void Update()
     {
-        m_timer -= Time.deltaTime;
-        m_timer = Mathf.Clamp(m_timer, 0, 100);
-        if(m_timer <= 0)
+        TimerManager();
+    }
+
+    void TimerManager()
+    {
+        if (!m_timerIsActive) return;
+        if (m_timer > 0)
         {
+            m_timerIsActive = true;
+            m_timer -= Time.deltaTime;
+            m_timer = Mathf.Clamp(m_timer, 0, 100);
+        }
+        if (m_timer <= 0)
+        {
+            m_timerIsActive = false;
             m_fingerInputs.enabled = false;
         }
+    }
+
+
+    public bool TimerIsActive
+    {
+        get { return m_timerIsActive; }
+    }
+
+    public float Timer
+    {
+        get { return m_timer; }
     }
 
     public void IncreaseScore()
@@ -40,6 +65,7 @@ public class CutPhaseManager : MonoBehaviour
         m_cutPhaseScore.IncreaseScore(1);
     }
 
+    public CutPhaseScore GetCutPhaseScore() => m_cutPhaseScore;
 
    
   

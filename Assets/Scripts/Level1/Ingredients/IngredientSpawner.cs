@@ -23,24 +23,6 @@ public class IngredientSpawner : MonoBehaviour
         Init();
     }
 
-  
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space)) { 
-        
-            CreateIngredient(false);
-        
-        }
-        if (Input.GetKeyDown(KeyCode.Backspace))
-        {
-
-            CutIngredient();
-
-        }
-    }
-
-
-
     public void Init()
     {
         for (int i = 0;i< m_baseIngredientNum;i++)
