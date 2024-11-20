@@ -91,7 +91,7 @@ public class IngredientSpawner : MonoBehaviour
         {
             CreateIngredient(false);
         }
-        m_currentIngredient.IngredientVisual.Strech(7);
+        m_currentIngredient.IngredientVisual.Strech(10);
     }
 
     #region RANDOM WEIGHT SYSTEM

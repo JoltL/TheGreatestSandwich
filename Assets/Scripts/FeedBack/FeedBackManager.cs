@@ -7,7 +7,7 @@ public class FeedBackManager : MonoBehaviour
 {
     public static FeedBackManager Instance;
 
-    List<ParticleSystem> m_particles = new List<ParticleSystem>();
+    [SerializeField] List<ParticleSystem> m_particles = new List<ParticleSystem>();
 
     Coroutine m_FreezeFrameCoroutine;
 

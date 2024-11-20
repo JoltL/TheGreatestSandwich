@@ -36,7 +36,7 @@ public class IngredientEntity : MonoBehaviour
     {
         Debug.Log("Cut");
         GameManager.Instance.CameraOne.OscillateShake(5,false, true);
-        // Disable the ingredient 
+        SoundManager.Instance.PlaySFX("Slash");
         gameObject.SetActive(false);
     }
 
