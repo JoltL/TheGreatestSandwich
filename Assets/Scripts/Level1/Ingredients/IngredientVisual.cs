@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class IngredientVisual : MonoBehaviour
 {
-    SpriteRenderer m_spriteRenderer;
+    OscillatorScale m_oscillator;
 
-    void Start()
+    private void Start()
     {
-        
+        m_oscillator = GetComponent<OscillatorScale>();
     }
 
-    void Update()
+    public void Strech(float force)
     {
-        
+        m_oscillator.StartOscillator(force);
     }
 }

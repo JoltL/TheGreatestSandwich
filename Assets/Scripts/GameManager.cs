@@ -7,11 +7,16 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     [SerializeField] CutPhaseManager m_cutPhaseManager;
+    [SerializeField] CutPhaseCameraManager m_cameraOne;
+
+
+    public CutPhaseCameraManager CameraOne
+    {
+        get {return m_cameraOne;}
+    }
 
     void Awake()
     {
-        //Debug.Log(PLAYER_LAYER);
-      
         if (Instance != null)
         {
             Debug.LogError("Plus d'une instance game manager dans la scene");
@@ -21,9 +26,14 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            //DontDestroyOnLoad(gameObject);
+          
         }    
         m_cutPhaseManager = GetComponent<CutPhaseManager>();
+    }
+
+    private void Start()
+    {
+        m_cameraOne = Camera.main.gameObject.GetComponent<CutPhaseCameraManager>();
     }
 
 

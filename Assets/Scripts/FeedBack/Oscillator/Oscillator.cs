@@ -28,7 +28,7 @@ public class Oscillator : MonoBehaviour
         m_velocity += force * Time.deltaTime;
         m_displacement += m_velocity * Time.deltaTime;
 
-        if (Input.GetKeyUp(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             SetVelocity(10);
         }

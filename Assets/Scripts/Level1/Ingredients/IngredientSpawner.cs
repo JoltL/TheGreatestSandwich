@@ -82,9 +82,7 @@ public class IngredientSpawner : MonoBehaviour
     {
         // Call action ingrecient cut
         OnIngredientCut?.Invoke(m_currentIngredient);
-        // Disable the current ingredient and destroy it at 10
-        m_currentIngredient.gameObject.SetActive(false);
-        //Destroy(m_currentIngredient.gameObject,10);
+        m_currentIngredient.OnCut();
         // Remove the current ingredient from the ingredients list
         m_ingredients.RemoveAt(0);
         // Set the new current ingredient
@@ -92,7 +90,8 @@ public class IngredientSpawner : MonoBehaviour
         if (m_ingredients.Count < m_baseIngredientNum/2)
         {
             CreateIngredient(false);
-        }        
+        }
+        m_currentIngredient.IngredientVisual.Strech(7);
     }
 
     #region RANDOM WEIGHT SYSTEM
