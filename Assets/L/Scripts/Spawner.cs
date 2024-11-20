@@ -38,6 +38,9 @@ public class Spawner : MonoBehaviour
     private CameraController _camera;
 
     [SerializeField] private GameObject _movementPos;
+    private int _distanceCount;
+
+    private float _posY;
 
 
     private void Start()
@@ -58,7 +61,6 @@ public class Spawner : MonoBehaviour
             Drop();
         }
 
-        TopIngredient();
         DistancePosition();
 
     }
@@ -78,8 +80,11 @@ public class Spawner : MonoBehaviour
             {
                 _stackedIngredient[i].tag = "Finish";
                 _camera.AddTarget(_stackedIngredient[i].transform);
+                print("tagfinish");
 
                 _stackedIngredient[i - 1].tag = "Untagged";
+                _camera.RemoveTarget(_stackedIngredient[i-1].transform);
+                print("taguntagged");
             }
 
         }
@@ -148,22 +153,25 @@ public class Spawner : MonoBehaviour
 
     void DistancePosition()
     {
-        if(_ingredientCount > 15)
-        {
 
-        _movementPos.transform.position = new Vector3(0,1,0);
+        if(_distanceCount >= 10)
+        {
+            _posY += 1.5f;
+
+            _movementPos.transform.position = new Vector3(0f,_posY,0f);
+
+            _distanceCount = 0;
+
+            print("up" + _posY);
 
         }
-        else if (_ingredientCount > 30)
-        {
-
-            _movementPos.transform.position = new Vector3(0, 2, 0);
-
-        }
+      
     }
 
     public void Drop()
     {
+
+        TopIngredient();
 
         if (_thisIngredient != null)
         {
@@ -175,6 +183,8 @@ public class Spawner : MonoBehaviour
             _thisIngredient.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
 
             _ingredientCount++;
+
+            _distanceCount++;
         }
     }
 

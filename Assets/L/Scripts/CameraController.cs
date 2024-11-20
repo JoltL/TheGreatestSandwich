@@ -14,7 +14,7 @@ public class CameraController : MonoBehaviour
 
     [SerializeField] private float _zoomSpeed = 0.5f;
 
-    private readonly List<Transform> _targets = new();
+    [SerializeField] private List<Transform> _targets = new();
 
     private Vector3 _velocity;
 
@@ -49,6 +49,11 @@ public class CameraController : MonoBehaviour
         Vector3 centerPoint = GetCenterPoint();
         Vector3 targetPosition = new Vector3(transform.position.x, centerPoint.y, transform.position.z);
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref _velocity, _zoomSpeed);
+    }
+
+    public void RemoveTarget(Transform target)
+    {
+        _targets.Remove(target);
     }
 
     private float GetGreatestDistance()

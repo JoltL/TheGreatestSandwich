@@ -15,6 +15,8 @@ public class Moving : MonoBehaviour
 
     public bool _isMoving = false;
 
+    [SerializeField] private float _limit;
+
     [Header("Spawner")]
 
     private Spawner _spawner;
@@ -25,13 +27,16 @@ public class Moving : MonoBehaviour
 
     private bool _isRotten;
 
+    CameraController _camera;
+
 
     private void Start()
     {
+        _camera = FindObjectOfType<CameraController>();
 
         _spawner = FindObjectOfType<Spawner>();
 
-        _moveSpeed = Random.Range(3, 10);
+        _moveSpeed = Random.Range(4f, 10f);
 
         if (_pointA != null && _pointB != null)
         {
@@ -43,6 +48,9 @@ public class Moving : MonoBehaviour
     }
     private void Update()
     {
+        float limitsx = Mathf.Clamp(transform.position.x, -_limit, _limit);
+
+        transform.position = new Vector3(limitsx, transform.position.y, transform.position.z);
 
         if (_isMoving == true)
         {
@@ -134,6 +142,8 @@ public class Moving : MonoBehaviour
                 _isStacked = true;
                 _spawner._stackedIngredient.Remove(this.gameObject);
 
+                _camera.RemoveTarget(gameObject.transform);
+
                 this.gameObject.tag = "Respawn";
                 print("Spawn by touching the ground");
             }
@@ -157,7 +167,15 @@ public class Moving : MonoBehaviour
 
         }
 
-        //_camera.SetOverview();
+        for (int i = 1; i < _spawner._stackedIngredient.Count; i++)
+        {
+            if(_spawner._stackedIngredient.Count > 1)
+            {
+        _camera.RemoveTarget(_spawner._stackedIngredient[i-1].transform);
+
+            }
+
+        }
 
         _spawner.Spawn();
 
@@ -169,6 +187,8 @@ public class Moving : MonoBehaviour
 
         if (_isStacked)
         {
+
+            _camera.RemoveTarget(gameObject.transform);
 
             if (other.gameObject.CompareTag("Finish"))
             {
