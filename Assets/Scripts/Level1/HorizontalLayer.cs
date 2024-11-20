@@ -15,7 +15,7 @@ public class HorizontalLayer : MonoBehaviour
     [Header("Dynamic Update")]
     [SerializeField] bool m_autoUpdate = true; // Mettre à jour automatiquement dans l'éditeur
 
-
+    [SerializeField] List<Transform> m_children;
   
 
     void OnValidate()
@@ -35,11 +35,12 @@ public class HorizontalLayer : MonoBehaviour
     public void ReorganizeGroup()
     {
         // Obtenir tous les enfants
-        Transform[] children = GetComponentsInChildren<Transform>();
+        IngredientEntity[] children = GetComponentsInChildren<IngredientEntity>();
+
 
         // Commencer à index 1 pour ignorer l'objet parent
         int index = 0;
-        for (int i = 1; i < children.Length; i++)
+        for (int i = 0; i < children.Length; i++)
         {
             // Calculer la couche et la position horizontale
             int layer = index / m_objectsPerLayer; // Numéro de couche
@@ -53,7 +54,7 @@ public class HorizontalLayer : MonoBehaviour
             );
 
             // Appliquer la position à l'enfant
-            children[i].localPosition = Vector3.Lerp(children[i].localPosition,newPosition,Time.deltaTime*m_lerpSpeed);
+            children[i].transform.localPosition = Vector3.Lerp(children[i].transform.localPosition,newPosition,Time.deltaTime*m_lerpSpeed);
 
             // Incrémenter l'index
             index++;

@@ -1027,11 +1027,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_baseIngredientNum: 10
   m_ingredientPref: {fileID: 6026466370739585912, guid: a449681eed6f7764a8bd2e5d2beb4cb5, type: 3}
-  m_allIngredient:
-  - {fileID: 11400000, guid: ca1e560977cd34e4795db11d8c8bf35c, type: 2}
+  m_allIngredients:
   - {fileID: 11400000, guid: 850258db3b5480c4f84ead32cda03cff, type: 2}
   - {fileID: 11400000, guid: 0e0c7d2389310f042a680391b488ab5a, type: 2}
   - {fileID: 11400000, guid: db5f037881c8000479ac98afa0201250, type: 2}
+  - {fileID: 11400000, guid: ca1e560977cd34e4795db11d8c8bf35c, type: 2}
 --- !u!114 &1745077854
 MonoBehaviour:
   m_ObjectHideFlags: 0

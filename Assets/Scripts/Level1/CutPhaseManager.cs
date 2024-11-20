@@ -10,6 +10,13 @@ public class CutPhaseManager : MonoBehaviour
     FingerInputsManager m_fingerInputs;
     CutPhaseScore m_cutPhaseScore;
 
+    List<IngredientEntity> m_cuttedIngredients = new List<IngredientEntity>();
+
+    int m_cheese;
+    int m_salad;
+    int m_ham;
+    int m_tomato;
+
 
     bool m_timerIsActive = true;
     [SerializeField] float m_time;
@@ -20,6 +27,7 @@ public class CutPhaseManager : MonoBehaviour
         m_ingredientSpawner = FindObjectOfType<IngredientSpawner>();
         m_fingerInputs = GetComponent<FingerInputsManager>();
         m_cutPhaseScore = GetComponent<CutPhaseScore>();    
+
 
 
         m_fingerInputs.OnSwipe += m_ingredientSpawner.TryToCut;
@@ -46,9 +54,11 @@ public class CutPhaseManager : MonoBehaviour
         {
             m_timerIsActive = false;
             m_fingerInputs.enabled = false;
+            SortIngredients();
         }
     }
 
+    #region ACCESORS
 
     public bool TimerIsActive
     {
@@ -60,13 +70,36 @@ public class CutPhaseManager : MonoBehaviour
         get { return m_timer; }
     }
 
-    public void IncreaseScore()
+    public void IncreaseScore(IngredientEntity ingredient)
     {
+        m_cuttedIngredients.Add(ingredient);
         m_cutPhaseScore.IncreaseScore(1);
     }
 
-    public CutPhaseScore GetCutPhaseScore() => m_cutPhaseScore;
+    public void SortIngredients()
+    {
+        foreach(IngredientEntity ingredient in m_cuttedIngredients)
+        {
+            switch (ingredient.ID)
+            {
+                case 0:
+                    m_salad++;
+                break;
+                case 1:
+                    m_tomato++; 
+                break;
+                case 2:
+                    m_cheese++;
+                break;
+                case 3:
+                    m_ham++;
+                break;
+            }
+        }
+    }
 
-   
-  
+    public CutPhaseScore GetCutPhaseScore() => m_cutPhaseScore;
+    #endregion
+
+
 }

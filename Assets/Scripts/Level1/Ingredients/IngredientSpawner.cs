@@ -8,15 +8,21 @@ public class IngredientSpawner : MonoBehaviour
 {
 
     [SerializeField] int m_baseIngredientNum = 10;
+
     [SerializeField] GameObject m_ingredientPref;
     IngredientEntity m_currentIngredient;
-    [SerializeField] List<IngredientData> m_allIngredient;
+
+
+    [SerializeField] List<IngredientData> m_allIngredients;
+    List<float> m_weights = new List<float>();
+    [SerializeField] float m_weightReductionFactor = 0.7f;
+    int m_lastSpawnIndex;
 
 
     List<IngredientEntity> m_ingredients;
 
     public event Action OnCurrentIngredientChanged;
-    public event Action OnIngredientCut;
+    public event Action<IngredientEntity> OnIngredientCut;
 
     void Start()
     {
@@ -25,23 +31,36 @@ public class IngredientSpawner : MonoBehaviour
 
     public void Init()
     {
+        for (int i = 0; i < m_allIngredients.Count; i++)
+        {
+            m_weights.Add(1f);
+        }
         for (int i = 0;i< m_baseIngredientNum;i++)
         {
             CreateIngredient(true);
-        }
+        } 
     }
 
     public void CreateIngredient(bool setCurrentIngredient)
     {
-        IngredientEntity newIngredient = Instantiate(m_ingredientPref, transform.position+new Vector3(50,0,0),transform.rotation).gameObject.GetComponent<IngredientEntity>();
+        int selectedIndex = GetWeightedRandomIndex();
+        //Instantiate the ingredient
+        IngredientEntity newIngredient = Instantiate(m_ingredientPref, transform.position+new Vector3(50,0,0),transform.rotation).gameObject.GetComponent<IngredientEntity>();       
+        //Change the ingredient prent
         newIngredient.transform.parent = transform;
-        newIngredient.SetIngredientData(m_allIngredient[UnityEngine.Random.Range(0,m_allIngredient.Count)]);   
-      
+        //Set ingredient data
+        //newIngredient.SetIngredientData(m_allIngredients[UnityEngine.Random.Range(0,m_allIngredients.Count)]);   
+        newIngredient.SetIngredientData(m_allIngredients[selectedIndex]);
+        //Add the ingredient in ingredients list
         m_ingredients = GetComponentsInChildren<IngredientEntity>().ToList();
+        //Ajust the weight of selected ingredient type;
+        AdjustWeights(selectedIndex);
+        m_lastSpawnIndex = selectedIndex;
+
+        //Check if we need to change the current ingredient at spawn
         if (setCurrentIngredient)
         {
             SetCurrentIngredient(m_ingredients[0]);
-            OnCurrentIngredientChanged?.Invoke();
         }
     }
 
@@ -61,26 +80,82 @@ public class IngredientSpawner : MonoBehaviour
 
     public void CutIngredient()
     {
-        //Destroy(m_currentIngredient.gameObject);
+        // Call action ingrecient cut
+        OnIngredientCut?.Invoke(m_currentIngredient);
+        // Disable the current ingredient and destroy it at 10
         m_currentIngredient.gameObject.SetActive(false);
-        Destroy(m_currentIngredient.gameObject,10);
-        m_ingredients.RemoveAt(0);   
+        //Destroy(m_currentIngredient.gameObject,10);
+        // Remove the current ingredient from the ingredients list
+        m_ingredients.RemoveAt(0);
+        // Set the new current ingredient
         SetCurrentIngredient(m_ingredients[0]);
-        OnCurrentIngredientChanged?.Invoke();
-        OnIngredientCut?.Invoke();
-        if (m_ingredients.Count < m_baseIngredientNum)
+        if (m_ingredients.Count < m_baseIngredientNum/2)
         {
             CreateIngredient(false);
         }        
     }
+
+    #region RANDOM WEIGHT SYSTEM
+    int GetWeightedRandomIndex()
+    {
+        // Calculer la somme totale des poids
+        float totalWeight = 0f;
+        foreach (float weight in m_weights)
+        {
+            totalWeight += weight;
+        }
+
+        // Générer une valeur aléatoire entre 0 et la somme des poids
+        float randomValue = UnityEngine.Random.Range(0f, totalWeight);
+
+        // Identifier l'objet correspondant à la valeur aléatoire
+        float cumulativeWeight = 0f;
+        for (int i = 0; i < m_weights.Count; i++)
+        {
+            cumulativeWeight += m_weights[i];
+            if (randomValue <= cumulativeWeight)
+            {
+                return i;
+            }
+        }
+
+        // Par sécurité, retourner le dernier index si aucune correspondance (devrait rarement arriver)
+        return m_weights.Count - 1;
+    }
+
+    void AdjustWeights(int selectedIndex)
+    {
+        // Réduire le poids de l'objet choisi
+        m_weights[selectedIndex] *= m_weightReductionFactor;
+
+        // Normaliser les poids pour éviter qu'ils deviennent trop petits
+        NormalizeWeights();
+    }
+
+    void NormalizeWeights()
+    {
+        // Calculer la somme totale des poids
+        float totalWeight = 0f;
+        foreach (float weight in m_weights)
+        {
+            totalWeight += weight;
+        }
+
+        // Réajuster les poids pour que la somme soit égale à 1
+        for (int i = 0; i < m_weights.Count; i++)
+        {
+            m_weights[i] /= totalWeight;
+        }
+    }
+    #endregion
 
 
     #region ACCESSORS
     public void SetCurrentIngredient(IngredientEntity newCurrentIngredient)
     {
         m_currentIngredient = newCurrentIngredient;
+        OnCurrentIngredientChanged?.Invoke();
     }
-
 
     public IngredientEntity GetCurrentIngredient()
     {

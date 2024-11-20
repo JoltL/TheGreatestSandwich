@@ -21,8 +21,11 @@ public class CutPhaseScore : MonoBehaviour
         OnScoreChanged?.Invoke();
     }
 
+
+    #region ACCESSORS
     public int Score
     {
         get { return m_score; }
     }
+    #endregion
 }

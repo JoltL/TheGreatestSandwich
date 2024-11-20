@@ -26,8 +26,10 @@ public class GameManager : MonoBehaviour
         m_cutPhaseManager = GetComponent<CutPhaseManager>();
     }
 
+
+    #region ACCESSORS
+
     public CutPhaseManager GetCutPhaseManager() => m_cutPhaseManager;
 
-
-
+    #endregion
 }
