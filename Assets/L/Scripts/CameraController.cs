@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private Camera _camera;
+    private Camera _camera;
 
-    [Space]
+    private Vector3 _camerapos;
 
     [SerializeField] private Vector3 _offset;
     [SerializeField] private float _minZoom = 8f;
@@ -18,22 +18,27 @@ public class CameraController : MonoBehaviour
 
     private Vector3 _velocity;
 
+
     private void Start()
     {
         _camera = GetComponent<Camera>();
+
+        _camerapos = transform.position;
+    }
+
+    private void Update()
+    {
+
+            if (_targets.Count < 2)
+                return;
+
+            Move();
+            Zoom();
+
     }
     public void AddTarget(Transform target)
     {
         _targets.Add(target);
-    }
-
-    private void LateUpdate()
-    {
-        if (_targets.Count < 2)
-            return;
-
-        Move();
-        Zoom();
     }
 
     private void Zoom()

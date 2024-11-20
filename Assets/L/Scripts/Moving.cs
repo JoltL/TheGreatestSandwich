@@ -29,6 +29,8 @@ public class Moving : MonoBehaviour
 
     CameraController _camera;
 
+    [SerializeField] private bool _isSliding;
+
 
     private void Start()
     {
@@ -120,8 +122,12 @@ public class Moving : MonoBehaviour
 
         if (!_isStacked)
         {
-
-            StartCoroutine(StayStable());
+            if (!_isSliding)
+            { StartCoroutine(StayStable()); }
+            else
+            {
+                StartCoroutine(StackUpdate());
+            }
 
             //Spawn with tag Finish
             if (other.gameObject.CompareTag("Finish"))
@@ -171,13 +177,42 @@ public class Moving : MonoBehaviour
         {
             if(_spawner._stackedIngredient.Count > 1)
             {
-        _camera.RemoveTarget(_spawner._stackedIngredient[i-1].transform);
+                _camera.RemoveTarget(_spawner._stackedIngredient[i-1].transform);
 
             }
 
         }
 
+        _spawner.Stacked(1);
         _spawner.Spawn();
+
+    }
+
+    IEnumerator StackUpdate()
+    {
+        yield return new WaitForSeconds(1f);
+
+        CheckRotation();
+
+        if (!_isRotten)
+        {
+            _spawner._stackedIngredient.Add(this.gameObject);
+
+        }
+
+        for (int i = 1; i < _spawner._stackedIngredient.Count; i++)
+        {
+            if (_spawner._stackedIngredient.Count > 1)
+            {
+                _camera.RemoveTarget(_spawner._stackedIngredient[i - 1].transform);
+
+            }
+
+        }
+
+        _spawner.Stacked(1);
+        _spawner.Spawn();
+
 
     }
 
@@ -187,12 +222,12 @@ public class Moving : MonoBehaviour
 
         if (_isStacked)
         {
-
             _camera.RemoveTarget(gameObject.transform);
 
             if (other.gameObject.CompareTag("Finish"))
             {
 
+                _spawner.Stacked(-1);
                 _isRotten = true;
 
                 if (_spawner._stackedIngredient.Contains(gameObject))

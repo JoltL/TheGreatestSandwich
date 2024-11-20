@@ -38,7 +38,9 @@ public class Spawner : MonoBehaviour
     private CameraController _camera;
 
     [SerializeField] private GameObject _movementPos;
+
     private int _distanceCount;
+    private int _numberlimit =0;
 
     private float _posY;
 
@@ -62,10 +64,11 @@ public class Spawner : MonoBehaviour
         }
 
         DistancePosition();
+        ReachedLevel();
 
     }
 
-    void TopIngredient()
+    public void TopIngredient()
     {
         if (_stackedIngredient.Count == 1)
         {
@@ -83,7 +86,9 @@ public class Spawner : MonoBehaviour
                 print("tagfinish");
 
                 _stackedIngredient[i - 1].tag = "Untagged";
-                _camera.RemoveTarget(_stackedIngredient[i-1].transform);
+
+               _camera.RemoveTarget(_stackedIngredient[i - 1].transform);
+
                 print("taguntagged");
             }
 
@@ -136,6 +141,12 @@ public class Spawner : MonoBehaviour
         {
             //ENDING
             Debug.Log("Let's eat!");
+
+            for (int i = 0; i < _stackedIngredient.Count; i++)
+            {
+                _camera.AddTarget(_stackedIngredient[i].transform);
+
+            }
         }
     }
 
@@ -167,16 +178,30 @@ public class Spawner : MonoBehaviour
         }
       
     }
+    void ReachedLevel()
+    {
+        if(_numberlimit >= 5)
+        {
+
+            FrozeIngredient();
+            _numberlimit = 0;
+        }
+    }
+
+    void FrozeIngredient()
+    {
+        foreach (GameObject all in _stackedIngredient)
+        {
+            all.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+        }
+    }
 
     public void Drop()
     {
-
         TopIngredient();
 
         if (_thisIngredient != null)
         {
-
-            //_camera.SetTarget(_thisIngredient.transform);
 
             _thisIngredient.GetComponentInChildren<Moving>()._isMoving = false;
 
@@ -184,8 +209,15 @@ public class Spawner : MonoBehaviour
 
             _ingredientCount++;
 
-            _distanceCount++;
+            //_distanceCount++;
         }
+    }
+
+    public void Stacked(int number)
+    {
+        _numberlimit += number; 
+        _distanceCount += number;
+
     }
 
 }

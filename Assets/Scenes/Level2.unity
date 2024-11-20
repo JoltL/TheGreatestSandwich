@@ -486,10 +486,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f00889b4d01565e4ebacf6c7175a05dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camera: {fileID: 0}
   _offset: {x: 0, y: 2, z: -5}
   _minZoom: 2
-  _maxZoom: 5
+  _maxZoom: 10
   _zoomLimit: 7
   _zoomSpeed: 0.35
   _targets: []
@@ -883,10 +882,10 @@ MonoBehaviour:
   _parent: {fileID: 1402662016}
   _stackedIngredient: []
   _AllIngredient: []
-  _ham: 20
-  _cheese: 20
-  _tomato: 20
-  _salad: 20
+  _ham: 5
+  _cheese: 5
+  _tomato: 5
+  _salad: 5
   _ingredientCount: 0
   _maxIngredients: 50
   _movementPos: {fileID: 1519187354}

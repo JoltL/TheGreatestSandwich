@@ -178,6 +178,7 @@ MonoBehaviour:
   _pointB: {fileID: 0}
   _isMoving: 0
   _limit: 3
+  _isSliding: 0
 --- !u!61 &3335828063329523745
 BoxCollider2D:
   m_ObjectHideFlags: 0
