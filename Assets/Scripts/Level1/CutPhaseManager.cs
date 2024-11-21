@@ -56,6 +56,8 @@ public class CutPhaseManager : MonoBehaviour
             m_timerIsActive = false;
             m_fingerInputs.enabled = false;
             SortIngredients();
+            transform.SetParent(GameManager.Instance.transform);
+            GameManager.Instance.LoadScene(2);
         }
     }
 
