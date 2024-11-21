@@ -8,34 +8,21 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Vector3 _offset;
     [SerializeField] private float _minZoom = 8f;
     [SerializeField] private float _maxZoom = 5f;
-    [SerializeField] private float _zoomLimit = 13f;
+    //[SerializeField] private float _zoomLimit = 13f;
 
     [SerializeField] private float _zoomSpeed = 0.5f;
 
-    [SerializeField] private List<Transform> _targets = new();
+    public List<Transform> _targets = new();
 
     private Vector3 _velocity = Vector3.zero;
-
-    [Header("Spawner")]
-
-    private Spawner _spawner;
-
 
     private void Start()
     {
         _camera = GetComponent<Camera>();
-
-        _spawner = FindObjectOfType<Spawner>();
-
     }
 
     private void Update()
     {
-        if(_spawner._isTheEnd)
-        {
-            EndZoom();
-            return;
-        }
 
         if (_targets.Count == 0)
             return;
@@ -43,7 +30,7 @@ public class CameraController : MonoBehaviour
         if (_targets.Count == 1)
         {
             //transform.position = new Vector3(transform.position.x, _targets[0].position.y + _offset.y, transform.position.z);
-            _camera.orthographicSize = Mathf.Lerp(_camera.orthographicSize, _zoomLimit, _zoomSpeed * Time.deltaTime);
+            _camera.orthographicSize = Mathf.Lerp(_camera.orthographicSize, _maxZoom, _zoomSpeed * Time.deltaTime);
             return;
         }
 
@@ -65,8 +52,9 @@ public class CameraController : MonoBehaviour
 
     private void Zoom()
     {
-        float targetZoom = Mathf.Lerp(_minZoom, _maxZoom, GetGreatestDistance() / _zoomLimit);
+        float targetZoom = Mathf.Lerp(_minZoom, _maxZoom, GetGreatestDistance());
         _camera.orthographicSize = Mathf.Lerp(_camera.orthographicSize, targetZoom, _zoomSpeed* Time.deltaTime);
+
     }
 
     private void Move()

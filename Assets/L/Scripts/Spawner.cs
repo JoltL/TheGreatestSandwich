@@ -48,6 +48,8 @@ public class Spawner : MonoBehaviour
 
     public bool _isTheEnd = false;
 
+    private bool _canClick = true;
+
 
     private void Start()
     {
@@ -62,13 +64,15 @@ public class Spawner : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Drop();
-        }
 
-        DistancePosition();
-        ReachedLevel();
+        if (_canClick)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Drop();
+            }
+
+        }
 
     }
 
@@ -148,14 +152,19 @@ public class Spawner : MonoBehaviour
         {
             //ENDING
             _isTheEnd = true;
+
+            _canClick = false;
+
             Debug.Log("Let's eat!");
+
+                _camera._targets.Clear();
 
             for (int i = 0; i < _stackedIngredient.Count; i++)
             {
                 _camera.AddTarget(_stackedIngredient[i].transform);
-                _camera.EndZoom();
 
             }
+                _camera.EndZoom();
         }
     }
 
@@ -174,9 +183,9 @@ public class Spawner : MonoBehaviour
     void DistancePosition()
     {
 
-        if(_distanceCount >= 10)
+        if(_distanceCount >= 2)
         {
-            _posY += 1.5f;
+            _posY += 0.2f;
 
             _movementPos.transform.position = new Vector3(0f,_posY,0f);
 
@@ -209,8 +218,12 @@ public class Spawner : MonoBehaviour
     {
         TopIngredient();
 
+        ReachedLevel();
+
         if (_thisIngredient != null)
         {
+
+            DistancePosition();
 
             _thisIngredient.GetComponentInChildren<Moving>()._isMoving = false;
 

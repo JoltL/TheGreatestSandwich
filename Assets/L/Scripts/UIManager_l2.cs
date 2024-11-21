@@ -5,9 +5,11 @@ using UnityEngine;
 
 public class UIManager_l2 : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _scoreText;
+    [SerializeField] private TMP_Text[] _scoreText;
 
     [SerializeField] private Spawner _spawner;
+
+    [SerializeField] private GameObject _photoPanel;
 
 
     private void Start()
@@ -16,6 +18,12 @@ public class UIManager_l2 : MonoBehaviour
     }
     private void Update()
     {
-        _scoreText.text = _spawner._stackedIngredient.Count.ToString();
+        _scoreText[0].text = _spawner._stackedIngredient.Count.ToString();
+
+        if(_spawner._isTheEnd)
+        {
+            _scoreText[1].text = _scoreText[0].text;
+            _photoPanel.SetActive(true);
+        }
     }
 }
