@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class IngredientEntity : MonoBehaviour
     [SerializeField] IngredientData m_ingredientData;
     [SerializeField] IngredientVisual m_visual;
 
+ 
 
     void Start()
     {
@@ -34,9 +36,7 @@ public class IngredientEntity : MonoBehaviour
 
     public void OnCut()
     {
-        Debug.Log("Cut");
-        GameManager.Instance.CameraOne.OscillateShake(5,false, true);
-        SoundManager.Instance.PlaySFX("Slash");
+        m_visual.CutFeedBack();
         gameObject.SetActive(false);
     }
 
@@ -44,6 +44,9 @@ public class IngredientEntity : MonoBehaviour
     #region ACCESSORS
 
     public IngredientVisual IngredientVisual { get { return m_visual; } }
+
+    public IngredientData GetIngredientData() => m_ingredientData;
+
     public int ID { get { return m_id; } }
     public Vector3 Sign { get { return m_sign; } }
 

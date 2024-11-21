@@ -9,5 +9,6 @@ public class IngredientData : ScriptableObject
     public Vector2 m_cutDirection;
     public string m_name;
     public GameObject m_sprite;
+    public Color m_particleColor;
 
 }
