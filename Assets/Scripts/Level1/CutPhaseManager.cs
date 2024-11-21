@@ -24,6 +24,7 @@ public class CutPhaseManager : MonoBehaviour
 
     private void Start()
     {
+        GameManager.Instance.SetCutPhaseManager(this);
         m_ingredientSpawner = FindObjectOfType<IngredientSpawner>();
         m_fingerInputs = GetComponent<FingerInputsManager>();
         m_cutPhaseScore = GetComponent<CutPhaseScore>();    
