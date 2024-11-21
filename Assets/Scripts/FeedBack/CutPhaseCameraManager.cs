@@ -8,7 +8,9 @@ public class CutPhaseCameraManager : MonoBehaviour
 
     public void Start()
     {
+        GameManager.Instance.SetCameraOne(this);
         m_oscillator = GetComponent<OscillatorPosition>();
+        
     }
 
     public void OscillateShake(float force,bool x , bool y)

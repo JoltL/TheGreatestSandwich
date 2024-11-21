@@ -11,7 +11,7 @@ public class CutPhaseTimerDisplay : MonoBehaviour
 
     private void Start()
     {
-        m_cutPhaseManager = GameManager.Instance.GetCutPhaseManager();
+        m_cutPhaseManager = FindObjectOfType<CutPhaseManager>();
         if (!m_timerText)
         {
             Debug.LogError("timer text value is null !!",gameObject);

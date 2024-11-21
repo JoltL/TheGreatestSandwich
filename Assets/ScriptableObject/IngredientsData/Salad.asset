@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 265016493ae39c9489b6590aa2ced67d, type: 3}
   m_Name: Salad
   m_EditorClassIdentifier: 
+  m_ID: 0
   m_cutDirection: {x: -1, y: 0}
   m_name: Salad
   m_sprite: {fileID: 6204020226656096762, guid: 314b6fecda40283488a38f43926e2d35, type: 3}
+  m_particleColor: {r: 0.3726415, g: 1, b: 0.4204021, a: 1}
