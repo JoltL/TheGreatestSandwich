@@ -23,7 +23,7 @@ public class Moving : MonoBehaviour
 
     [Header("Stack")]
 
-    private bool _isStacked = false;
+    public bool _isStacked = false;
 
     private bool _isRotten;
 
@@ -63,7 +63,7 @@ public class Moving : MonoBehaviour
     }
     void MoveTo()
     {
-     
+
         //Speed
         float step = _moveSpeed * Time.deltaTime;
 
@@ -113,6 +113,8 @@ public class Moving : MonoBehaviour
     {
         Debug.Log("Ingrédient incliné");
         gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+        gameObject.tag = "Untagged";
+        gameObject.GetComponent<Moving>().enabled = false;
         _spawner._stackedIngredient.Remove(this.gameObject);
     }
 
@@ -122,37 +124,99 @@ public class Moving : MonoBehaviour
 
         if (!_isStacked)
         {
-            if (!_isSliding)
-            { StartCoroutine(StayStable()); }
-            else
-            {
-                StartCoroutine(StackUpdate());
-            }
 
             //Spawn with tag Finish
             if (other.gameObject.CompareTag("Finish"))
             {
 
                 //print("Spawn by touching the top ingredient");
-               
+
                 _isStacked = true;
 
-            }
+                print("Trigger Finish with" + other.gameObject.name);
+
+                //gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+
+                //CheckRotation();
+
+                //for (int i = 1; i < _spawner._stackedIngredient.Count; i++)
+                //{
+                //    if (_spawner._stackedIngredient.Count > 1)
+                //    {
+                //        _camera.RemoveTarget(_spawner._stackedIngredient[i - 1].transform);
+
+                //    }
+
+                //}
+                //_spawner._stackedIngredient.Add(this.gameObject);
+
+                //_spawner.Stacked(1);
+
+                //_spawner.Spawn();
+
+                if (!_isSliding)
+                { StartCoroutine(StayStable()); }
+                else
+                {
+                    StartCoroutine(StackUpdate());
+                }
+            } 
 
             //Spawn with ground
 
-            if (other.gameObject.CompareTag("Respawn"))
+            else if (other.gameObject.CompareTag("Respawn"))
             {
                 _isRotten = true;
+                _spawner._stackedIngredient.Remove(this.gameObject);
 
                 _isStacked = true;
-                _spawner._stackedIngredient.Remove(this.gameObject);
 
                 _camera.RemoveTarget(gameObject.transform);
 
-                this.gameObject.tag = "Respawn";
-                print("Spawn by touching the ground");
+                //this.gameObject.tag = "Respawn";
+                this.gameObject.GetComponent<Moving>().enabled = false;
+                print("Spawn by touching the ground" + other.gameObject.name);
+
+                if (!_isSliding)
+                { StartCoroutine(StayStable()); }
+                else
+                {
+                    StartCoroutine(StackUpdate());
+                }
+                //_spawner.Spawn();
             }
+            //if (!_isSliding)
+            //{ StartCoroutine(StayStable()); }
+            //else
+            //{
+            //    StartCoroutine(StackUpdate());
+            //}
+
+            else
+            {
+
+                _isRotten = true;
+
+                _spawner._stackedIngredient.Remove(this.gameObject);
+              
+
+                _isStacked = true;
+
+                _camera.RemoveTarget(gameObject.transform);
+
+                //this.gameObject.tag = "Respawn";
+                this.gameObject.GetComponent<Moving>().enabled = false;
+                print("Spawn by touching other things" + other.gameObject.name);
+              
+
+                if (!_isSliding)
+                { StartCoroutine(StayStable()); }
+                else
+                {
+                    StartCoroutine(StackUpdate());
+                }
+            }
+
         }
 
     }
@@ -175,19 +239,22 @@ public class Moving : MonoBehaviour
 
         for (int i = 1; i < _spawner._stackedIngredient.Count; i++)
         {
-            if(_spawner._stackedIngredient.Count > 1)
+            if (_spawner._stackedIngredient.Count > 1)
             {
-                _camera.RemoveTarget(_spawner._stackedIngredient[i-1].transform);
+                _camera.RemoveTarget(_spawner._stackedIngredient[i - 1].transform);
 
             }
 
         }
 
         _spawner.Stacked(1);
+
         _spawner.Spawn();
+        print("isSpawning");
 
     }
 
+    //No freeze
     IEnumerator StackUpdate()
     {
         yield return new WaitForSeconds(1f);
@@ -216,6 +283,17 @@ public class Moving : MonoBehaviour
 
     }
 
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Finish") && (other.gameObject.CompareTag("Untagged")))
+        {
+            _spawner._stackedIngredient.Add(this.gameObject);
+           
+        }
+
+
+    }
+
     //When touching but falling after
     private void OnTriggerExit2D(Collider2D other)
     {
@@ -223,31 +301,42 @@ public class Moving : MonoBehaviour
         if (_isStacked)
         {
             _camera.RemoveTarget(gameObject.transform);
+            _spawner.Stacked(-1);
+            _isRotten = true;
 
-            if (other.gameObject.CompareTag("Finish"))
-            {
+            //if (other.CompareTag("Untagged"))
+            //{
+            //    //gameObject.GetComponent<Moving>().enabled = false;
+            //    gameObject.tag = "Untagged";
+            //}
+            //if (other.gameObject.CompareTag("Finish"))
+            //{
 
-                _spawner.Stacked(-1);
-                _isRotten = true;
 
-                if (_spawner._stackedIngredient.Contains(gameObject))
-                {
-                    gameObject.tag = "Finish";
-                    other.gameObject.tag = "Respawn";
-                    _spawner._stackedIngredient.Remove(this.gameObject);
+            //    if (_spawner._stackedIngredient.Contains(gameObject))
+            //    {
+            //        gameObject.tag = "Finish";
+            //        //other.gameObject.tag = "Respawn";
+            //        if (other.gameObject.GetComponent<Moving>())
+            //        {
+            //            other.gameObject.GetComponent<Moving>().enabled = false;
 
-                    print("Other tag respawn" + this.gameObject);
-                }
+            //        }
+            //        _spawner._stackedIngredient.Remove(other.gameObject);
 
-                else
-                {
-                    _spawner._stackedIngredient.Remove(this.gameObject);
-                    this.gameObject.tag = "Respawn";
-                    other.gameObject.tag = "Finish";
+            //        print("Other tag respawn" + other.gameObject.name);
+            //    }
 
-                    print("Me tag respawn" + this.gameObject);
-                }
-            }
+            //    else
+            //    {
+            //        _spawner._stackedIngredient.Remove(this.gameObject);
+            //        //this.gameObject.tag = "Respawn";
+            //        gameObject.GetComponent<Moving>().enabled = false;
+            //        other.gameObject.tag = "Finish";
+
+            //        print("Me tag respawn" + this.gameObject.name);
+            //    }
+            //}
         }
     }
 }

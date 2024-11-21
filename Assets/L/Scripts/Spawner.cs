@@ -39,10 +39,14 @@ public class Spawner : MonoBehaviour
 
     [SerializeField] private GameObject _movementPos;
 
+    public bool _hasSpawned = false;
+
     private int _distanceCount;
     private int _numberlimit =0;
 
     private float _posY;
+
+    public bool _isTheEnd = false;
 
 
     private void Start()
@@ -98,6 +102,7 @@ public class Spawner : MonoBehaviour
 
     public void Spawn()
     {
+
         if (_ingredientCount < _maxIngredients)
         {
             //Random position
@@ -136,15 +141,19 @@ public class Spawner : MonoBehaviour
             else if (selectedIngredient == _ingredient[2]) _tomato--;
             else if (selectedIngredient == _ingredient[3]) _salad--;
 
+            _hasSpawned = true;
+
         }
         else
         {
             //ENDING
+            _isTheEnd = true;
             Debug.Log("Let's eat!");
 
             for (int i = 0; i < _stackedIngredient.Count; i++)
             {
                 _camera.AddTarget(_stackedIngredient[i].transform);
+                _camera.EndZoom();
 
             }
         }
@@ -209,7 +218,6 @@ public class Spawner : MonoBehaviour
 
             _ingredientCount++;
 
-            //_distanceCount++;
         }
     }
 
