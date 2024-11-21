@@ -16,3 +16,4 @@ MonoBehaviour:
   m_cutDirection: {x: 0, y: 1}
   m_name: Ham
   m_sprite: {fileID: 8307611657583415723, guid: fcdeefed5d634ae4fbaf9004b96e82e0, type: 3}
+  m_particleColor: {r: 1, g: 0.759434, b: 0.9015866, a: 1}

@@ -9,15 +9,12 @@ public class CutPhaseScoreDisplay : MonoBehaviour
     CutPhaseScore m_cutPhaseScore;
     [SerializeField] TextMeshProUGUI m_scoreText;
 
-    private void Awake()
-    {
-        m_cutPhaseManager = GameManager.Instance.GetCutPhaseManager();   
-       
-    }
+ 
 
     IEnumerator Start()
     {
         yield return new WaitForSeconds(0.1f);
+        m_cutPhaseManager = GameManager.Instance.GetCutPhaseManager();
         m_cutPhaseScore = m_cutPhaseManager.GetCutPhaseScore();
         m_cutPhaseScore.OnScoreChanged += DisplayScore;        
     } 

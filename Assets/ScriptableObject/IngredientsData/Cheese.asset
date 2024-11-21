@@ -16,3 +16,4 @@ MonoBehaviour:
   m_cutDirection: {x: 0, y: -1}
   m_name: Cheese
   m_sprite: {fileID: 3991161651158218600, guid: 5ad46b99ad77d6045a804201865e88d6, type: 3}
+  m_particleColor: {r: 1, g: 0.91147983, b: 0, a: 1}

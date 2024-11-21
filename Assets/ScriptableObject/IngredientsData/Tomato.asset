@@ -16,3 +16,4 @@ MonoBehaviour:
   m_cutDirection: {x: 1, y: 0}
   m_name: Tomato
   m_sprite: {fileID: 7860525002921514060, guid: 2288a0faca995bd4c91eaa87b0c4640e, type: 3}
+  m_particleColor: {r: 1, g: 0.3066038, b: 0.3066038, a: 1}
