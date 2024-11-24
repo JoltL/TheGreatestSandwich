@@ -6,6 +6,9 @@ using UnityEngine;
 public class UIManager_l2 : MonoBehaviour
 {
     [SerializeField] private TMP_Text[] _scoreText;
+    private float _score;
+
+    [SerializeField] private TMP_Text[] _nbIngredientText;
 
     [SerializeField] private Spawner _spawner;
 
@@ -18,12 +21,22 @@ public class UIManager_l2 : MonoBehaviour
     }
     private void Update()
     {
-        _scoreText[0].text = _spawner._stackedIngredient.Count.ToString();
+        _nbIngredientText[0].text = _spawner._stackedIngredient.Count.ToString();
 
-        if(_spawner._isTheEnd)
+        _scoreText[0].text = _score.ToString();
+
+        if (_spawner._isTheEnd)
         {
+            _nbIngredientText[1].text = _nbIngredientText[0].text;
+
             _scoreText[1].text = _scoreText[0].text;
+
             _photoPanel.SetActive(true);
         }
+    }
+
+    public void AddScore(int points)
+    {
+        _score += points; 
     }
 }

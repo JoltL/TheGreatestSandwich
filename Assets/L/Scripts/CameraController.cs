@@ -12,6 +12,9 @@ public class CameraController : MonoBehaviour
 
     [SerializeField] private float _zoomSpeed = 0.5f;
 
+    [SerializeField] private float _moveSpeed = 0.5f;
+
+
     public List<Transform> _targets = new();
 
     private Vector3 _velocity = Vector3.zero;
@@ -61,7 +64,7 @@ public class CameraController : MonoBehaviour
     {
         float centerPoint = GetCenterPoint();
         Vector3 targetPosition = new Vector3(transform.position.x, centerPoint, transform.position.z);
-        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref _velocity, _zoomSpeed);
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref _velocity, _moveSpeed);
     }
 
     public void EndZoom()

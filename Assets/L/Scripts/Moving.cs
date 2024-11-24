@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Moving : MonoBehaviour
@@ -17,9 +19,13 @@ public class Moving : MonoBehaviour
 
     [SerializeField] private float _limit;
 
-    [Header("Spawner")]
+    [Header("Reference")]
 
     private Spawner _spawner;
+
+    private UIManager_l2 _uiManager;
+
+    CameraController _camera;
 
     [Header("Stack")]
 
@@ -27,18 +33,27 @@ public class Moving : MonoBehaviour
 
     private bool _isRotten;
 
-    CameraController _camera;
 
     [SerializeField] private bool _isSliding;
 
 
+    [Header("Animation")]
+    private Animator _animator;
+
+    [SerializeField] private TMP_Text _text;
+
     private void Start()
     {
+
+        _uiManager = FindObjectOfType<UIManager_l2>();
+
+        _animator = GetComponent<Animator>();
+
         _camera = FindObjectOfType<CameraController>();
 
         _spawner = FindObjectOfType<Spawner>();
 
-        _moveSpeed = Random.Range(4f, 10f);
+        _moveSpeed = Random.Range(4f, 8f);
 
         if (_pointA != null && _pointB != null)
         {
@@ -61,6 +76,7 @@ public class Moving : MonoBehaviour
         }
 
     }
+
     void MoveTo()
     {
 
@@ -118,12 +134,29 @@ public class Moving : MonoBehaviour
         _spawner._stackedIngredient.Remove(this.gameObject);
     }
 
+    private int CalculateScore(float distance)
+    {
+        if (distance >= 1.25)
+            return -3;
+        else if (distance >= 1f)
+            return -2;
+        else if (distance >= 0.75)
+            return -1;
+        else if (distance >= 0.5)
+            return 1;
+        else if (distance >= 0.25f)
+            return 2;
+        else
+            return 3;
+    }
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
 
         if (!_isStacked)
         {
+            _animator.SetTrigger("Squish");
 
             //Spawn with tag Finish
             if (other.gameObject.CompareTag("Finish"))
@@ -133,7 +166,7 @@ public class Moving : MonoBehaviour
 
                 print("Trigger Finish with" + other.gameObject.name);
 
-                
+               
                 if (!_isSliding)
                 { StartCoroutine(StayStable()); }
                 else
@@ -208,6 +241,23 @@ public class Moving : MonoBehaviour
 
             _spawner.Stacked(1);
 
+            // Calculer la distance par rapport au centre (x = 0)
+            float distanceFromCenter = Mathf.Abs(transform.position.x);
+
+            // Calculer le score en fonction de la distance
+            int score = CalculateScore(distanceFromCenter);
+
+            // Afficher ou utiliser le score (par exemple, l'ajouter à un score global)
+            print("Score: " + score);
+
+            _text.text = "+" + score.ToString();
+            _text.gameObject.SetActive(true);
+            StartCoroutine(SetactiveFalse());
+
+            _uiManager.AddScore(score);
+
+
+
         }
 
         for (int i = 1; i < _spawner._stackedIngredient.Count; i++)
@@ -227,6 +277,13 @@ public class Moving : MonoBehaviour
 
     }
 
+    IEnumerator SetactiveFalse() 
+    {
+    yield return new WaitForSeconds (0.5f);
+
+        _text.gameObject.SetActive(false);
+    }
+
     //No freeze
     IEnumerator StackUpdate()
     {
@@ -238,6 +295,18 @@ public class Moving : MonoBehaviour
             _spawner._stackedIngredient.Add(this.gameObject);
 
             _spawner.Stacked(1);
+
+            // Calculer la distance par rapport au centre (x = 0)
+            float distanceFromCenter = Mathf.Abs(transform.position.x);
+
+            // Calculer le score en fonction de la distance
+            int score = CalculateScore(distanceFromCenter);
+
+            // Afficher ou utiliser le score (par exemple, l'ajouter à un score global)
+            print("Score: " + score);
+
+            _uiManager.AddScore(score);
+
 
         }
 
