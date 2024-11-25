@@ -81,6 +81,9 @@ public class CameraController : MonoBehaviour
 
     private float GetGreatestDistance()
     {
+
+        if(_targets.Count == 0) return 0;
+
         float minY = _targets[0].position.y;
         float maxY = _targets[0].position.y;
 
