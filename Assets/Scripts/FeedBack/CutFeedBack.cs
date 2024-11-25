@@ -27,7 +27,7 @@ public class CutFeedBack : MonoBehaviour
             GameObject cutInst = Instantiate(m_cutGameObject, transform.position, transform.rotation);
             Rigidbody2D cutRb = cutInst.GetComponent<Rigidbody2D>();
             cutRb.AddForce(new Vector3(dir, 1,1)*2,ForceMode2D.Impulse); //TODO CHANGE HARD VALUE
-            cutRb.AddTorque(Random.Range(-100, 100));
+            cutRb.AddTorque(Random.Range(-100, 100)*10);
             Destroy(cutInst,5f);
             Debug.Log(i +"= "+dir);
         }     

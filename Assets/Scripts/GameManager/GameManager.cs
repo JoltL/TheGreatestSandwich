@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 
 
     [SerializeField] Animator m_sceneTransition;
+    bool m_inTransition = false;
 
     [SerializeField] CutPhaseManager m_cutPhaseManager;
     [SerializeField] CutPhaseCameraManager m_cameraOne;
@@ -42,6 +43,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadScene(int scene)
     {
+        if (m_inTransition) return;
         StartCoroutine(LoadSceneCoroutine(scene));
     }
 
@@ -49,8 +51,10 @@ public class GameManager : MonoBehaviour
     IEnumerator LoadSceneCoroutine(int scene)
     {
         m_sceneTransition.SetTrigger("End");
+        m_inTransition = true;
         yield return new WaitForSeconds(0.5f);
         m_sceneTransition.SetTrigger("Start");
+        m_inTransition = false;
         SceneManager.LoadScene(scene);
         if (scene == 0)
         {       
