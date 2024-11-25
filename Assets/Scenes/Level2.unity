@@ -754,7 +754,7 @@ GameObject:
   - component: {fileID: 396025915}
   - component: {fileID: 396025914}
   m_Layer: 5
-  m_Name: White
+  m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2147,14 +2147,15 @@ MonoBehaviour:
   _parent: {fileID: 1402662016}
   _stackedIngredient: []
   _AllIngredient: []
-  _ham: 50
-  _cheese: 50
-  _tomato: 50
-  _salad: 50
+  _ham: 5
+  _cheese: 5
+  _tomato: 5
+  _salad: 5
   _ingredientCount: 0
   _maxIngredients: 50
   _movementPos: {fileID: 1519187354}
   _hasSpawned: 0
+  _distanceCount: 0
   _isTheEnd: 0
   _useLevel1: 0
 --- !u!114 &998522335

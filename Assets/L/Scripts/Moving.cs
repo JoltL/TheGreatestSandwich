@@ -8,7 +8,7 @@ using UnityEngine.SocialPlatforms.Impl;
 public class Moving : MonoBehaviour
 {
     [Header("Move")]
-    [SerializeField] private float _moveSpeed = 3f;
+    public float _moveSpeed = 3f;
 
     public Transform _pointA;
     public Transform _pointB;
@@ -53,7 +53,7 @@ public class Moving : MonoBehaviour
         _camera = FindObjectOfType<CameraController>();
         _spawner = FindObjectOfType<Spawner>();
 
-        _moveSpeed = Random.Range(4f, 10f);
+        MoveDifficulty();
 
         if (_pointA != null && _pointB != null)
         {
@@ -103,6 +103,30 @@ public class Moving : MonoBehaviour
 
         }
 
+    }
+
+    //VOIR LA DIFFICULTE
+    void MoveDifficulty()
+    {
+        int randomSpeed;
+
+        if (_spawner._distanceCount >= _spawner._AllIngredient.Count/2)
+        {
+            randomSpeed = Random.Range(8, 12);
+        }
+        else if (_spawner._distanceCount >= _spawner._AllIngredient.Count / 3)
+        {
+            randomSpeed = Random.Range(6, 10);
+        }
+        else if (_spawner._distanceCount >= _spawner._AllIngredient.Count / 4)
+        {
+            randomSpeed = Random.Range(5, 8);
+        }
+        else
+        {
+            randomSpeed = Random.Range(4, 6);
+        }
+        _moveSpeed = randomSpeed;
     }
 
 

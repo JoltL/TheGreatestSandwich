@@ -41,7 +41,8 @@ public class Spawner : MonoBehaviour
 
     public bool _hasSpawned = false;
 
-    private int _distanceCount;
+    public int _distanceCount;
+
     private int _numberlimit =0;
 
     private float _posY;
@@ -191,6 +192,8 @@ public class Spawner : MonoBehaviour
 
         }
         _camera.EndZoom();
+
+        print("goHere");
     }
     private List<GameObject> GenerateWeightedList()
     {
