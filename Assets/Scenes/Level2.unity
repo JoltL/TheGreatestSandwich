@@ -2157,7 +2157,7 @@ MonoBehaviour:
   _hasSpawned: 0
   _distanceCount: 0
   _isTheEnd: 0
-  _useLevel1: 0
+  _useLevel1: 1
 --- !u!114 &998522335
 MonoBehaviour:
   m_ObjectHideFlags: 0

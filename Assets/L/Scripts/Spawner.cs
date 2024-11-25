@@ -59,8 +59,6 @@ public class Spawner : MonoBehaviour
     private void Start()
     {
         _camera = FindObjectOfType<CameraController>();
-
-        _maxIngredients = _ham + _tomato + _cheese + _salad;
         
         Spawn();
 
@@ -74,6 +72,7 @@ public class Spawner : MonoBehaviour
         _tomato = dictIngredient["Tomato"];
         }
 
+        _maxIngredients = _ham + _tomato + _cheese + _salad;
     }
 
     private void Update()
