@@ -40,7 +40,7 @@ public class Moving : MonoBehaviour
     [Header("Animation")]
     private Animator _animator;
 
-    [SerializeField] private TMP_Text _text;
+    [SerializeField] private TMP_Text _text; //Bonus text (+1)
 
     private void Start()
     {
@@ -93,13 +93,13 @@ public class Moving : MonoBehaviour
             if (_movingToB)
             {
                 _target = _pointA;
-                transform.eulerAngles = new Vector2(0f, 180f);
+                //transform.eulerAngles = new Vector2(0f, 180f);
 
             }
             else
             {
                 _target = _pointB;
-                transform.eulerAngles = new Vector2(0f, 0f);
+                //transform.eulerAngles = new Vector2(0f, 0f);
             }
             //if MovingtoB, don't go to B
             _movingToB = !_movingToB;
@@ -250,7 +250,7 @@ public class Moving : MonoBehaviour
             // Afficher ou utiliser le score (par exemple, l'ajouter à un score global)
             print("Score: " + score);
 
-            _text.text = "+" + score.ToString();
+            _text.text = score.ToString();
             _text.gameObject.SetActive(true);
             StartCoroutine(SetactiveFalse());
 

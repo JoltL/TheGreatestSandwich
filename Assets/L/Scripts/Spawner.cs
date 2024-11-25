@@ -180,6 +180,7 @@ public class Spawner : MonoBehaviour
         return weightedList;
     }
 
+    //Spawn position hauteur
     void DistancePosition()
     {
 
