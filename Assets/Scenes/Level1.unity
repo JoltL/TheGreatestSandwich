@@ -443,7 +443,7 @@ GameObject:
   - component: {fileID: 1149450289}
   - component: {fileID: 1149450288}
   m_Layer: 0
-  m_Name: '[MANAGERS]'
+  m_Name: '[LVL MANAGERS]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -501,7 +501,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e4366345b2e0464e9faf82fcd0996e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_time: 30
+  m_time: 15
 --- !u!114 &1149450289
 MonoBehaviour:
   m_ObjectHideFlags: 0
