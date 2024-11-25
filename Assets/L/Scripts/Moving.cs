@@ -53,7 +53,7 @@ public class Moving : MonoBehaviour
         _camera = FindObjectOfType<CameraController>();
         _spawner = FindObjectOfType<Spawner>();
 
-        _moveSpeed = Random.Range(4f, 8f);
+        _moveSpeed = Random.Range(4f, 10f);
 
         if (_pointA != null && _pointB != null)
         {

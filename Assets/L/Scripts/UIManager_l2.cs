@@ -18,21 +18,32 @@ public class UIManager_l2 : MonoBehaviour
 
     [SerializeField] private Slider _slider;
 
-    private int _multiplier = 1;
+    private float _sliderScore;
+
+    [Header("Best Score")]
+
+    [SerializeField] private int _bestScore;
+
+    [SerializeField] private TMP_Text _bestScoreText;
 
     [Header("References")]
 
     [SerializeField] private Spawner _spawner;
 
     [SerializeField] private TakeScreenshot _takeScreenshot;
-
     private bool _once = false;
 
+    [Header("Bonus")]
+
     [SerializeField] private GameObject _help;
+
+    private bool _hardMode;
 
 
     private void Start()
     {
+        _bestScore = PlayerPrefs.GetInt("Best Score", 0);
+
         _spawner = GetComponent<Spawner>();
 
         _once = false;
@@ -42,12 +53,14 @@ public class UIManager_l2 : MonoBehaviour
     }
     private void Update()
     {
-        _slider.value = Mathf.Clamp(_slider.value, 0f, 10f);
+        _slider.value = Mathf.Lerp(_slider.value, _sliderScore, 5 * Time.deltaTime);
+        _sliderScore = Mathf.Clamp(_sliderScore, 0f, _slider.maxValue);
 
         _nbIngredientText[0].text = _spawner._stackedIngredient.Count.ToString();
 
         _scoreText[0].text = _score.ToString();
 
+        
 
         if (_spawner._isTheEnd)
         {
@@ -61,17 +74,17 @@ public class UIManager_l2 : MonoBehaviour
 
         _spawner.TheEnd();
 
-        _nbIngredientText[1].text = _nbIngredientText[0].text;
+        TotalScore();
 
-        _scoreText[1].text = _scoreText[0].text;
-
-        _photoPanel.SetActive(true);
+        ShowUI();
 
         StartCoroutine(waitScreenshot());
+        _spawner._isTheEnd = false;
     }
 
     IEnumerator waitScreenshot()
     {
+       
         _slider.gameObject.SetActive(false);    
 
         yield return new WaitForSeconds(1f);
@@ -84,31 +97,74 @@ public class UIManager_l2 : MonoBehaviour
 
     }
 
+    void ShowUI()
+    {
+        _bestScoreText.text = _bestScore.ToString();
+
+        //_spawner.TheEnd();
+
+        _nbIngredientText[1].text = _nbIngredientText[0].text;
+
+        _scoreText[1].text = _scoreText[0].text;
+
+        _photoPanel.SetActive(true);
+    }
+
+    public void TotalScore()
+    {
+        if (_spawner._stackedIngredient.Count > _bestScore)
+        {
+            _bestScore = _spawner._stackedIngredient.Count;
+
+            PlayerPrefs.SetInt("Best Score", _bestScore);
+
+        }
+    }
+
     public void AddScore(int points)
     {
         _score += points;
 
-
-        _slider.value += points;
+        _sliderScore += points;
 
         _help.SetActive(false);
 
         MinScore();
 
 
+        if (_hardMode)
+        {
+            _sliderScore -= 1f;
+        }
+
+
     }
 
     void MinScore()
     {
-        if (_slider.value <= 0f)
+        if (_sliderScore <= 0f)
         {
-            IstheEnd();
+            //IstheEnd();
+
+            _spawner._isTheEnd = true;
         }
 
-        if (_slider.value == _slider.maxValue)
+        if (_sliderScore >= _slider.maxValue)
         {
             _help.SetActive(true);
+
+            _sliderScore = 8f;
+
+            _hardMode = true;
+
         }
+    }
+
+    //Button
+
+    public void LoadScene(int scene)
+    {
+        GameManager.Instance.LoadScene(scene);
     }
 
 }

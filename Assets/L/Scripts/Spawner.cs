@@ -94,6 +94,7 @@ public class Spawner : MonoBehaviour
         if (_stackedIngredient.Count == 1)
         {
             _stackedIngredient[0].tag = "Finish";
+
             return;
         }
 
@@ -209,7 +210,7 @@ public class Spawner : MonoBehaviour
 
         if(_distanceCount >= 2)
         {
-            _posY += 0.05f;
+            _posY += 0.5f;
 
             _movementPos.transform.position = new Vector3(0f,_posY,0f);
 

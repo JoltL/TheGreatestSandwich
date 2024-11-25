@@ -19,9 +19,14 @@ public class CameraController : MonoBehaviour
 
     private Vector3 _velocity = Vector3.zero;
 
+
+    private Spawner _spawner;
+
     private void Start()
     {
         _camera = GetComponent<Camera>();
+
+        _spawner = FindObjectOfType<Spawner>();
     }
 
     private void Update()
@@ -33,7 +38,16 @@ public class CameraController : MonoBehaviour
         if (_targets.Count == 1)
         {
             //transform.position = new Vector3(transform.position.x, _targets[0].position.y + _offset.y, transform.position.z);
+            if(_spawner._stackedIngredient.Count > 0)
+            {
+            AddTarget(_spawner._stackedIngredient[0].transform);
+
+            }
+            else
+            {
             _camera.orthographicSize = Mathf.Lerp(_camera.orthographicSize, _maxZoom, _zoomSpeed * Time.deltaTime);
+
+            }
             return;
         }
 
