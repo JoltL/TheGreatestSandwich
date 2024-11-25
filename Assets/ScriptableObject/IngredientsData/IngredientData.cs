@@ -10,5 +10,6 @@ public class IngredientData : ScriptableObject
     public string m_name;
     public GameObject m_sprite;
     public Color m_particleColor;
+    public Sprite m_cutSprite;
 
 }

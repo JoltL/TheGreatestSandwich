@@ -16,4 +16,5 @@ MonoBehaviour:
   m_cutDirection: {x: -1, y: 0}
   m_name: Salad
   m_sprite: {fileID: 6204020226656096762, guid: 314b6fecda40283488a38f43926e2d35, type: 3}
-  m_particleColor: {r: 0.3726415, g: 1, b: 0.4204021, a: 1}
+  m_particleColor: {r: 0.3882353, g: 1, b: 0.7294118, a: 1}
+  m_cutSprite: {fileID: 21300000, guid: 615a517f5e8e61847bf2929007c53f0d, type: 3}

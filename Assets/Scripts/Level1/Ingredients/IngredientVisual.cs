@@ -6,6 +6,7 @@ public class IngredientVisual : MonoBehaviour
 {
     IngredientEntity m_ingredient;
     OscillatorScale m_oscillator;
+    [SerializeField] CutFeedBack m_cutFeedBack;
 
     private void Start()
     {
@@ -37,6 +38,14 @@ public class IngredientVisual : MonoBehaviour
         GameManager.Instance.CameraOne.OscillateShake(5, false, true);
         SoundManager.Instance.PlaySFX("Slash");
         SoundManager.Instance.PlaySFX("Splat");
+        InstantiateCutFeedBack();
+    }
+
+    public void InstantiateCutFeedBack()
+    {
+        CutFeedBack inst = Instantiate(m_cutFeedBack,transform.position,transform.rotation);
+        inst.SetCutVisual(m_ingredient.GetIngredientData().m_cutSprite);
+
     }
 
 }
