@@ -57,6 +57,7 @@ public class CutPhaseManager : MonoBehaviour
             m_fingerInputs.enabled = false;
             SortIngredients();
             transform.SetParent(GameManager.Instance.transform);
+            m_cuttedIngredients.Clear();
             GameManager.Instance.LoadScene(2);
         }
     }
@@ -102,6 +103,19 @@ public class CutPhaseManager : MonoBehaviour
     }
 
     public CutPhaseScore GetCutPhaseScore() => m_cutPhaseScore;
+
+    public Dictionary<string, int> GetCutIngredients()
+    {
+        Dictionary<string, int> dictIngredients = new Dictionary<string, int>();
+        dictIngredients.Add("Cheese",m_cheese);
+        dictIngredients.Add("Salad", m_salad);
+        dictIngredients.Add("Tomato", m_tomato);
+        dictIngredients.Add("Ham", m_ham);
+        return dictIngredients;
+    }
+
+
+
     #endregion
 
 

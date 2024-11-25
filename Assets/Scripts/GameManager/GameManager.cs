@@ -74,6 +74,11 @@ public class GameManager : MonoBehaviour
         m_cutPhaseManager = cutPhaseManager;
     }
 
+    public Dictionary<string,int> GetCutIngredients()
+    {
+        return m_cutPhaseManager.GetCutIngredients();
+    }
+
     public void SetCameraOne(CutPhaseCameraManager cutPhaseCameraManager)
     {
         m_cameraOne = cutPhaseCameraManager;
