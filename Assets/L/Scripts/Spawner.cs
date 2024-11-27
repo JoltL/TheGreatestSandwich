@@ -27,11 +27,12 @@ public class Spawner : MonoBehaviour
     [SerializeField] private int _tomato = 3;
     [SerializeField] private int _salad = 3;
 
+    [SerializeField] private GameObject _bread;
 
     [Header("Score")]
-    [SerializeField] private int _ingredientCount;
+    public int _ingredientCount;
 
-    [SerializeField] private int _maxIngredients;
+    public int _maxIngredients;
 
     [Header("Camera")]
 
@@ -129,6 +130,7 @@ public class Spawner : MonoBehaviour
 
         if (_ingredientCount < _maxIngredients)
         {
+                print(_ingredientCount + "/" + _maxIngredients);
 
             Vector2 position = new Vector2(0f, 0f);
             
@@ -151,7 +153,15 @@ public class Spawner : MonoBehaviour
 
             GameObject thisRandomIngredient = Instantiate(selectedIngredient, position, transform.rotation, _parent);
 
-            thisRandomIngredient.GetComponentInChildren<Moving>()._pointA = _pointA;
+                if(_stackedIngredient.Count > 0)
+                {
+                int number = _stackedIngredient.Count;
+                GameObject item = _stackedIngredient[number - 1];
+
+                    thisRandomIngredient.GetComponent<SpriteRenderer>().sortingOrder = item.GetComponent<SpriteRenderer>().sortingOrder + 1;
+                }
+
+                thisRandomIngredient.GetComponentInChildren<Moving>()._pointA = _pointA;
             thisRandomIngredient.GetComponentInChildren<Moving>()._pointB = _pointB;
 
             _thisIngredient = thisRandomIngredient;
@@ -169,8 +179,29 @@ public class Spawner : MonoBehaviour
         }
         else
         {
-            //ENDING
-            TheEnd();
+
+                //Vector2 position = new Vector2(0f, 0f);
+
+                //int randomPosition = Random.Range(0, 2); //Random.Range(min, max-1)
+
+                //if (randomPosition == 0)
+                //{
+                //    position = _pointA.position;
+                //}
+                //else
+                //{
+                //    position = _pointB.position;
+                //}
+
+                //GameObject thisRandomIngredient = Instantiate(_bread, position, transform.rotation, _parent);
+                //thisRandomIngredient.GetComponentInChildren<Moving>()._pointA = _pointA;
+                //thisRandomIngredient.GetComponentInChildren<Moving>()._pointB = _pointB;
+                //_camera.AddTarget(thisRandomIngredient.transform);
+
+                //_hasSpawned = true;
+
+                //ENDING
+                TheEnd();
         }
         }
     }

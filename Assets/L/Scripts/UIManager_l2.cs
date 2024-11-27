@@ -14,6 +14,8 @@ public class UIManager_l2 : MonoBehaviour
 
     [SerializeField] private TMP_Text[] _nbIngredientText;
 
+    [SerializeField] private TMP_Text _maxnbIngredientText;
+
     [SerializeField] private GameObject _photoPanel;
 
     [SerializeField] private Slider _slider;
@@ -53,6 +55,8 @@ public class UIManager_l2 : MonoBehaviour
     }
     private void Update()
     {
+
+        _maxnbIngredientText.text = _spawner._ingredientCount.ToString() + "/" + _spawner._maxIngredients.ToString();
         _slider.value = Mathf.Lerp(_slider.value, _sliderScore, 5 * Time.deltaTime);
         _sliderScore = Mathf.Clamp(_sliderScore, 0f, _slider.maxValue);
 
