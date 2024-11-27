@@ -34,7 +34,7 @@ public class IngredientVisual : MonoBehaviour
         }
         FeedBackManager.Instance.InstantiateParticle("Stain", data.m_particleColor, transform.position, transform.rotation);
         FeedBackManager.Instance.InstantiateParticle("Slash", transform.position, rotation);
-        FeedBackManager.Instance.FreezeFrame(0.1f,0.11f, 0.05f);
+        FeedBackManager.Instance.FreezeFrame(0.1f,0.15f, 0.05f);
         GameManager.Instance.CameraOne.OscillateShake(5, false, true);
         SoundManager.Instance.PlaySFX("Slash");
         SoundManager.Instance.PlaySFX("Splat");

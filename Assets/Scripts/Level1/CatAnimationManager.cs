@@ -33,11 +33,13 @@ public class CatAnimationManager : MonoBehaviour
     void HorizontalSlice()
     {
         m_animator.SetTrigger("HSliced");
+        GetComponent<Oscillator>().StartOscillator(1);
     }
 
     void VerticalSlice() 
     {
         m_animator.SetTrigger("VSliced");
+        GetComponent<Oscillator>().StartOscillator(1);
     }
 
 }

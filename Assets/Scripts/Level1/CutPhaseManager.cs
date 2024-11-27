@@ -20,6 +20,7 @@ public class CutPhaseManager : MonoBehaviour
 
     bool m_timerIsActive = true;
     [SerializeField] float m_time;
+    [SerializeField] float m_timeToFinish = 2;
     float m_timer;
 
     private void Start()
@@ -58,8 +59,43 @@ public class CutPhaseManager : MonoBehaviour
             SortIngredients();
             transform.SetParent(GameManager.Instance.transform);
             m_cuttedIngredients.Clear();
-            GameManager.Instance.LoadScene(2);
+            StartCoroutine(FinishCoolDown());
+           
         }
+    }
+
+    public void IncreaseScore(IngredientEntity ingredient)
+    {
+        m_cuttedIngredients.Add(ingredient);
+        m_cutPhaseScore.IncreaseScore(1);
+    }
+
+    public void SortIngredients()
+    {
+        foreach (IngredientEntity ingredient in m_cuttedIngredients)
+        {
+            switch (ingredient.ID)
+            {
+                case 0:
+                    m_salad++;
+                    break;
+                case 1:
+                    m_tomato++;
+                    break;
+                case 2:
+                    m_cheese++;
+                    break;
+                case 3:
+                    m_ham++;
+                    break;
+            }
+        }
+    }
+
+    IEnumerator FinishCoolDown()
+    {
+        yield return new WaitForSeconds(m_timeToFinish);
+        GameManager.Instance.LoadScene(2);
     }
 
     #region ACCESORS
@@ -74,33 +110,7 @@ public class CutPhaseManager : MonoBehaviour
         get { return m_timer; }
     }
 
-    public void IncreaseScore(IngredientEntity ingredient)
-    {
-        m_cuttedIngredients.Add(ingredient);
-        m_cutPhaseScore.IncreaseScore(1);
-    }
 
-    public void SortIngredients()
-    {
-        foreach(IngredientEntity ingredient in m_cuttedIngredients)
-        {
-            switch (ingredient.ID)
-            {
-                case 0:
-                    m_salad++;
-                break;
-                case 1:
-                    m_tomato++; 
-                break;
-                case 2:
-                    m_cheese++;
-                break;
-                case 3:
-                    m_ham++;
-                break;
-            }
-        }
-    }
 
     public CutPhaseScore GetCutPhaseScore() => m_cutPhaseScore;
 
@@ -113,7 +123,6 @@ public class CutPhaseManager : MonoBehaviour
         dictIngredients.Add("Ham", m_ham);
         return dictIngredients;
     }
-
 
 
     #endregion
