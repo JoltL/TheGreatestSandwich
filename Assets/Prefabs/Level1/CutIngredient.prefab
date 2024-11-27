@@ -170,7 +170,7 @@ PrefabInstance:
     - target: {fileID: 221763116820804188, guid: 5ad46b99ad77d6045a804201865e88d6, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 4c3748bfca9af1948acb528f53805a3e, type: 3}
+      objectReference: {fileID: 21300000, guid: 615a517f5e8e61847bf2929007c53f0d, type: 3}
     - target: {fileID: 3991161651158218600, guid: 5ad46b99ad77d6045a804201865e88d6, type: 3}
       propertyPath: m_Name
       value: Cheese
