@@ -112,19 +112,19 @@ public class Moving : MonoBehaviour
 
         if (_spawner._distanceCount >= _spawner._AllIngredient.Count/2)
         {
-            randomSpeed = Random.Range(8, 12);
+            randomSpeed = Random.Range(10, 14);
         }
         else if (_spawner._distanceCount >= _spawner._AllIngredient.Count / 3)
         {
-            randomSpeed = Random.Range(6, 10);
+            randomSpeed = Random.Range(8, 12);
         }
         else if (_spawner._distanceCount >= _spawner._AllIngredient.Count / 4)
         {
-            randomSpeed = Random.Range(5, 8);
+            randomSpeed = Random.Range(6, 10);
         }
         else
         {
-            randomSpeed = Random.Range(4, 6);
+            randomSpeed = Random.Range(5, 8);
         }
         _moveSpeed = randomSpeed;
     }

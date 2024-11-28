@@ -63,11 +63,7 @@ public class Spawner : MonoBehaviour
     private void Start()
     {
         _camera = FindObjectOfType<CameraController>();
-
-        _maxIngredients = _ham + _tomato + _cheese + _salad;
         
-        Spawn();
-
         if(_useLevel1)
         {
 
@@ -77,7 +73,9 @@ public class Spawner : MonoBehaviour
         _salad = dictIngredient["Salad"];
         _tomato = dictIngredient["Tomato"];
         }
+        _maxIngredients = _ham + _tomato + _cheese + _salad;
 
+        Spawn();
     }
 
     private void Update()
@@ -214,11 +212,19 @@ public class Spawner : MonoBehaviour
                 _hasSpawned = true;
                 _takeBread = true;
 
-                //ENDING
             }
             else if (_ingredientCount >= _maxIngredients && _takeBread)
             { 
+                //ENDING
                 TheEnd();
+
+                //2 photos? avant après?
+                /*
+                foreach (var item in _stackedIngredient)
+                {
+                    item.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+                }
+                */
             }
         
         }
