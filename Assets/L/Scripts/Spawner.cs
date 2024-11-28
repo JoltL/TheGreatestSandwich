@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 using static UnityEngine.GraphicsBuffer;
 
 public class Spawner : MonoBehaviour
@@ -56,10 +57,14 @@ public class Spawner : MonoBehaviour
 
     private bool _canSpawn = true;
 
+    private bool _takeBread = false;
+
 
     private void Start()
     {
         _camera = FindObjectOfType<CameraController>();
+
+        _maxIngredients = _ham + _tomato + _cheese + _salad;
         
         Spawn();
 
@@ -73,7 +78,6 @@ public class Spawner : MonoBehaviour
         _tomato = dictIngredient["Tomato"];
         }
 
-        _maxIngredients = _ham + _tomato + _cheese + _salad;
     }
 
     private void Update()
@@ -128,81 +132,95 @@ public class Spawner : MonoBehaviour
         if(_canSpawn)
         {
 
-        if (_ingredientCount < _maxIngredients)
-        {
+            if (_ingredientCount < _maxIngredients && !_takeBread)
+            {
                 print(_ingredientCount + "/" + _maxIngredients);
 
-            Vector2 position = new Vector2(0f, 0f);
-            
-            int randomPosition = Random.Range(0, 2); //Random.Range(min, max-1)
+                Vector2 position = new Vector2(0f, 0f);
 
-            if (randomPosition == 0)
-            {
-                position = _pointA.position;
-            }
-            else
-            {
-                position = _pointB.position;
-            }
+                int randomPosition = Random.Range(0, 2); //Random.Range(min, max-1)
 
-            // Générer la liste des ingrédients et leurs quantités
-            _AllIngredient = GenerateWeightedList();
-            // Sélectionner un ingrédient aléatoire
-            int randomIndex = Random.Range(0, _AllIngredient.Count);
-            GameObject selectedIngredient = _AllIngredient[randomIndex];
-
-            GameObject thisRandomIngredient = Instantiate(selectedIngredient, position, transform.rotation, _parent);
-
-                if(_stackedIngredient.Count > 0)
+                if (randomPosition == 0)
                 {
-                int number = _stackedIngredient.Count;
-                GameObject item = _stackedIngredient[number - 1];
+                    position = _pointA.position;
+                }
+                else
+                {
+                    position = _pointB.position;
+                }
+
+                // Générer la liste des ingrédients et leurs quantités
+                _AllIngredient = GenerateWeightedList();
+                // Sélectionner un ingrédient aléatoire
+                int randomIndex = Random.Range(0, _AllIngredient.Count);
+                GameObject selectedIngredient = _AllIngredient[randomIndex];
+
+                GameObject thisRandomIngredient = Instantiate(selectedIngredient, position, transform.rotation, _parent);
+
+                if (_stackedIngredient.Count > 0)
+                {
+                    int number = _stackedIngredient.Count;
+                    GameObject item = _stackedIngredient[number - 1];
 
                     thisRandomIngredient.GetComponent<SpriteRenderer>().sortingOrder = item.GetComponent<SpriteRenderer>().sortingOrder + 1;
                 }
 
                 thisRandomIngredient.GetComponentInChildren<Moving>()._pointA = _pointA;
-            thisRandomIngredient.GetComponentInChildren<Moving>()._pointB = _pointB;
+                thisRandomIngredient.GetComponentInChildren<Moving>()._pointB = _pointB;
 
-            _thisIngredient = thisRandomIngredient;
+                _thisIngredient = thisRandomIngredient;
 
-            _camera.AddTarget(thisRandomIngredient.transform);
+                _camera.AddTarget(thisRandomIngredient.transform);
 
-            // Mettre à jour les quantités restantes
-            if (selectedIngredient == _ingredient[0]) _ham--;
-            else if (selectedIngredient == _ingredient[1]) _cheese--;
-            else if (selectedIngredient == _ingredient[2]) _tomato--;
-            else if (selectedIngredient == _ingredient[3]) _salad--;
+                // Mettre à jour les quantités restantes
+                if (selectedIngredient == _ingredient[0]) _ham--;
+                else if (selectedIngredient == _ingredient[1]) _cheese--;
+                else if (selectedIngredient == _ingredient[2]) _tomato--;
+                else if (selectedIngredient == _ingredient[3]) _salad--;
 
-            _hasSpawned = true;
+                _hasSpawned = true;
 
-        }
-        else
-        {
+            }
+            else if (_ingredientCount >= _maxIngredients && !_takeBread)
+            {
 
-                //Vector2 position = new Vector2(0f, 0f);
+                Vector2 position = new Vector2(0f, 0f);
 
-                //int randomPosition = Random.Range(0, 2); //Random.Range(min, max-1)
+                int randomPosition = Random.Range(0, 2); //Random.Range(min, max-1)
 
-                //if (randomPosition == 0)
-                //{
-                //    position = _pointA.position;
-                //}
-                //else
-                //{
-                //    position = _pointB.position;
-                //}
+                if (randomPosition == 0)
+                {
+                    position = _pointA.position;
+                }
+                else
+                {
+                    position = _pointB.position;
+                }
 
-                //GameObject thisRandomIngredient = Instantiate(_bread, position, transform.rotation, _parent);
-                //thisRandomIngredient.GetComponentInChildren<Moving>()._pointA = _pointA;
-                //thisRandomIngredient.GetComponentInChildren<Moving>()._pointB = _pointB;
-                //_camera.AddTarget(thisRandomIngredient.transform);
+                GameObject thisRandomIngredient = Instantiate(_bread, position, transform.rotation, _parent);
+                thisRandomIngredient.GetComponentInChildren<Moving>()._pointA = _pointA;
+                thisRandomIngredient.GetComponentInChildren<Moving>()._pointB = _pointB;
+                _camera.AddTarget(thisRandomIngredient.transform);
 
-                //_hasSpawned = true;
+                _thisIngredient = thisRandomIngredient;
+                if (_stackedIngredient.Count > 0)
+                {
+                    int number = _stackedIngredient.Count;
+                    GameObject item = _stackedIngredient[number - 1];
+
+                    thisRandomIngredient.GetComponent<SpriteRenderer>().sortingOrder = item.GetComponent<SpriteRenderer>().sortingOrder + 1;
+                }
+
+                _hasSpawned = true;
+                _takeBread = true;
 
                 //ENDING
+            }
+            else if (_ingredientCount >= _maxIngredients && _takeBread)
+            { 
                 TheEnd();
-        }
+            }
+        
         }
     }
 

@@ -56,7 +56,11 @@ public class UIManager_l2 : MonoBehaviour
     private void Update()
     {
 
-        _maxnbIngredientText.text = _spawner._ingredientCount.ToString() + "/" + _spawner._maxIngredients.ToString();
+
+        //+1 for bread
+
+        int maxing = _spawner._maxIngredients + 1;
+        _maxnbIngredientText.text = _spawner._ingredientCount.ToString() + "/" + maxing.ToString();
         _slider.value = Mathf.Lerp(_slider.value, _sliderScore, 5 * Time.deltaTime);
         _sliderScore = Mathf.Clamp(_sliderScore, 0f, _slider.maxValue);
 
