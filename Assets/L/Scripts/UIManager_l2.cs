@@ -20,6 +20,8 @@ public class UIManager_l2 : MonoBehaviour
 
     [SerializeField] private Slider _slider;
 
+    [SerializeField] private GameObject _dissapearBeforePhoto;
+
     private float _sliderScore;
 
     [Header("Best Score")]
@@ -40,6 +42,8 @@ public class UIManager_l2 : MonoBehaviour
     [SerializeField] private GameObject _help;
 
     private bool _hardMode;
+
+    int _nbOfMaxSlider;
 
 
     private void Start()
@@ -93,7 +97,8 @@ public class UIManager_l2 : MonoBehaviour
     IEnumerator waitScreenshot()
     {
        
-        _slider.gameObject.SetActive(false);    
+        //_slider.gameObject.SetActive(false);  
+        _dissapearBeforePhoto.SetActive(false);
 
         yield return new WaitForSeconds(1f);
 
@@ -139,10 +144,21 @@ public class UIManager_l2 : MonoBehaviour
 
         MinScore();
 
-
+        //Difficulty : be more precise
         if (_hardMode)
         {
-            _sliderScore -= 1f;
+            if (_nbOfMaxSlider > 5)
+            {
+                _sliderScore -= 2;
+            }
+            else if (_nbOfMaxSlider > 2)
+            {
+                _sliderScore -= 1;
+            }
+            else
+            {
+                _sliderScore -= 0;
+            }
         }
 
 
@@ -160,9 +176,11 @@ public class UIManager_l2 : MonoBehaviour
         if (_sliderScore >= _slider.maxValue)
         {
             _help.SetActive(true);
+            _nbOfMaxSlider++;
 
             _sliderScore = 8f;
 
+           
             _hardMode = true;
 
         }

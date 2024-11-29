@@ -109,22 +109,26 @@ public class Moving : MonoBehaviour
     void MoveDifficulty()
     {
         int randomSpeed;
-
-        if (_spawner._distanceCount >= _spawner._AllIngredient.Count/2)
+        
+        if (_spawner._ingredientCount >= _spawner._maxIngredients * 0.75f)
         {
-            randomSpeed = Random.Range(10, 14);
+            randomSpeed = Random.Range(8, 11);
+            print("4 :" + randomSpeed);
         }
-        else if (_spawner._distanceCount >= _spawner._AllIngredient.Count / 3)
+        else if (_spawner._ingredientCount >= _spawner._maxIngredients *0.5f)
         {
-            randomSpeed = Random.Range(8, 12);
+            randomSpeed = Random.Range(7, 10);
+            print("3 :" + randomSpeed);
         }
-        else if (_spawner._distanceCount >= _spawner._AllIngredient.Count / 4)
+        else if (_spawner._ingredientCount >= _spawner._maxIngredients *0.25f)
         {
-            randomSpeed = Random.Range(6, 10);
+            randomSpeed = Random.Range(6, 9);
+            print("2 :" + randomSpeed);
         }
         else
         {
             randomSpeed = Random.Range(5, 8);
+            print("1 :" + randomSpeed);
         }
         _moveSpeed = randomSpeed;
     }
@@ -184,7 +188,7 @@ public class Moving : MonoBehaviour
 
                 _isStacked = true;
 
-                print("Trigger Finish with" + other.gameObject.name);
+                //print("Trigger Finish with" + other.gameObject.name);
 
 
                 if (!_isSliding)
@@ -207,7 +211,7 @@ public class Moving : MonoBehaviour
                 _camera.RemoveTarget(gameObject.transform);
 
                 //this.gameObject.GetComponent<Moving>().enabled = false;
-                print("Spawn by touching the ground" + other.gameObject.name);
+                //print("Spawn by touching the ground" + other.gameObject.name);
 
                 if (!_isSliding)
                 { StartCoroutine(StayStable()); }
@@ -291,7 +295,7 @@ public class Moving : MonoBehaviour
         CheckRotation();
 
         _spawner.Spawn();
-        print("isSpawning");
+        //print("isSpawning");
 
     }
 

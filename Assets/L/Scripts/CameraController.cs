@@ -83,9 +83,11 @@ public class CameraController : MonoBehaviour
 
     public void EndZoom()
     {
+
         float greatestDistance = GetGreatestDistance();
 
         float targetZoom = greatestDistance + 2f;
+        _maxZoom = targetZoom;
 
         //// Clamping pour rester dans les limites spécifiées
         //targetZoom = Mathf.Clamp(targetZoom, _maxZoom, _minZoom);
