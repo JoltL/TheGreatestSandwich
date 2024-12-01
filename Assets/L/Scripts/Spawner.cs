@@ -219,12 +219,9 @@ public class Spawner : MonoBehaviour
                 TheEnd();
 
                 //2 photos? avant après?
-                /*
-                foreach (var item in _stackedIngredient)
-                {
-                    item.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
-                }
-                */
+                
+               
+                
             }
         
         }
@@ -247,6 +244,10 @@ public class Spawner : MonoBehaviour
         }
         _camera.EndZoom();
 
+        foreach (var item in _stackedIngredient)
+        {
+            item.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+        }
         print("goHere");
     }
     private List<GameObject> GenerateWeightedList()

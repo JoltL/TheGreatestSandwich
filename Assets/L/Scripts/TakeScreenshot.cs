@@ -17,12 +17,12 @@ public class TakeScreenshot : MonoBehaviour
     }
     void Update()
     {
-      if(Input.GetKeyDown(KeyCode.Space))
-        {
-            StartCoroutine(TakeScreenshotandShow());
+      //if(Input.GetKeyDown(KeyCode.Space))
+      //  {
+      //      StartCoroutine(TakeScreenshotandShow());
 
-            //ScreenCapture.CaptureScreenshot("Screenshot.png");
-        }
+      //      //ScreenCapture.CaptureScreenshot("Screenshot.png");
+      //  }
     }
 
     public void Screenshot()
@@ -44,6 +44,8 @@ public class TakeScreenshot : MonoBehaviour
 
         Destroy(screenshot);
 
+        yield return new WaitForSeconds(1);
+
         Sprite screenshotSprite = Sprite.Create(newScreenshot, new Rect(0,0,newScreenshot.width, newScreenshot.height), new Vector2(0.5f,0.5f));
 
         _showScreenshot.enabled = true;
@@ -51,4 +53,5 @@ public class TakeScreenshot : MonoBehaviour
 
         _animator.SetTrigger("Screenshot");
     }
+
 }

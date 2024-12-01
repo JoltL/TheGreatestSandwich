@@ -33,22 +33,54 @@ public class CameraController : MonoBehaviour
     {
 
         if (_targets.Count == 0)
+        {       
             return;
+        }
 
-        if (_targets.Count == 1)
+        else if (_targets.Count == 1)
         {
-            //transform.position = new Vector3(transform.position.x, _targets[0].position.y + _offset.y, transform.position.z);
-            if(_spawner._stackedIngredient.Count > 0)
-            {
-            AddTarget(_spawner._stackedIngredient[0].transform);
 
+            if (_spawner._stackedIngredient.Count > 0)
+            {
+                if(_spawner._stackedIngredient.Count == 1)
+                {
+                    if (!_targets.Contains(_spawner._stackedIngredient[0].transform))
+                    {
+
+                        AddTarget(_spawner._stackedIngredient[0].transform);
+                        return;
+                    }
+                }
+                else
+                {
+
+                int number = _spawner._stackedIngredient.Count;
+                GameObject item = _spawner._stackedIngredient[number - 1];
+
+                    if (!_targets.Contains(item.transform))
+                    {
+
+                        AddTarget(item.transform);
+                    }
+                }
             }
             else
             {
-            _camera.orthographicSize = Mathf.Lerp(_camera.orthographicSize, _maxZoom, _zoomSpeed * Time.deltaTime);
-
+                _camera.orthographicSize = Mathf.Lerp(_camera.orthographicSize, 10f, _zoomSpeed * Time.deltaTime);
             }
-            return;
+
+            //transform.position = new Vector3(transform.position.x, _targets[0].position.y + _offset.y, transform.position.z);
+            //if (_spawner._stackedIngredient.Count > 0)
+            //{
+            //AddTarget(_spawner._stackedIngredient[0].transform);
+
+            //}
+            //else
+            //{
+            //_camera.orthographicSize = Mathf.Lerp(_camera.orthographicSize, _maxZoom, _zoomSpeed * Time.deltaTime);
+
+            //}
+            //return;
         }
 
         //if (_targets.Count < 2)

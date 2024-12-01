@@ -45,6 +45,8 @@ public class UIManager_l2 : MonoBehaviour
 
     int _nbOfMaxSlider;
 
+    [SerializeField] private float _baseLossRate = 0.1f; // Perte initiale par seconde
+
 
     private void Start()
     {
@@ -72,7 +74,18 @@ public class UIManager_l2 : MonoBehaviour
 
         _scoreText[0].text = _score.ToString();
 
-        
+        if (_hardMode)
+        {
+            float lossRate = _baseLossRate + (_nbOfMaxSlider * 0.1f); // Augmentation progressive
+            _sliderScore -= lossRate * Time.deltaTime;
+
+            if (_sliderScore <= 0f)
+            {
+                //IstheEnd();
+
+                _spawner._isTheEnd = true;
+            }
+        }
 
         if (_spawner._isTheEnd)
         {
@@ -85,26 +98,32 @@ public class UIManager_l2 : MonoBehaviour
     {
 
         _spawner.TheEnd();
+     
+        StartCoroutine(waitScreenshot());
 
         TotalScore();
 
         ShowUI();
 
-        StartCoroutine(waitScreenshot());
         _spawner._isTheEnd = false;
     }
 
     IEnumerator waitScreenshot()
     {
-       
+        foreach (var item in _spawner._stackedIngredient)
+        {
+            item.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+        }
+
         //_slider.gameObject.SetActive(false);  
         _dissapearBeforePhoto.SetActive(false);
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
         if (!_once)
         {
             _takeScreenshot.Screenshot();
+
             _once = true;
         }
 
@@ -149,11 +168,14 @@ public class UIManager_l2 : MonoBehaviour
         {
             if (_nbOfMaxSlider > 5)
             {
-                _sliderScore -= 2;
+                //_sliderScore -= 2;
+                _baseLossRate = 0.3f;
+                
             }
             else if (_nbOfMaxSlider > 2)
             {
-                _sliderScore -= 1;
+                //_sliderScore -= 1;
+                _baseLossRate = 0.2f;
             }
             else
             {
@@ -177,9 +199,6 @@ public class UIManager_l2 : MonoBehaviour
         {
             _help.SetActive(true);
             _nbOfMaxSlider++;
-
-            _sliderScore = 8f;
-
            
             _hardMode = true;
 

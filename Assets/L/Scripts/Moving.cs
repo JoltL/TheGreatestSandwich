@@ -44,6 +44,10 @@ public class Moving : MonoBehaviour
 
     [SerializeField] private TMP_Text _text; //Bonus text (+1)
 
+    private int _bonus;
+
+    [SerializeField] private GameObject _fx;
+
 
     private void Start()
     {
@@ -182,6 +186,12 @@ public class Moving : MonoBehaviour
         {
             _animator.SetTrigger("Squish");
 
+            if (_fx != null)
+            {
+                _fx.SetActive(true);
+
+            }
+
             //Spawn with tag Finish
             if (other.gameObject.CompareTag("Finish"))
             {
@@ -254,8 +264,7 @@ public class Moving : MonoBehaviour
     IEnumerator StayStable()
     {
 
-
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
         gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
 
@@ -266,21 +275,25 @@ public class Moving : MonoBehaviour
 
             _spawner.Stacked(1);
 
+           
+
             float distanceFromCenter = Mathf.Abs(transform.position.x);
 
-            int score = CalculateScore(distanceFromCenter);
+            _bonus = CalculateScore(distanceFromCenter);
 
-            _text.text = score.ToString();
-            _text.gameObject.SetActive(true);
-            StartCoroutine(SetactiveFalse());
-
-            _uiManager.AddScore(score);
+            _uiManager.AddScore(_bonus);
 
         }
         else
         {
-            _uiManager.AddScore(-1);
+            _bonus = -1;
+            _uiManager.AddScore(_bonus);
         }
+
+
+        _text.text = _bonus.ToString();
+        _text.gameObject.SetActive(true);
+        StartCoroutine(SetactiveFalse());
 
         for (int i = 1; i < _spawner._stackedIngredient.Count; i++)
         {
@@ -309,7 +322,7 @@ public class Moving : MonoBehaviour
     //No freeze
     IEnumerator StackUpdate()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
 
         if (!_isRotten)
