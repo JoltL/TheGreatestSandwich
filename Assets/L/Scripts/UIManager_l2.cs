@@ -20,6 +20,8 @@ public class UIManager_l2 : MonoBehaviour
 
     [SerializeField] private Slider _slider;
 
+    [SerializeField] private GameObject _frontSlider;
+
     [SerializeField] private GameObject _dissapearBeforePhoto;
 
     private float _sliderScore;
@@ -110,10 +112,10 @@ public class UIManager_l2 : MonoBehaviour
 
     IEnumerator waitScreenshot()
     {
-        foreach (var item in _spawner._stackedIngredient)
-        {
-            item.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
-        }
+        //foreach (var item in _spawner._stackedIngredient)
+        //{
+        //    item.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+        //}
 
         //_slider.gameObject.SetActive(false);  
         _dissapearBeforePhoto.SetActive(false);
@@ -163,17 +165,26 @@ public class UIManager_l2 : MonoBehaviour
 
         MinScore();
 
+        DifficultySlider();
+    }
+
+    void DifficultySlider()
+    {
+
         //Difficulty : be more precise
         if (_hardMode)
         {
+            StartCoroutine(PreventSliderDiminution());
+
             if (_nbOfMaxSlider > 5)
             {
                 //_sliderScore -= 2;
                 _baseLossRate = 0.3f;
-                
+
             }
             else if (_nbOfMaxSlider > 2)
             {
+
                 //_sliderScore -= 1;
                 _baseLossRate = 0.2f;
             }
@@ -183,7 +194,19 @@ public class UIManager_l2 : MonoBehaviour
             }
         }
 
+    }
 
+    IEnumerator PreventSliderDiminution()
+    {
+
+        for (int i = 0; i < 3; i++)
+        {
+
+        _frontSlider.GetComponent<Image>().color = Color.red;
+        yield return new WaitForSeconds(0.25f);
+        _frontSlider.GetComponent<Image>().color = Color.white;
+            yield return new WaitForSeconds(0.25f);
+        }
     }
 
     void MinScore()
