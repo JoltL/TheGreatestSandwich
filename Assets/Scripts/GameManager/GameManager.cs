@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEngine.GraphicsBuffer;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] CutPhaseManager m_cutPhaseManager;
     [SerializeField] CutPhaseCameraManager m_cameraOne;
 
+    [SerializeField] Dictionary<string, int> m_ingredientDict;
 
     public CutPhaseCameraManager CameraOne
     {
@@ -78,9 +80,14 @@ public class GameManager : MonoBehaviour
         m_cutPhaseManager = cutPhaseManager;
     }
 
+    public void SetIngredientDict(Dictionary<string,int> newDict)
+    {
+        m_ingredientDict = newDict;
+    }
+
     public Dictionary<string,int> GetCutIngredients()
     {
-        return m_cutPhaseManager.GetCutIngredients();
+        return m_ingredientDict;
     }
 
     public void SetCameraOne(CutPhaseCameraManager cutPhaseCameraManager)
