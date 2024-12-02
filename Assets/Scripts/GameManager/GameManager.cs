@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEngine.GraphicsBuffer;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,10 +10,12 @@ public class GameManager : MonoBehaviour
 
 
     [SerializeField] Animator m_sceneTransition;
+    bool m_inTransition = false;
 
     [SerializeField] CutPhaseManager m_cutPhaseManager;
     [SerializeField] CutPhaseCameraManager m_cameraOne;
 
+    [SerializeField] Dictionary<string, int> m_ingredientDict;
 
     public CutPhaseCameraManager CameraOne
     {
@@ -42,6 +45,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadScene(int scene)
     {
+        if (m_inTransition) return;
         StartCoroutine(LoadSceneCoroutine(scene));
     }
 
@@ -49,8 +53,10 @@ public class GameManager : MonoBehaviour
     IEnumerator LoadSceneCoroutine(int scene)
     {
         m_sceneTransition.SetTrigger("End");
+        m_inTransition = true;
         yield return new WaitForSeconds(0.5f);
         m_sceneTransition.SetTrigger("Start");
+        m_inTransition = false;
         SceneManager.LoadScene(scene);
         if (scene == 0)
         {       
@@ -74,9 +80,14 @@ public class GameManager : MonoBehaviour
         m_cutPhaseManager = cutPhaseManager;
     }
 
+    public void SetIngredientDict(Dictionary<string,int> newDict)
+    {
+        m_ingredientDict = newDict;
+    }
+
     public Dictionary<string,int> GetCutIngredients()
     {
-        return m_cutPhaseManager.GetCutIngredients();
+        return m_ingredientDict;
     }
 
     public void SetCameraOne(CutPhaseCameraManager cutPhaseCameraManager)

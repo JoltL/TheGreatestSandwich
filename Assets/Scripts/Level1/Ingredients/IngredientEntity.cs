@@ -9,8 +9,10 @@ public class IngredientEntity : MonoBehaviour
     int m_id;
     [SerializeField] IngredientData m_ingredientData;
     [SerializeField] IngredientVisual m_visual;
+    public static event Action OnVCut;
+    public static event Action OnHCut;
 
- 
+
 
     void Start()
     {
@@ -38,6 +40,14 @@ public class IngredientEntity : MonoBehaviour
     {
         m_visual.CutFeedBack();
         gameObject.SetActive(false);
+        if (m_ingredientData.m_cutDirection.x != 0)
+        {
+            OnHCut?.Invoke();
+        }
+        if (m_ingredientData.m_cutDirection.y != 0)
+        {
+            OnVCut?.Invoke();
+        }
     }
 
 

@@ -7,6 +7,5 @@ public class MainMenu : MonoBehaviour
     public void StartGame()
     {
         GameManager.Instance.LoadScene(1);
-        Debug.Log("zizi");
     }
 }
