@@ -14,6 +14,6 @@ public class OscillatorRotation : Oscillator
     public override void Update()
     {
         base.Update();
-       
+        m_target.transform.localRotation = Quaternion.Euler(0, 0, m_displacement);
     }
 }

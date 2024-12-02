@@ -4,21 +4,27 @@ using UnityEngine;
 
 public class CutPhaseCameraManager : MonoBehaviour
 {
-    OscillatorPosition m_oscillator;
+    OscillatorPosition m_oscillatorPosition;
+    OscillatorRotation m_oscillatorRotation;
 
     public void Start()
     {
         GameManager.Instance.SetCameraOne(this);
-        m_oscillator = GetComponent<OscillatorPosition>();
+        m_oscillatorPosition = GetComponent<OscillatorPosition>();
+        m_oscillatorRotation = GetComponent<OscillatorRotation>();
         
     }
 
     public void OscillateShake(float force,bool x , bool y)
     {
-        m_oscillator.ResetOscillatePos2D();
-        m_oscillator.OscillateX = x;
-        m_oscillator.OscillateY = y;
-        m_oscillator.StartOscillator(force); 
+        m_oscillatorPosition.ResetOscillatePos2D();
+        m_oscillatorPosition.OscillateX = x;
+        m_oscillatorPosition.OscillateY = y;
+        m_oscillatorPosition.StartOscillator(force); 
+    }
+    public void OscillateShakeRotate(float force)
+    {
+        m_oscillatorRotation.StartOscillator(force);
     }
 
 }

@@ -27,12 +27,12 @@ public class IngredientVisual : MonoBehaviour
         if (data.m_cutDirection.x !=0)
         {
             rotation = Quaternion.Euler(0,0,0);
-            FeedBackManager.Instance.FreezeFrame(0.1f, 0.15f, 0.05f);
+            FeedBackManager.Instance.FreezeFrame(0.1f, 0.15f, 0.1f);
         }
         if (data.m_cutDirection.y != 0)
         {
             rotation = Quaternion.Euler(0, 0, 90);
-            FeedBackManager.Instance.FreezeFrame(0.2f, 0.15f, 0.05f);
+            FeedBackManager.Instance.FreezeFrame(0.2f, 0.15f, 0.1f);
         }
         FeedBackManager.Instance.InstantiateParticle("Stain", data.m_particleColor, transform.position, transform.rotation);
         FeedBackManager.Instance.InstantiateParticle("Slash", transform.position, rotation);

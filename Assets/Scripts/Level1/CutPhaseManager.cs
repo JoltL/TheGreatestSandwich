@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,24 +18,27 @@ public class CutPhaseManager : MonoBehaviour
     int m_ham;
     int m_tomato;
 
+    [SerializeField] GameObject m_finishedMessage;
 
-    bool m_timerIsActive = true;
+    bool m_timerIsActive = false;
     [SerializeField] float m_time;
     [SerializeField] float m_timeToFinish = 2;
     float m_timer;
+
+    public event Action<int> OnStartTimerFeedback;
 
     private void Start()
     {
         GameManager.Instance.SetCutPhaseManager(this);
         m_ingredientSpawner = FindObjectOfType<IngredientSpawner>();
         m_fingerInputs = GetComponent<FingerInputsManager>();
-        m_cutPhaseScore = GetComponent<CutPhaseScore>();    
+        m_cutPhaseScore = GetComponent<CutPhaseScore>();
 
-
-
+        m_fingerInputs.enabled = false;
         m_fingerInputs.OnSwipe += m_ingredientSpawner.TryToCut;
         m_ingredientSpawner.OnIngredientCut += IncreaseScore;
         m_timer = m_time;
+        StartCoroutine(StartCoolDown());
     }
 
 
@@ -93,8 +97,23 @@ public class CutPhaseManager : MonoBehaviour
         }
     }
 
+    IEnumerator StartCoolDown()
+    {
+        int i = 3;     
+        while (i != -1)
+        {
+            OnStartTimerFeedback?.Invoke(i);
+            yield return new WaitForSeconds(1);
+            i--;     
+        }
+        m_fingerInputs.enabled = true;
+        m_timerIsActive = true;
+    }
     IEnumerator FinishCoolDown()
     {
+        m_finishedMessage.SetActive(true);
+        m_finishedMessage.GetComponent<OscillatorScale>().StartOscillator(5);
+        m_finishedMessage.GetComponent<OscillatorRotation>().StartOscillator(150);
         yield return new WaitForSeconds(m_timeToFinish);
         GameManager.Instance.LoadScene(2);
     }
