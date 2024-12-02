@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 using static UnityEngine.GraphicsBuffer;
 
 public class Spawner : MonoBehaviour
@@ -27,11 +28,12 @@ public class Spawner : MonoBehaviour
     [SerializeField] private int _tomato = 3;
     [SerializeField] private int _salad = 3;
 
+    [SerializeField] private GameObject _bread;
 
     [Header("Score")]
-    [SerializeField] private int _ingredientCount;
+    public int _ingredientCount;
 
-    [SerializeField] private int _maxIngredients;
+    public int _maxIngredients;
 
     [Header("Camera")]
 
@@ -41,7 +43,8 @@ public class Spawner : MonoBehaviour
 
     public bool _hasSpawned = false;
 
-    private int _distanceCount;
+    public int _distanceCount;
+
     private int _numberlimit =0;
 
     private float _posY;
@@ -50,16 +53,29 @@ public class Spawner : MonoBehaviour
 
     private bool _canClick = true;
 
+    [SerializeField] private bool _useLevel1;
+
+    private bool _canSpawn = true;
+
+    private bool _takeBread = false;
+
 
     private void Start()
     {
         _camera = FindObjectOfType<CameraController>();
+        
+        if(_useLevel1)
+        {
 
+        Dictionary<string,int> dictIngredient = GameManager.Instance.GetCutIngredients();
+        _cheese = dictIngredient["Cheese"];
+        _ham = dictIngredient["Ham"];
+        _salad = dictIngredient["Salad"];
+        _tomato = dictIngredient["Tomato"];
+        }
         _maxIngredients = _ham + _tomato + _cheese + _salad;
 
         Spawn();
-
-       
     }
 
     private void Update()
@@ -81,6 +97,7 @@ public class Spawner : MonoBehaviour
         if (_stackedIngredient.Count == 1)
         {
             _stackedIngredient[0].tag = "Finish";
+
             return;
         }
 
@@ -90,14 +107,18 @@ public class Spawner : MonoBehaviour
             if (_stackedIngredient[i].transform.position.y > _stackedIngredient[i - 1].transform.position.y)
             {
                 _stackedIngredient[i].tag = "Finish";
-                _camera.AddTarget(_stackedIngredient[i].transform);
-                print("tagfinish");
 
+                if (!_stackedIngredient.Contains(_stackedIngredient[i]))
+                {
+                _camera.AddTarget(_stackedIngredient[i].transform);
+                //print("tagfinish");
+
+                }
                 _stackedIngredient[i - 1].tag = "Untagged";
 
                _camera.RemoveTarget(_stackedIngredient[i - 1].transform);
 
-                print("taguntagged");
+                //print("taguntagged");
             }
 
         }
@@ -106,68 +127,129 @@ public class Spawner : MonoBehaviour
 
     public void Spawn()
     {
-
-        if (_ingredientCount < _maxIngredients)
+        if(_canSpawn)
         {
-            //Random position
-            Vector2 position = new Vector2(0f, 0f);
-            
-            int randomPosition = Random.Range(0, 2); //Random.Range(min, max-1)
 
-            if (randomPosition == 0)
+            if (_ingredientCount < _maxIngredients && !_takeBread)
             {
-                position = _pointA.position;
-            }
-            else
-            {
-                position = _pointB.position;
-            }
+                //print(_ingredientCount + "/" + _maxIngredients);
 
-            // Générer la liste des ingrédients et leurs quantités
-            _AllIngredient = GenerateWeightedList();
-            // Sélectionner un ingrédient aléatoire
-            int randomIndex = Random.Range(0, _AllIngredient.Count);
-            GameObject selectedIngredient = _AllIngredient[randomIndex];
+                Vector2 position = new Vector2(0f, 0f);
 
-            //Instantiate
-            GameObject thisRandomIngredient = Instantiate(selectedIngredient, position, transform.rotation, _parent);
+                int randomPosition = Random.Range(0, 2); //Random.Range(min, max-1)
 
-            thisRandomIngredient.GetComponentInChildren<Moving>()._pointA = _pointA;
-            thisRandomIngredient.GetComponentInChildren<Moving>()._pointB = _pointB;
+                if (randomPosition == 0)
+                {
+                    position = _pointA.position;
+                }
+                else
+                {
+                    position = _pointB.position;
+                }
 
-            _thisIngredient = thisRandomIngredient;
+                // Générer la liste des ingrédients et leurs quantités
+                _AllIngredient = GenerateWeightedList();
+                // Sélectionner un ingrédient aléatoire
+                int randomIndex = Random.Range(0, _AllIngredient.Count);
+                GameObject selectedIngredient = _AllIngredient[randomIndex];
 
-            _camera.AddTarget(thisRandomIngredient.transform);
+                GameObject thisRandomIngredient = Instantiate(selectedIngredient, position, transform.rotation, _parent);
 
-            // Mettre à jour les quantités restantes
-            if (selectedIngredient == _ingredient[0]) _ham--;
-            else if (selectedIngredient == _ingredient[1]) _cheese--;
-            else if (selectedIngredient == _ingredient[2]) _tomato--;
-            else if (selectedIngredient == _ingredient[3]) _salad--;
+                if (_stackedIngredient.Count > 0)
+                {
+                    int number = _stackedIngredient.Count;
+                    GameObject item = _stackedIngredient[number - 1];
 
-            _hasSpawned = true;
+                    thisRandomIngredient.GetComponent<SpriteRenderer>().sortingOrder = item.GetComponent<SpriteRenderer>().sortingOrder + 1;
+                }
 
-        }
-        else
-        {
-            //ENDING
-            _isTheEnd = true;
+                thisRandomIngredient.GetComponentInChildren<Moving>()._pointA = _pointA;
+                thisRandomIngredient.GetComponentInChildren<Moving>()._pointB = _pointB;
 
-            _canClick = false;
+                _thisIngredient = thisRandomIngredient;
 
-            Debug.Log("Let's eat!");
+                _camera.AddTarget(thisRandomIngredient.transform);
 
-                _camera._targets.Clear();
+                // Mettre à jour les quantités restantes
+                if (selectedIngredient == _ingredient[0]) _ham--;
+                else if (selectedIngredient == _ingredient[1]) _cheese--;
+                else if (selectedIngredient == _ingredient[2]) _tomato--;
+                else if (selectedIngredient == _ingredient[3]) _salad--;
 
-            for (int i = 0; i < _stackedIngredient.Count; i++)
-            {
-                _camera.AddTarget(_stackedIngredient[i].transform);
+                _hasSpawned = true;
 
             }
-                _camera.EndZoom();
+            else if (_ingredientCount >= _maxIngredients && !_takeBread)
+            {
+
+                Vector2 position = new Vector2(0f, 0f);
+
+                int randomPosition = Random.Range(0, 2); //Random.Range(min, max-1)
+
+                if (randomPosition == 0)
+                {
+                    position = _pointA.position;
+                }
+                else
+                {
+                    position = _pointB.position;
+                }
+
+                GameObject thisRandomIngredient = Instantiate(_bread, position, transform.rotation, _parent);
+                thisRandomIngredient.GetComponentInChildren<Moving>()._pointA = _pointA;
+                thisRandomIngredient.GetComponentInChildren<Moving>()._pointB = _pointB;
+                _camera.AddTarget(thisRandomIngredient.transform);
+
+                _thisIngredient = thisRandomIngredient;
+                if (_stackedIngredient.Count > 0)
+                {
+                    int number = _stackedIngredient.Count;
+                    GameObject item = _stackedIngredient[number - 1];
+
+                    thisRandomIngredient.GetComponent<SpriteRenderer>().sortingOrder = item.GetComponent<SpriteRenderer>().sortingOrder + 1;
+                }
+
+                _hasSpawned = true;
+                _takeBread = true;
+
+            }
+            else if (_ingredientCount >= _maxIngredients && _takeBread)
+            { 
+                //ENDING
+                TheEnd();
+
+                //2 photos? avant après?
+                
+               
+                
+            }
+        
         }
     }
 
+    public void TheEnd()
+    {
+        _isTheEnd = true;
+        _canSpawn = false;
+        _canClick = false;
+
+        Debug.Log("Let's eat!");
+
+        _camera._targets.Clear();
+
+        for (int i = 0; i < _stackedIngredient.Count; i++)
+        {
+            _camera.AddTarget(_stackedIngredient[i].transform);
+
+        }
+        _camera.EndZoom();
+
+        foreach (var item in _stackedIngredient)
+        {
+            item.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+        }
+        print("goHere");
+    }
     private List<GameObject> GenerateWeightedList()
     {
         List<GameObject> weightedList = new List<GameObject>();
@@ -180,22 +262,25 @@ public class Spawner : MonoBehaviour
         return weightedList;
     }
 
+    //Spawn position hauteur
     void DistancePosition()
     {
 
         if(_distanceCount >= 2)
         {
-            _posY += 0.2f;
+            _posY += 0.5f;
 
             _movementPos.transform.position = new Vector3(0f,_posY,0f);
 
             _distanceCount = 0;
 
-            print("up" + _posY);
+            //print("up" + _posY);
 
         }
       
     }
+
+    //If use physics
     void ReachedLevel()
     {
         if(_numberlimit >= 5)
@@ -213,6 +298,8 @@ public class Spawner : MonoBehaviour
             all.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         }
     }
+
+    //
 
     public void Drop()
     {

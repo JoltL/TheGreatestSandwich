@@ -12,26 +12,75 @@ public class CameraController : MonoBehaviour
 
     [SerializeField] private float _zoomSpeed = 0.5f;
 
+    [SerializeField] private float _moveSpeed = 0.5f;
+
+
     public List<Transform> _targets = new();
 
     private Vector3 _velocity = Vector3.zero;
 
+
+    private Spawner _spawner;
+
     private void Start()
     {
         _camera = GetComponent<Camera>();
+
+        _spawner = FindObjectOfType<Spawner>();
     }
 
     private void Update()
     {
 
         if (_targets.Count == 0)
+        {       
             return;
+        }
 
-        if (_targets.Count == 1)
+        else if (_targets.Count == 1)
         {
+
+            if (_spawner._stackedIngredient.Count > 0)
+            {
+                if(_spawner._stackedIngredient.Count == 1)
+                {
+                    if (!_targets.Contains(_spawner._stackedIngredient[0].transform))
+                    {
+
+                        AddTarget(_spawner._stackedIngredient[0].transform);
+                        return;
+                    }
+                }
+                else
+                {
+
+                int number = _spawner._stackedIngredient.Count;
+                GameObject item = _spawner._stackedIngredient[number - 1];
+
+                    if (!_targets.Contains(item.transform))
+                    {
+
+                        AddTarget(item.transform);
+                    }
+                }
+            }
+            else
+            {
+                _camera.orthographicSize = Mathf.Lerp(_camera.orthographicSize, 10f, _zoomSpeed * Time.deltaTime);
+            }
+
             //transform.position = new Vector3(transform.position.x, _targets[0].position.y + _offset.y, transform.position.z);
-            _camera.orthographicSize = Mathf.Lerp(_camera.orthographicSize, _maxZoom, _zoomSpeed * Time.deltaTime);
-            return;
+            //if (_spawner._stackedIngredient.Count > 0)
+            //{
+            //AddTarget(_spawner._stackedIngredient[0].transform);
+
+            //}
+            //else
+            //{
+            //_camera.orthographicSize = Mathf.Lerp(_camera.orthographicSize, _maxZoom, _zoomSpeed * Time.deltaTime);
+
+            //}
+            //return;
         }
 
         //if (_targets.Count < 2)
@@ -61,14 +110,16 @@ public class CameraController : MonoBehaviour
     {
         float centerPoint = GetCenterPoint();
         Vector3 targetPosition = new Vector3(transform.position.x, centerPoint, transform.position.z);
-        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref _velocity, _zoomSpeed);
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref _velocity, _moveSpeed);
     }
 
     public void EndZoom()
     {
+
         float greatestDistance = GetGreatestDistance();
 
         float targetZoom = greatestDistance + 2f;
+        _maxZoom = targetZoom;
 
         //// Clamping pour rester dans les limites spécifiées
         //targetZoom = Mathf.Clamp(targetZoom, _maxZoom, _minZoom);
@@ -78,6 +129,9 @@ public class CameraController : MonoBehaviour
 
     private float GetGreatestDistance()
     {
+
+        if(_targets.Count == 0) return 0;
+
         float minY = _targets[0].position.y;
         float maxY = _targets[0].position.y;
 
