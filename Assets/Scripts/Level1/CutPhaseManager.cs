@@ -103,7 +103,7 @@ public class CutPhaseManager : MonoBehaviour
         while (i != -1)
         {
             OnStartTimerFeedback?.Invoke(i);
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.8f);
             i--;     
         }
         m_fingerInputs.enabled = true;

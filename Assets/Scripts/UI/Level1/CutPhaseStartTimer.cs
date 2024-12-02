@@ -16,7 +16,7 @@ public class CutPhaseStartTimer : MonoBehaviour
     
     void TimerFeedback(int time)
     {
-        GetComponent<OscillatorScale>().StartOscillator(5);
+        GetComponent<OscillatorScale>().StartOscillator(10);
         GetComponent<OscillatorRotation>().StartOscillator(150);
         if (time == 0)
         {
