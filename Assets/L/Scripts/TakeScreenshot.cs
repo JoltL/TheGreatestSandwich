@@ -44,7 +44,7 @@ public class TakeScreenshot : MonoBehaviour
 
         Destroy(screenshot);
 
-        yield return new WaitForSeconds(1);
+        //yield return new WaitForSeconds(1);
 
         Sprite screenshotSprite = Sprite.Create(newScreenshot, new Rect(0,0,newScreenshot.width, newScreenshot.height), new Vector2(0.5f,0.5f));
 
