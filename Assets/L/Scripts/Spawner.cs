@@ -111,14 +111,14 @@ public class Spawner : MonoBehaviour
                 if (!_stackedIngredient.Contains(_stackedIngredient[i]))
                 {
                 _camera.AddTarget(_stackedIngredient[i].transform);
-                print("tagfinish");
+                //print("tagfinish");
 
                 }
                 _stackedIngredient[i - 1].tag = "Untagged";
 
                _camera.RemoveTarget(_stackedIngredient[i - 1].transform);
 
-                print("taguntagged");
+                //print("taguntagged");
             }
 
         }
@@ -132,7 +132,7 @@ public class Spawner : MonoBehaviour
 
             if (_ingredientCount < _maxIngredients && !_takeBread)
             {
-                print(_ingredientCount + "/" + _maxIngredients);
+                //print(_ingredientCount + "/" + _maxIngredients);
 
                 Vector2 position = new Vector2(0f, 0f);
 
@@ -219,12 +219,9 @@ public class Spawner : MonoBehaviour
                 TheEnd();
 
                 //2 photos? avant après?
-                /*
-                foreach (var item in _stackedIngredient)
-                {
-                    item.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
-                }
-                */
+                
+               
+                
             }
         
         }
@@ -247,6 +244,10 @@ public class Spawner : MonoBehaviour
         }
         _camera.EndZoom();
 
+        foreach (var item in _stackedIngredient)
+        {
+            item.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+        }
         print("goHere");
     }
     private List<GameObject> GenerateWeightedList()
@@ -273,7 +274,7 @@ public class Spawner : MonoBehaviour
 
             _distanceCount = 0;
 
-            print("up" + _posY);
+            //print("up" + _posY);
 
         }
       

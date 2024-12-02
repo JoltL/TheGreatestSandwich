@@ -20,6 +20,10 @@ public class UIManager_l2 : MonoBehaviour
 
     [SerializeField] private Slider _slider;
 
+    [SerializeField] private GameObject _frontSlider;
+
+    [SerializeField] private GameObject _dissapearBeforePhoto;
+
     private float _sliderScore;
 
     [Header("Best Score")]
@@ -40,6 +44,10 @@ public class UIManager_l2 : MonoBehaviour
     [SerializeField] private GameObject _help;
 
     private bool _hardMode;
+
+    int _nbOfMaxSlider;
+
+    [SerializeField] private float _baseLossRate = 0.1f; // Perte initiale par seconde
 
 
     private void Start()
@@ -68,7 +76,18 @@ public class UIManager_l2 : MonoBehaviour
 
         _scoreText[0].text = _score.ToString();
 
-        
+        if (_hardMode)
+        {
+            float lossRate = _baseLossRate + (_nbOfMaxSlider * 0.1f); // Augmentation progressive
+            _sliderScore -= lossRate * Time.deltaTime;
+
+            if (_sliderScore <= 0f)
+            {
+                //IstheEnd();
+
+                _spawner._isTheEnd = true;
+            }
+        }
 
         if (_spawner._isTheEnd)
         {
@@ -81,25 +100,32 @@ public class UIManager_l2 : MonoBehaviour
     {
 
         _spawner.TheEnd();
+     
+        StartCoroutine(waitScreenshot());
 
         TotalScore();
 
         ShowUI();
 
-        StartCoroutine(waitScreenshot());
         _spawner._isTheEnd = false;
     }
 
     IEnumerator waitScreenshot()
     {
-       
-        _slider.gameObject.SetActive(false);    
+        //foreach (var item in _spawner._stackedIngredient)
+        //{
+        //    item.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+        //}
 
-        yield return new WaitForSeconds(1f);
+        //_slider.gameObject.SetActive(false);  
+        _dissapearBeforePhoto.SetActive(false);
+
+        yield return new WaitForSeconds(0.5f);
 
         if (!_once)
         {
             _takeScreenshot.Screenshot();
+
             _once = true;
         }
 
@@ -139,13 +165,48 @@ public class UIManager_l2 : MonoBehaviour
 
         MinScore();
 
+        DifficultySlider();
+    }
 
+    void DifficultySlider()
+    {
+
+        //Difficulty : be more precise
         if (_hardMode)
         {
-            _sliderScore -= 1f;
+            StartCoroutine(PreventSliderDiminution());
+
+            if (_nbOfMaxSlider > 5)
+            {
+                //_sliderScore -= 2;
+                _baseLossRate = 0.3f;
+
+            }
+            else if (_nbOfMaxSlider > 2)
+            {
+
+                //_sliderScore -= 1;
+                _baseLossRate = 0.2f;
+            }
+            else
+            {
+                _sliderScore -= 0;
+            }
         }
 
+    }
 
+    IEnumerator PreventSliderDiminution()
+    {
+
+        for (int i = 0; i < 3; i++)
+        {
+
+        _frontSlider.GetComponent<Image>().color = Color.red;
+        yield return new WaitForSeconds(0.25f);
+        _frontSlider.GetComponent<Image>().color = Color.white;
+            yield return new WaitForSeconds(0.25f);
+        }
     }
 
     void MinScore()
@@ -160,9 +221,8 @@ public class UIManager_l2 : MonoBehaviour
         if (_sliderScore >= _slider.maxValue)
         {
             _help.SetActive(true);
-
-            _sliderScore = 8f;
-
+            _nbOfMaxSlider++;
+           
             _hardMode = true;
 
         }

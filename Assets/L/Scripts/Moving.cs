@@ -44,6 +44,10 @@ public class Moving : MonoBehaviour
 
     [SerializeField] private TMP_Text _text; //Bonus text (+1)
 
+    private int _bonus;
+
+    [SerializeField] private GameObject _fx;
+
 
     private void Start()
     {
@@ -109,22 +113,26 @@ public class Moving : MonoBehaviour
     void MoveDifficulty()
     {
         int randomSpeed;
-
-        if (_spawner._distanceCount >= _spawner._AllIngredient.Count/2)
+        
+        if (_spawner._ingredientCount >= _spawner._maxIngredients * 0.75f)
         {
-            randomSpeed = Random.Range(10, 14);
+            randomSpeed = Random.Range(8, 11);
+            print("4 :" + randomSpeed);
         }
-        else if (_spawner._distanceCount >= _spawner._AllIngredient.Count / 3)
+        else if (_spawner._ingredientCount >= _spawner._maxIngredients *0.5f)
         {
-            randomSpeed = Random.Range(8, 12);
+            randomSpeed = Random.Range(7, 10);
+            print("3 :" + randomSpeed);
         }
-        else if (_spawner._distanceCount >= _spawner._AllIngredient.Count / 4)
+        else if (_spawner._ingredientCount >= _spawner._maxIngredients *0.25f)
         {
-            randomSpeed = Random.Range(6, 10);
+            randomSpeed = Random.Range(6, 9);
+            print("2 :" + randomSpeed);
         }
         else
         {
             randomSpeed = Random.Range(5, 8);
+            print("1 :" + randomSpeed);
         }
         _moveSpeed = randomSpeed;
     }
@@ -178,13 +186,19 @@ public class Moving : MonoBehaviour
         {
             _animator.SetTrigger("Squish");
 
+            if (_fx != null)
+            {
+                _fx.SetActive(true);
+
+            }
+
             //Spawn with tag Finish
             if (other.gameObject.CompareTag("Finish"))
             {
 
                 _isStacked = true;
 
-                print("Trigger Finish with" + other.gameObject.name);
+                //print("Trigger Finish with" + other.gameObject.name);
 
 
                 if (!_isSliding)
@@ -207,7 +221,7 @@ public class Moving : MonoBehaviour
                 _camera.RemoveTarget(gameObject.transform);
 
                 //this.gameObject.GetComponent<Moving>().enabled = false;
-                print("Spawn by touching the ground" + other.gameObject.name);
+                //print("Spawn by touching the ground" + other.gameObject.name);
 
                 if (!_isSliding)
                 { StartCoroutine(StayStable()); }
@@ -250,8 +264,7 @@ public class Moving : MonoBehaviour
     IEnumerator StayStable()
     {
 
-
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
         gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
 
@@ -262,21 +275,25 @@ public class Moving : MonoBehaviour
 
             _spawner.Stacked(1);
 
+           
+
             float distanceFromCenter = Mathf.Abs(transform.position.x);
 
-            int score = CalculateScore(distanceFromCenter);
+            _bonus = CalculateScore(distanceFromCenter);
 
-            _text.text = score.ToString();
-            _text.gameObject.SetActive(true);
-            StartCoroutine(SetactiveFalse());
-
-            _uiManager.AddScore(score);
+            _uiManager.AddScore(_bonus);
 
         }
         else
         {
-            _uiManager.AddScore(-1);
+            _bonus = -1;
+            _uiManager.AddScore(_bonus);
         }
+
+
+        _text.text = _bonus.ToString();
+        _text.gameObject.SetActive(true);
+        StartCoroutine(SetactiveFalse());
 
         for (int i = 1; i < _spawner._stackedIngredient.Count; i++)
         {
@@ -291,7 +308,7 @@ public class Moving : MonoBehaviour
         CheckRotation();
 
         _spawner.Spawn();
-        print("isSpawning");
+        //print("isSpawning");
 
     }
 
@@ -305,7 +322,7 @@ public class Moving : MonoBehaviour
     //No freeze
     IEnumerator StackUpdate()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
 
         if (!_isRotten)
