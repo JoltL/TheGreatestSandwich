@@ -9,7 +9,7 @@ public class CutPhaseTimerDisplay : MonoBehaviour
     CutPhaseManager m_cutPhaseManager;
     Color m_baseColor;
     [SerializeField] TextMeshProUGUI m_timerText;
-
+    [SerializeField] GameObject m_missedPanel;
 
 
     private void Start()
@@ -40,6 +40,7 @@ public class CutPhaseTimerDisplay : MonoBehaviour
     void Malus()
     {
         FeedBack(Color.red);
+        m_missedPanel.SetActive(true);
     }
 
     void FeedBack(Color color)
@@ -53,5 +54,6 @@ public class CutPhaseTimerDisplay : MonoBehaviour
         m_timerText.color = color;
         yield return new WaitForSeconds(0.5f);
         m_timerText.color = m_baseColor;
+        m_missedPanel.SetActive(false);
     }
 }

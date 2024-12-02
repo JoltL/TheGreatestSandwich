@@ -25,6 +25,7 @@ public class CutPhaseManager : MonoBehaviour
     [SerializeField] float m_timeToFinish = 2;
     float m_timer;
 
+
     public event Action OnCutMissed;
     public event Action<int> OnStartTimerFeedback;
 
