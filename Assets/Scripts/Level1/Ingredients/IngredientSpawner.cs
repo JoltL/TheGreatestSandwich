@@ -73,10 +73,11 @@ public class IngredientSpawner : MonoBehaviour
         {
             CutIngredient();
         }
-        else {
-            GameManager.Instance.CameraOne.OscillateShakeRotate(350);
-            //GameManager.Instance.CameraOne.OscillateShake(5, false,true);
-            FeedBackManager.Instance.FreezeFrame(0,0.15f, 0.05f);
+        else { // If is not the correct direction
+            GameManager.Instance.GetCutPhaseManager().CutMissed();
+            GameManager.Instance.CameraOne.OscillateShakeRotate(850);
+            GameManager.Instance.CameraOne.OscillateShake(5, true,false);
+            FeedBackManager.Instance.FreezeFrame(0,0.1f, 0.01f);
         }
        
     }

@@ -5,13 +5,18 @@ using TMPro;
 
 public class CutPhaseTimerDisplay : MonoBehaviour
 {
+    Color RED = new Color(336,53,100,1);
     CutPhaseManager m_cutPhaseManager;
+    Color m_baseColor;
     [SerializeField] TextMeshProUGUI m_timerText;
+
 
 
     private void Start()
     {
+        m_baseColor = m_timerText.color;
         m_cutPhaseManager = FindObjectOfType<CutPhaseManager>();
+        m_cutPhaseManager.OnCutMissed += Malus;
         if (!m_timerText)
         {
             Debug.LogError("timer text value is null !!",gameObject);
@@ -30,5 +35,23 @@ public class CutPhaseTimerDisplay : MonoBehaviour
             int intTimer = (int)m_cutPhaseManager.Timer;
             m_timerText.text = $"{intTimer.ToString()}s";
         }
+    }
+
+    void Malus()
+    {
+        FeedBack(Color.red);
+    }
+
+    void FeedBack(Color color)
+    {
+        GetComponent<Oscillator>().StartOscillator(800);
+        StartCoroutine(FeedBackTimer(color));
+    }
+
+    IEnumerator FeedBackTimer(Color color)
+    {
+        m_timerText.color = color;
+        yield return new WaitForSeconds(0.5f);
+        m_timerText.color = m_baseColor;
     }
 }

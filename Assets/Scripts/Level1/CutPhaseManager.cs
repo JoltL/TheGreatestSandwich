@@ -25,6 +25,7 @@ public class CutPhaseManager : MonoBehaviour
     [SerializeField] float m_timeToFinish = 2;
     float m_timer;
 
+    public event Action OnCutMissed;
     public event Action<int> OnStartTimerFeedback;
 
     private void Start()
@@ -97,6 +98,11 @@ public class CutPhaseManager : MonoBehaviour
         }
     }
 
+    public void CutMissed()
+    {
+        DecreaseTimer(1);
+        OnCutMissed?.Invoke();
+    }
     IEnumerator StartCoolDown()
     {
         int i = 3;     
@@ -130,7 +136,10 @@ public class CutPhaseManager : MonoBehaviour
         get { return m_timer; }
     }
 
-
+    public void DecreaseTimer(float value)
+    {
+        m_timer-= value;
+    }
 
     public CutPhaseScore GetCutPhaseScore() => m_cutPhaseScore;
 
