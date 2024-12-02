@@ -78,18 +78,26 @@ public class Spawner : MonoBehaviour
         Spawn();
     }
 
-    private void Update()
-    {
+    //private void Update()
+    //{
 
+    //    if (_canClick)
+    //    {
+    //        if (Input.GetMouseButtonDown(0))
+    //        {
+    //            Drop();
+    //        }
+
+    //    }
+
+    //}
+
+    public void CanDrop()
+    {
         if (_canClick)
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                Drop();
-            }
-
+            Drop();
         }
-
     }
 
     public void TopIngredient()

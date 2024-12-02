@@ -78,7 +78,7 @@ public class UIManager_l2 : MonoBehaviour
 
         _scoreText[0].text = _score.ToString();
 
-        if (_hardMode)
+        if (_hardMode && !_spawner._isTheEnd)
         {
             float lossRate = _baseLossRate + (_nbOfMaxSlider * 0.1f); // Augmentation progressive
             _sliderScore -= lossRate * Time.deltaTime;
