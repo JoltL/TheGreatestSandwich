@@ -78,18 +78,26 @@ public class Spawner : MonoBehaviour
         Spawn();
     }
 
-    private void Update()
-    {
+    //private void Update()
+    //{
 
+    //    if (_canClick)
+    //    {
+    //        if (Input.GetMouseButtonDown(0))
+    //        {
+    //            Drop();
+    //        }
+
+    //    }
+
+    //}
+
+    public void CanDrop()
+    {
         if (_canClick)
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                Drop();
-            }
-
+            Drop();
         }
-
     }
 
     public void TopIngredient()
@@ -181,6 +189,7 @@ public class Spawner : MonoBehaviour
             }
             else if (_ingredientCount >= _maxIngredients && !_takeBread)
             {
+                _AllIngredient.Clear();
 
                 Vector2 position = new Vector2(0f, 0f);
 
@@ -244,10 +253,10 @@ public class Spawner : MonoBehaviour
         }
         _camera.EndZoom();
 
-        foreach (var item in _stackedIngredient)
-        {
-            item.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
-        }
+        //foreach (var item in _stackedIngredient)
+        //{
+        //    item.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+        //}
         print("goHere");
     }
     private List<GameObject> GenerateWeightedList()

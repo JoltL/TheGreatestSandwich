@@ -49,6 +49,8 @@ public class UIManager_l2 : MonoBehaviour
 
     [SerializeField] private float _baseLossRate = 0.1f; // Perte initiale par seconde
 
+    private bool _isPreventing;
+
 
     private void Start()
     {
@@ -67,8 +69,8 @@ public class UIManager_l2 : MonoBehaviour
 
         //+1 for bread
 
-        int maxing = _spawner._maxIngredients + 1;
-        _maxnbIngredientText.text = _spawner._ingredientCount.ToString() + "/" + maxing.ToString();
+        //int maxing = _spawner._maxIngredients + 1;+ "/" + maxing.ToString()
+        _maxnbIngredientText.text = _spawner._AllIngredient.Count.ToString() ;
         _slider.value = Mathf.Lerp(_slider.value, _sliderScore, 5 * Time.deltaTime);
         _sliderScore = Mathf.Clamp(_sliderScore, 0f, _slider.maxValue);
 
@@ -76,7 +78,7 @@ public class UIManager_l2 : MonoBehaviour
 
         _scoreText[0].text = _score.ToString();
 
-        if (_hardMode)
+        if (_hardMode && !_spawner._isTheEnd)
         {
             float lossRate = _baseLossRate + (_nbOfMaxSlider * 0.1f); // Augmentation progressive
             _sliderScore -= lossRate * Time.deltaTime;
@@ -86,6 +88,11 @@ public class UIManager_l2 : MonoBehaviour
                 //IstheEnd();
 
                 _spawner._isTheEnd = true;
+            }
+            else if (_sliderScore <= 5f && !_isPreventing)
+            {
+                StartCoroutine(PreventSliderDiminution());
+
             }
         }
 
@@ -120,7 +127,7 @@ public class UIManager_l2 : MonoBehaviour
         //_slider.gameObject.SetActive(false);  
         _dissapearBeforePhoto.SetActive(false);
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
 
         if (!_once)
         {
@@ -174,15 +181,14 @@ public class UIManager_l2 : MonoBehaviour
         //Difficulty : be more precise
         if (_hardMode)
         {
-            StartCoroutine(PreventSliderDiminution());
-
-            if (_nbOfMaxSlider > 5)
+           
+            if (_nbOfMaxSlider > 10)
             {
                 //_sliderScore -= 2;
                 _baseLossRate = 0.3f;
 
             }
-            else if (_nbOfMaxSlider > 2)
+            else if (_nbOfMaxSlider > 5)
             {
 
                 //_sliderScore -= 1;
@@ -198,15 +204,27 @@ public class UIManager_l2 : MonoBehaviour
 
     IEnumerator PreventSliderDiminution()
     {
+        _isPreventing = true;
 
         for (int i = 0; i < 3; i++)
         {
 
         _frontSlider.GetComponent<Image>().color = Color.red;
-        yield return new WaitForSeconds(0.25f);
+            if (SoundManager.Instance)
+            {
+                SoundManager.Instance.PlaySFX("Click");
+            }
+            yield return new WaitForSeconds(0.25f);
         _frontSlider.GetComponent<Image>().color = Color.white;
+            if (SoundManager.Instance)
+            {
+                SoundManager.Instance.PlaySFX("Click");
+            }
             yield return new WaitForSeconds(0.25f);
         }
+
+        _isPreventing = false;
+
     }
 
     void MinScore()

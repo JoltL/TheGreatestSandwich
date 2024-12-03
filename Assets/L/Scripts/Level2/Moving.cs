@@ -49,6 +49,8 @@ public class Moving : MonoBehaviour
     [SerializeField] private GameObject _fx;
 
 
+
+
     private void Start()
     {
 
@@ -113,18 +115,18 @@ public class Moving : MonoBehaviour
     void MoveDifficulty()
     {
         int randomSpeed;
-        
+
         if (_spawner._ingredientCount >= _spawner._maxIngredients * 0.75f)
         {
             randomSpeed = Random.Range(8, 11);
             print("4 :" + randomSpeed);
         }
-        else if (_spawner._ingredientCount >= _spawner._maxIngredients *0.5f)
+        else if (_spawner._ingredientCount >= _spawner._maxIngredients * 0.5f)
         {
             randomSpeed = Random.Range(7, 10);
             print("3 :" + randomSpeed);
         }
-        else if (_spawner._ingredientCount >= _spawner._maxIngredients *0.25f)
+        else if (_spawner._ingredientCount >= _spawner._maxIngredients * 0.25f)
         {
             randomSpeed = Random.Range(6, 9);
             print("2 :" + randomSpeed);
@@ -186,6 +188,11 @@ public class Moving : MonoBehaviour
         {
             _animator.SetTrigger("Squish");
 
+            if (SoundManager.Instance)
+            {
+                SoundManager.Instance.PlaySFX(gameObject.name);
+            }
+
             if (_fx != null)
             {
                 _fx.SetActive(true);
@@ -234,6 +241,10 @@ public class Moving : MonoBehaviour
 
             else
             {
+                if (SoundManager.Instance)
+                {
+                    SoundManager.Instance.PlaySFX("Wrong");
+                }
 
                 _isRotten = true;
                 _spawner._stackedIngredient.Remove(this.gameObject);
@@ -275,7 +286,7 @@ public class Moving : MonoBehaviour
 
             _spawner.Stacked(1);
 
-           
+
 
             float distanceFromCenter = Mathf.Abs(transform.position.x);
 
@@ -283,11 +294,40 @@ public class Moving : MonoBehaviour
 
             _uiManager.AddScore(_bonus);
 
+
+            if (SoundManager.Instance)
+            {
+                if (_bonus < 0)
+                {
+
+                    SoundManager.Instance.PlaySFX("Wrong");
+
+                }
+                else if (_bonus > 0)
+                {
+
+                    SoundManager.Instance.PlaySFX("Good");
+
+                }
+                else
+                {
+                    SoundManager.Instance.PlaySFX("Click");
+                }
+
+            }
+
+
+
         }
         else
         {
             _bonus = -1;
             _uiManager.AddScore(_bonus);
+
+            if (SoundManager.Instance)
+            {
+                SoundManager.Instance.PlaySFX("Wrong");
+            }
         }
 
 
@@ -340,6 +380,22 @@ public class Moving : MonoBehaviour
             // Afficher ou utiliser le score (par exemple, l'ajouter à un score global)
             print("Score: " + score);
 
+
+            if (score < 0)
+            {
+                if (SoundManager.Instance)
+                {
+                    SoundManager.Instance.PlaySFX("Wrong");
+                }
+            }
+            else if (score > 0)
+            {
+                if (SoundManager.Instance)
+                {
+                    SoundManager.Instance.PlaySFX("Good");
+                }
+            }
+
             _uiManager.AddScore(score);
 
 
@@ -375,6 +431,10 @@ public class Moving : MonoBehaviour
                 //_spawner.Stacked(-1);
                 _isRotten = true;
 
+                if (SoundManager.Instance)
+                {
+                    SoundManager.Instance.PlaySFX("Wrong");
+                }
 
                 _spawner.TopIngredient();
 

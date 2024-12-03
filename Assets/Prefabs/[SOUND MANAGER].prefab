@@ -54,6 +54,14 @@ MonoBehaviour:
   m_sfxClips:
   - {fileID: 8300000, guid: 0218b7b7c46f4a04691239fd95a64aed, type: 3}
   - {fileID: 8300000, guid: 3ec27c631b396b74fb1391a5bf3cbbdc, type: 3}
+  - {fileID: 8300000, guid: c8dc13fe41d33f247ba8d94727ef6239, type: 3}
+  - {fileID: 8300000, guid: bbbb076556fa0b545a9b515858b0ecbb, type: 3}
+  - {fileID: 8300000, guid: 3b6dba33903c7d9499dff6f62b27c296, type: 3}
+  - {fileID: 8300000, guid: dffa9455d870f9244af57ce56fa56bf6, type: 3}
+  - {fileID: 8300000, guid: 79298e069624b3c47a56ca7d3415b335, type: 3}
+  - {fileID: 8300000, guid: 6c02a73904967cc45b3ad9411382025d, type: 3}
+  - {fileID: 8300000, guid: 6c7e8efb49cbb6e46b78c636efc1c67a, type: 3}
+  - {fileID: 8300000, guid: 1d71bd84cfc0ca6448860b05d0211a30, type: 3}
   m_musicVolume: 0.5
   m_sfxVolume: 0.5
 --- !u!82 &39546628184339389
