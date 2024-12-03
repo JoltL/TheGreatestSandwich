@@ -51,20 +51,31 @@ public class Spawner : MonoBehaviour
 
     public bool _isTheEnd = false;
 
-    private bool _canClick = true;
+    public bool _canClick = false;
 
     [SerializeField] private bool _useLevel1;
 
     private bool _canSpawn = true;
 
+    private bool _once = false;
+
     private bool _takeBread = false;
 
+    [Header("EndIcon")]
+
+    [SerializeField] private GameObject _whiskerIcon;
+    [SerializeField] private Sprite _whiskerSpriteIcon;
 
     private void Start()
     {
+        _posY = -2;
+
+        _canClick = false;
         _camera = FindObjectOfType<CameraController>();
-        
-        if(_useLevel1)
+
+        _AllIngredient = GenerateWeightedList();
+
+        if (_useLevel1)
         {
 
         Dictionary<string,int> dictIngredient = GameManager.Instance.GetCutIngredients();
@@ -75,22 +86,26 @@ public class Spawner : MonoBehaviour
         }
         _maxIngredients = _ham + _tomato + _cheese + _salad;
 
-        Spawn();
+      
     }
 
-    //private void Update()
-    //{
+    private void Update()
+    {
+        if (_canClick && !_once)
+        {
+            Spawn();
+            _once = true;
+        }
+        //if (_canClick)
+        //{
+        //    if (Input.GetMouseButtonDown(0))
+        //    {
+        //        Drop();
+        //    }
 
-    //    if (_canClick)
-    //    {
-    //        if (Input.GetMouseButtonDown(0))
-    //        {
-    //            Drop();
-    //        }
+        //}
 
-    //    }
-
-    //}
+    }
 
     public void CanDrop()
     {
@@ -238,6 +253,11 @@ public class Spawner : MonoBehaviour
 
     public void TheEnd()
     {
+        if(_AllIngredient.Count <= 0)
+        {
+        _whiskerIcon.GetComponent<Image>().sprite = _whiskerSpriteIcon;
+        }
+
         _isTheEnd = true;
         _canSpawn = false;
         _canClick = false;

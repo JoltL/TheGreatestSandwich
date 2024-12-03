@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,6 +10,19 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Animator _playAnimator;
 
     [SerializeField] private GameObject _pause;
+    [SerializeField] private TMP_Text _text;
+    private int _bestScore;
+
+    private void Start()
+    {
+        if(_text != null)
+        {
+       _bestScore = PlayerPrefs.GetInt("Best Score", _bestScore);
+
+        _text.text = _bestScore.ToString();
+
+        }
+    }
     public void Slash()
     {
         _catAnimator.SetTrigger("VSliced");

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 90ed66d6dfe6d0c429768edf96afac68
+guid: 070bf26bd6346684a9b2117b6e42a3c9
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Icons_0
+      name: WhiskerIcons_0
       rect:
         serializedVersion: 2
-        x: 45
-        y: 1032
-        width: 797
-        height: 796
+        x: 41
+        y: 493
+        width: 513
+        height: 261
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,41 +111,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9dd64157ea7fbbf4cb9cdb217f081f4b
-      internalID: 1460648576
+      spriteID: 93c4a6ee285f49e4baf99dd0e9ca4d86
+      internalID: 1253488590
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icons_1
-      rect:
-        serializedVersion: 2
-        x: 1221
-        y: 1095
-        width: 797
-        height: 797
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2fcd5010aa17e124f99579b998231db8
-      internalID: 980289018
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Icons_2
+      name: WhiskerIcons_1
       rect:
         serializedVersion: 2
         x: 53
-        y: 70
-        width: 797
-        height: 797
+        y: 58
+        width: 444
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,29 +132,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e9050283466121e488c20db49d32714f
-      internalID: 648366355
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Icons_3
-      rect:
-        serializedVersion: 2
-        x: 1213
-        y: 70
-        width: 797
-        height: 797
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4310e003e67342d4f918f1fb2ffde487
-      internalID: 1335884888
+      spriteID: 86bc48066be4e5b4fb47cd3720a80fd9
+      internalID: -561645381
       vertices: []
       indices: 
       edges: []
@@ -191,10 +149,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Icons_0: 1460648576
-      Icons_1: 980289018
-      Icons_2: 648366355
-      Icons_3: 1335884888
+      WhiskerIcons_0: 1253488590
+      WhiskerIcons_1: -561645381
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -186,6 +186,10 @@ public class Moving : MonoBehaviour
 
         if (!_isStacked)
         {
+
+            if(GameManager.Instance)
+            GameManager.Instance.CameraOne.OscillateShake(5, false, true);
+
             _animator.SetTrigger("Squish");
 
             if (SoundManager.Instance)
@@ -220,6 +224,8 @@ public class Moving : MonoBehaviour
 
             else if (other.gameObject.CompareTag("Respawn"))
             {
+                if (GameManager.Instance)
+                    GameManager.Instance.CameraOne.OscillateShake(10, true, false);
                 _isRotten = true;
                 _spawner._stackedIngredient.Remove(this.gameObject);
 
@@ -241,6 +247,9 @@ public class Moving : MonoBehaviour
 
             else
             {
+                if (GameManager.Instance)
+                    GameManager.Instance.CameraOne.OscillateShake(10, true, false);
+
                 if (SoundManager.Instance)
                 {
                     SoundManager.Instance.PlaySFX("Wrong");
@@ -425,6 +434,9 @@ public class Moving : MonoBehaviour
         {
             if (!_once)
             {
+
+                if (GameManager.Instance)
+                    GameManager.Instance.CameraOne.OscillateShake(10, true, false);
 
                 _camera.RemoveTarget(gameObject.transform);
                 gameObject.GetComponent<BoxCollider2D>().isTrigger = false;
