@@ -19,6 +19,10 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
+        FeedBackManager.Instance.FreezeFrame(0.1f,0.1f,0.05f);
+        SoundManager.Instance.PlaySFX("Slash");
+        FeedBackManager.Instance.InstantiateParticle("Slash",new Vector3(-1.29f,-1.55f,0.03f),Quaternion.Euler(0,0,90));
+        FeedBackManager.Instance.InstantiateParticle("Stain",new Color32(99,255,186,255), new Vector3(-1.29f, -1.55f, 0.03f), Quaternion.Euler(0, 0, 90));
         GameManager.Instance.LoadScene(1);
     }
 
