@@ -23,6 +23,7 @@ public class IngredientSpawner : MonoBehaviour
 
     public event Action OnCurrentIngredientChanged;
     public event Action<IngredientEntity> OnIngredientCut;
+    public event Action OnIngredientMissingCut;
 
     void Start()
     {
@@ -72,8 +73,11 @@ public class IngredientSpawner : MonoBehaviour
         {
             CutIngredient();
         }
-        else {
-            Debug.Log("NoP");
+        else { // If is not the correct direction
+            GameManager.Instance.GetCutPhaseManager().CutMissed();
+            GameManager.Instance.CameraOne.OscillateShakeRotate(850);
+            GameManager.Instance.CameraOne.OscillateShake(5, true,false);
+            FeedBackManager.Instance.FreezeFrame(0,0.1f, 0.01f);
         }
        
     }

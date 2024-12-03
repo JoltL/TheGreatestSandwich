@@ -22,6 +22,8 @@ public class CutPhaseScoreDisplay : MonoBehaviour
     void DisplayScore()
     {
         m_scoreText.text = m_cutPhaseScore.Score.ToString();
+        GetComponent<OscillatorScale>().StartOscillator(10);
+        GetComponent<OscillatorRotation>().StartOscillator(Random.Range(-155,155));
     }
 
 

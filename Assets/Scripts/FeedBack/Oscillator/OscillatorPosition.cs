@@ -22,7 +22,7 @@ public class OscillatorPosition : Oscillator
         if (m_OscillateX) pos.x = m_displacement * m_mulitiplier;
         if (m_OscillateY) pos.y = m_displacement * m_mulitiplier;
         if (m_OscillateZ) pos.z = m_displacement * m_mulitiplier;
-        m_target.transform.position = pos;
+        m_target.transform.localPosition = pos;
     }
 
 
