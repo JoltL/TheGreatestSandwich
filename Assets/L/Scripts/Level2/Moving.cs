@@ -186,6 +186,10 @@ public class Moving : MonoBehaviour
 
         if (!_isStacked)
         {
+
+            if(GameManager.Instance)
+            GameManager.Instance.CameraOne.OscillateShake(5, false, true);
+
             _animator.SetTrigger("Squish");
 
             if (SoundManager.Instance)
@@ -220,6 +224,8 @@ public class Moving : MonoBehaviour
 
             else if (other.gameObject.CompareTag("Respawn"))
             {
+                if (GameManager.Instance)
+                    GameManager.Instance.CameraOne.OscillateShake(10, true, false);
                 _isRotten = true;
                 _spawner._stackedIngredient.Remove(this.gameObject);
 
@@ -241,9 +247,12 @@ public class Moving : MonoBehaviour
 
             else
             {
+                if (GameManager.Instance)
+                    GameManager.Instance.CameraOne.OscillateShake(10, true, false);
+
                 if (SoundManager.Instance)
                 {
-                    SoundManager.Instance.PlaySFX("Wrong");
+                    SoundManager.Instance.PlaySFX("Baad");
                 }
 
                 _isRotten = true;
@@ -300,18 +309,18 @@ public class Moving : MonoBehaviour
                 if (_bonus < 0)
                 {
 
-                    SoundManager.Instance.PlaySFX("Wrong");
+                    SoundManager.Instance.PlaySFX("Baad");
 
                 }
                 else if (_bonus > 0)
                 {
 
-                    SoundManager.Instance.PlaySFX("Good");
+                    SoundManager.Instance.PlaySFX("Goood");
 
                 }
                 else
                 {
-                    SoundManager.Instance.PlaySFX("Click");
+                    //SoundManager.Instance.PlaySFX("Click");
                 }
 
             }
@@ -326,7 +335,7 @@ public class Moving : MonoBehaviour
 
             if (SoundManager.Instance)
             {
-                SoundManager.Instance.PlaySFX("Wrong");
+                SoundManager.Instance.PlaySFX("Baad");
             }
         }
 
@@ -426,6 +435,9 @@ public class Moving : MonoBehaviour
             if (!_once)
             {
 
+                if (GameManager.Instance)
+                    GameManager.Instance.CameraOne.OscillateShake(10, true, false);
+
                 _camera.RemoveTarget(gameObject.transform);
                 gameObject.GetComponent<BoxCollider2D>().isTrigger = false;
                 //_spawner.Stacked(-1);
@@ -433,7 +445,7 @@ public class Moving : MonoBehaviour
 
                 if (SoundManager.Instance)
                 {
-                    SoundManager.Instance.PlaySFX("Wrong");
+                    SoundManager.Instance.PlaySFX("Baad");
                 }
 
                 _spawner.TopIngredient();

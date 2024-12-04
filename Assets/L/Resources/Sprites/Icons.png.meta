@@ -100,12 +100,12 @@ TextureImporter:
       name: Icons_0
       rect:
         serializedVersion: 2
-        x: 119
-        y: 1054
-        width: 607
-        height: 757
+        x: 45
+        y: 1032
+        width: 797
+        height: 796
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -121,12 +121,12 @@ TextureImporter:
       name: Icons_1
       rect:
         serializedVersion: 2
-        x: 1229
-        y: 1124
-        width: 781
-        height: 752
+        x: 1221
+        y: 1095
+        width: 797
+        height: 797
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -142,12 +142,12 @@ TextureImporter:
       name: Icons_2
       rect:
         serializedVersion: 2
-        x: 76
-        y: 102
-        width: 746
-        height: 718
+        x: 53
+        y: 70
+        width: 797
+        height: 797
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -163,10 +163,10 @@ TextureImporter:
       name: Icons_3
       rect:
         serializedVersion: 2
-        x: 1320
-        y: 96
-        width: 594
-        height: 729
+        x: 1213
+        y: 70
+        width: 797
+        height: 797
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
