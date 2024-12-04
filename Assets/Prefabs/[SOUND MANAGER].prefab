@@ -62,6 +62,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6c02a73904967cc45b3ad9411382025d, type: 3}
   - {fileID: 8300000, guid: 6c7e8efb49cbb6e46b78c636efc1c67a, type: 3}
   - {fileID: 8300000, guid: 1d71bd84cfc0ca6448860b05d0211a30, type: 3}
+  - {fileID: 8300000, guid: 656865da79d57e94ca97c6068bfb223b, type: 3}
+  - {fileID: 8300000, guid: d5b9855e73ddaaf4786f6417e5e35430, type: 3}
+  - {fileID: 8300000, guid: 83ba54a71b4de254894981443d3dcfad, type: 3}
+  - {fileID: 8300000, guid: bd56f5a68dd93184e8225ee3c5f57154, type: 3}
+  - {fileID: 8300000, guid: c42dba0fdcca61a4a8b9b1029835283c, type: 3}
+  - {fileID: 8300000, guid: d903fcbdaf11e0d4d99000d141724e4a, type: 3}
+  - {fileID: 8300000, guid: 784ff8d233be23d45bbc4f9eaf509749, type: 3}
+  - {fileID: 8300000, guid: f8dcad753d8b8a34197735c6fcb63af1, type: 3}
   m_musicVolume: 0.5
   m_sfxVolume: 0.5
 --- !u!82 &39546628184339389
