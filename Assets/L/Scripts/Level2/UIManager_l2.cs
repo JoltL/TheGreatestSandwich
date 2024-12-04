@@ -98,11 +98,18 @@ public class UIManager_l2 : MonoBehaviour
                 //IstheEnd();
 
                 _spawner._isTheEnd = true;
+                StopAllCoroutines();
 
             }
             else if (_sliderScore <= 5f && !_isPreventing)
             {
                 StartCoroutine(PreventSliderDiminution());
+
+            }
+            else if (_sliderScore > 5 && _isPreventing)
+            {
+
+                _isPreventing = false;
 
             }
         }
@@ -262,6 +269,9 @@ public class UIManager_l2 : MonoBehaviour
     {
         _isPreventing = true;
 
+        for (int i = 0; i < 3; i++)
+        {
+
             _frontSlider.GetComponent<Image>().color = _colors[0];
             if (SoundManager.Instance)
             {
@@ -274,9 +284,7 @@ public class UIManager_l2 : MonoBehaviour
                 SoundManager.Instance.PlaySFX("Baad");
             }
             yield return new WaitForSeconds(0.25f);
-
-
-        _isPreventing = false;
+        }
 
     }
 
