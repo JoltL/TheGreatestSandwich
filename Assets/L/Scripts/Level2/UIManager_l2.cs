@@ -238,13 +238,13 @@ public class UIManager_l2 : MonoBehaviour
         if (_hardMode)
         {
 
-            if (_nbOfMaxSlider > 10)
+            if (_nbOfMaxSlider > _spawner._maxIngredients / 6)
             {
                 //_sliderScore -= 2;
                 _baseLossRate = 0.3f;
 
             }
-            else if (_nbOfMaxSlider > 5)
+            else if (_nbOfMaxSlider > _spawner._maxIngredients/7)
             {
 
                 //_sliderScore -= 1;
