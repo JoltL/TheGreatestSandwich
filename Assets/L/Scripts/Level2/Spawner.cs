@@ -59,7 +59,7 @@ public class Spawner : MonoBehaviour
 
     private bool _once = false;
 
-    private bool _takeBread = false;
+    public bool _takeBread = false;
 
     [Header("EndIcon")]
 
@@ -241,7 +241,7 @@ public class Spawner : MonoBehaviour
             { 
                 //ENDING
                 TheEnd();
-
+               
                 //2 photos? avant après?
                 
                
@@ -253,7 +253,10 @@ public class Spawner : MonoBehaviour
 
     public void TheEnd()
     {
-        if(_AllIngredient.Count <= 0)
+        _takeBread = false;
+
+
+        if (_AllIngredient.Count <= 0)
         {
         _whiskerIcon.GetComponent<Image>().sprite = _whiskerSpriteIcon;
         }
@@ -262,7 +265,6 @@ public class Spawner : MonoBehaviour
         _canSpawn = false;
         _canClick = false;
 
-        Debug.Log("Let's eat!");
 
         _camera._targets.Clear();
 
@@ -277,7 +279,8 @@ public class Spawner : MonoBehaviour
         //{
         //    item.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
         //}
-        print("goHere");
+        Debug.Log("Let's eat!");
+
     }
     private List<GameObject> GenerateWeightedList()
     {

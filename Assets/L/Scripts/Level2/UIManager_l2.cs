@@ -98,6 +98,7 @@ public class UIManager_l2 : MonoBehaviour
                 //IstheEnd();
 
                 _spawner._isTheEnd = true;
+
             }
             else if (_sliderScore <= 5f && !_isPreventing)
             {
@@ -117,6 +118,8 @@ public class UIManager_l2 : MonoBehaviour
         _timerIsActive = false;
 
         yield return new WaitForSeconds(0.5f);
+        if (SoundManager.Instance)
+            SoundManager.Instance.PlaySFX("Woo");
 
         int i = 3;
         while (i != 0)
@@ -125,7 +128,10 @@ public class UIManager_l2 : MonoBehaviour
             _countdownText.GetComponent<OscillatorRotation>().StartOscillator(150);
 
             yield return new WaitForSeconds(0.8f);
-            i--;
+            i--; 
+            if (SoundManager.Instance)
+                SoundManager.Instance.PlaySFX("Woo");
+
 
             _countdownText.text = i.ToString();
         }
@@ -136,6 +142,9 @@ public class UIManager_l2 : MonoBehaviour
             _countdownText.GetComponent<OscillatorRotation>().StartOscillator(150);
 
             _countdownText.text = "GO !";
+            if (SoundManager.Instance)
+                SoundManager.Instance.PlaySFX("Bell");
+
 
             yield return new WaitForSeconds(0.8f);
             _spawner._canClick = true;
@@ -146,6 +155,7 @@ public class UIManager_l2 : MonoBehaviour
 
     void IstheEnd()
     {
+        _spawner._takeBread = false;
 
         _spawner.TheEnd();
 
@@ -165,13 +175,16 @@ public class UIManager_l2 : MonoBehaviour
         //    item.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
         //}
 
-        //_slider.gameObject.SetActive(false);  
+        if (!_once)
+        {
+        if (SoundManager.Instance)
+            SoundManager.Instance.PlaySFX("Bell");
+         _slider.gameObject.GetComponent<Slider>().enabled = false;
+
         _dissapearBeforePhoto.SetActive(false);
 
         yield return new WaitForSeconds(1f);
 
-        if (!_once)
-        {
             _takeScreenshot.Screenshot();
 
             _once = true;
@@ -206,6 +219,8 @@ public class UIManager_l2 : MonoBehaviour
     public void AddScore(int points)
     {
         _score += points;
+        _nbIngredientText[0].gameObject.GetComponent<OscillatorScale>().StartOscillator(10);
+        _nbIngredientText[0].gameObject.GetComponent<OscillatorRotation>().StartOscillator(150);
 
         _sliderScore += points;
 
@@ -250,13 +265,13 @@ public class UIManager_l2 : MonoBehaviour
             _frontSlider.GetComponent<Image>().color = _colors[0];
             if (SoundManager.Instance)
             {
-                SoundManager.Instance.PlaySFX("Click");
+                SoundManager.Instance.PlaySFX("Bloop");
             }
             yield return new WaitForSeconds(0.25f);
             _frontSlider.GetComponent<Image>().color = _colors[1] ;
             if (SoundManager.Instance)
             {
-                SoundManager.Instance.PlaySFX("Click");
+                SoundManager.Instance.PlaySFX("Baad");
             }
             yield return new WaitForSeconds(0.25f);
 

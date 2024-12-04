@@ -10,6 +10,8 @@ public class TakeScreenshot : MonoBehaviour
 
     private Animator _animator;
 
+    bool _once = false;
+
 
     private void Start()
     {
@@ -27,6 +29,7 @@ public class TakeScreenshot : MonoBehaviour
 
     public void Screenshot()
     {
+        if(!_once) 
         StartCoroutine(TakeScreenshotandShow());
     }
 
@@ -46,12 +49,31 @@ public class TakeScreenshot : MonoBehaviour
 
         //yield return new WaitForSeconds(1);
 
+      
         Sprite screenshotSprite = Sprite.Create(newScreenshot, new Rect(0,0,newScreenshot.width, newScreenshot.height), new Vector2(0.5f,0.5f));
 
         _showScreenshot.enabled = true;
         _showScreenshot.sprite = screenshotSprite;
 
         _animator.SetTrigger("Screenshot");
+
+        _once = true;
+    }
+
+    public void SoundTakePhoto()
+    {
+
+        if (SoundManager.Instance)
+            SoundManager.Instance.PlaySFX("Takephoto");
+
+    }
+
+    public void Sticker()
+    {
+
+        if (SoundManager.Instance)
+            SoundManager.Instance.PlaySFX("Impact");
+
     }
 
 }

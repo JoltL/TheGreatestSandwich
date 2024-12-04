@@ -252,7 +252,7 @@ public class Moving : MonoBehaviour
 
                 if (SoundManager.Instance)
                 {
-                    SoundManager.Instance.PlaySFX("Wrong");
+                    SoundManager.Instance.PlaySFX("Baad");
                 }
 
                 _isRotten = true;
@@ -309,18 +309,18 @@ public class Moving : MonoBehaviour
                 if (_bonus < 0)
                 {
 
-                    SoundManager.Instance.PlaySFX("Wrong");
+                    SoundManager.Instance.PlaySFX("Baad");
 
                 }
                 else if (_bonus > 0)
                 {
 
-                    SoundManager.Instance.PlaySFX("Good");
+                    SoundManager.Instance.PlaySFX("Goood");
 
                 }
                 else
                 {
-                    SoundManager.Instance.PlaySFX("Click");
+                    //SoundManager.Instance.PlaySFX("Click");
                 }
 
             }
@@ -335,7 +335,7 @@ public class Moving : MonoBehaviour
 
             if (SoundManager.Instance)
             {
-                SoundManager.Instance.PlaySFX("Wrong");
+                SoundManager.Instance.PlaySFX("Baad");
             }
         }
 
@@ -445,7 +445,7 @@ public class Moving : MonoBehaviour
 
                 if (SoundManager.Instance)
                 {
-                    SoundManager.Instance.PlaySFX("Wrong");
+                    SoundManager.Instance.PlaySFX("Baad");
                 }
 
                 _spawner.TopIngredient();
