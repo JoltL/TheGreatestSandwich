@@ -69,11 +69,19 @@ public class TakeScreenshot : MonoBehaviour
 
     }
 
-    public void Sticker()
+    public void SoundSticker()
     {
 
         if (SoundManager.Instance)
             SoundManager.Instance.PlaySFX("Impact");
+
+    }
+
+    public void SoundUI()
+    {
+
+        if (SoundManager.Instance)
+            SoundManager.Instance.PlaySFX("Bloop");
 
     }
 

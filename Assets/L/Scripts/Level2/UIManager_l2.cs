@@ -62,6 +62,8 @@ public class UIManager_l2 : MonoBehaviour
 
     private void Start()
     {
+        _maxnbIngredientText.gameObject.SetActive(false);   
+
         _bestScore = PlayerPrefs.GetInt("Best Score", 0);
 
         _spawner = GetComponent<Spawner>();
@@ -77,6 +79,7 @@ public class UIManager_l2 : MonoBehaviour
     {
         if(_timerIsActive)
         StartCoroutine(Countdown());
+        
 
         //+1 for bread // int maxing = _spawner._maxIngredients + 1;+ "/" + maxing.ToString()
         _maxnbIngredientText.text = _spawner._AllIngredient.Count.ToString();
@@ -124,9 +127,6 @@ public class UIManager_l2 : MonoBehaviour
     {
         _timerIsActive = false;
 
-        if (SoundManager.Instance)
-            SoundManager.Instance.PlaySFX("Woo");
-
         int i = 4;
         while (i != 0)
         {
@@ -151,6 +151,7 @@ public class UIManager_l2 : MonoBehaviour
             if (SoundManager.Instance)
                 SoundManager.Instance.PlaySFX("Bell");
 
+            _maxnbIngredientText.gameObject.SetActive(true);
 
             yield return new WaitForSeconds(0.8f);
             _spawner._canClick = true;
