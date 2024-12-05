@@ -2639,34 +2639,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6477706152028897637, guid: ef8520c7d09eca644a254301ce4ac210, type: 3}
-      propertyPath: m_sfxClips.Array.size
-      value: 21
-      objectReference: {fileID: 0}
-    - target: {fileID: 6477706152028897637, guid: ef8520c7d09eca644a254301ce4ac210, type: 3}
-      propertyPath: m_musicClips.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6477706152028897637, guid: ef8520c7d09eca644a254301ce4ac210, type: 3}
-      propertyPath: m_sfxClips.Array.data[18]
-      value: 
-      objectReference: {fileID: 8300000, guid: 70d5da494f2a5a34e96e0050c5f05b9f, type: 3}
-    - target: {fileID: 6477706152028897637, guid: ef8520c7d09eca644a254301ce4ac210, type: 3}
-      propertyPath: m_sfxClips.Array.data[19]
-      value: 
-      objectReference: {fileID: 8300000, guid: 8846e3a2aac68dc49a5141299a936699, type: 3}
-    - target: {fileID: 6477706152028897637, guid: ef8520c7d09eca644a254301ce4ac210, type: 3}
-      propertyPath: m_sfxClips.Array.data[20]
-      value: 
-      objectReference: {fileID: 8300000, guid: da4e36cd2663141478b63eb3fb7de796, type: 3}
-    - target: {fileID: 6477706152028897637, guid: ef8520c7d09eca644a254301ce4ac210, type: 3}
-      propertyPath: m_musicClips.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: 9f08e15862e2c2d418433f2444d3594e, type: 3}
-    - target: {fileID: 6477706152028897637, guid: ef8520c7d09eca644a254301ce4ac210, type: 3}
-      propertyPath: m_musicClips.Array.data[1]
-      value: 
-      objectReference: {fileID: 8300000, guid: 3f664cc4bb729bc48b53b883dac60fe7, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

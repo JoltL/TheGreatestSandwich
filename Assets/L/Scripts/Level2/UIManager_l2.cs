@@ -39,6 +39,8 @@ public class UIManager_l2 : MonoBehaviour
     [SerializeField] private TakeScreenshot _takeScreenshot;
     private bool _once = false;
 
+    public GameObject _wrongPanel;
+
     [Header("Bonus")]
 
     [SerializeField] private GameObject _help;
