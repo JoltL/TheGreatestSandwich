@@ -13614,10 +13614,10 @@ MonoBehaviour:
   _parent: {fileID: 1402662016}
   _stackedIngredient: []
   _AllIngredient: []
-  _ham: 0
-  _cheese: 0
-  _tomato: 0
-  _salad: 0
+  _ham: 2
+  _cheese: 2
+  _tomato: 2
+  _salad: 2
   _bread: {fileID: 7057798744716763679, guid: 3d863c36dcb6b8646bf610db96860a81, type: 3}
   _ingredientCount: 0
   _maxIngredients: 4
