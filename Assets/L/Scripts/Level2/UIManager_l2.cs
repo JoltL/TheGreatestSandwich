@@ -62,6 +62,7 @@ public class UIManager_l2 : MonoBehaviour
 
     private void Start()
     {
+
         _maxnbIngredientText.gameObject.SetActive(false);
 
         _bestScore = PlayerPrefs.GetInt("Best Score", 0);

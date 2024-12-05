@@ -187,8 +187,8 @@ public class Moving : MonoBehaviour
         if (!_isStacked)
         {
 
-            //if(GameManager.Instance)
-            //GameManager.Instance.CameraOne.OscillateShake(5, false, true);
+            if (GameManager.Instance)
+                GameManager.Instance.CameraOne.OscillateShake(5, false, true);
 
             _animator.SetTrigger("Squish");
 
@@ -435,8 +435,9 @@ public class Moving : MonoBehaviour
             if (!_once)
             {
 
-                //if (GameManager.Instance)
-                //    GameManager.Instance.CameraOne.OscillateShake(10, true, false);
+                if (GameManager.Instance)
+                    GameManager.Instance.CameraOne.OscillateShake(10, true, false);
+                print("camera");
 
                 _camera.RemoveTarget(gameObject.transform);
                 gameObject.GetComponent<BoxCollider2D>().isTrigger = false;
