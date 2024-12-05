@@ -73,7 +73,7 @@ public class IngredientSpawner : MonoBehaviour
         {
             CutIngredient();
             var rand = UnityEngine.Random.Range(1,10);
-            if (rand < 2) {
+            if (rand < 4) {
                 SoundManager.Instance.PlaySFXArray(new string[]{"Cat-001","Cat-002"});
             }
         }
