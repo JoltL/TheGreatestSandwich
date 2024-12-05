@@ -124,11 +124,10 @@ public class UIManager_l2 : MonoBehaviour
     {
         _timerIsActive = false;
 
-        yield return new WaitForSeconds(0.5f);
         if (SoundManager.Instance)
             SoundManager.Instance.PlaySFX("Woo");
 
-        int i = 3;
+        int i = 4;
         while (i != 0)
         {
             _countdownText.GetComponent<OscillatorScale>().StartOscillator(10);

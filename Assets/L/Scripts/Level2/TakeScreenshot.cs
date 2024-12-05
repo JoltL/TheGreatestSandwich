@@ -16,6 +16,7 @@ public class TakeScreenshot : MonoBehaviour
     private void Start()
     {
         _animator = GetComponent<Animator>();
+
     }
     void Update()
     {
