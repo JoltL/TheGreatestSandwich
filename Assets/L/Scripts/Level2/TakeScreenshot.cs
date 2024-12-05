@@ -16,6 +16,7 @@ public class TakeScreenshot : MonoBehaviour
     private void Start()
     {
         _animator = GetComponent<Animator>();
+
     }
     void Update()
     {
@@ -68,11 +69,19 @@ public class TakeScreenshot : MonoBehaviour
 
     }
 
-    public void Sticker()
+    public void SoundSticker()
     {
 
         if (SoundManager.Instance)
             SoundManager.Instance.PlaySFX("Impact");
+
+    }
+
+    public void SoundUI()
+    {
+
+        if (SoundManager.Instance)
+            SoundManager.Instance.PlaySFX("Bloop");
 
     }
 
