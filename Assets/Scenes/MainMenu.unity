@@ -2640,13 +2640,13 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6477706152028897637, guid: ef8520c7d09eca644a254301ce4ac210, type: 3}
-      propertyPath: m_musicClips.Array.size
-      value: 3
+      propertyPath: m_musicVolume
+      value: 0.077
       objectReference: {fileID: 0}
     - target: {fileID: 6477706152028897637, guid: ef8520c7d09eca644a254301ce4ac210, type: 3}
-      propertyPath: m_musicClips.Array.data[2]
+      propertyPath: m_musicClips.Array.data[1]
       value: 
-      objectReference: {fileID: 8300000, guid: 3f664cc4bb729bc48b53b883dac60fe7, type: 3}
+      objectReference: {fileID: 8300000, guid: 0075fd976115f794d923efb95fce9efc, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
