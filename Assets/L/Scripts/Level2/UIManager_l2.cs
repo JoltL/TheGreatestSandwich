@@ -39,6 +39,8 @@ public class UIManager_l2 : MonoBehaviour
     [SerializeField] private TakeScreenshot _takeScreenshot;
     private bool _once = false;
 
+    public GameObject _wrongPanel;
+
     [Header("Bonus")]
 
     [SerializeField] private GameObject _help;
@@ -62,6 +64,7 @@ public class UIManager_l2 : MonoBehaviour
 
     private void Start()
     {
+
         _maxnbIngredientText.gameObject.SetActive(false);
 
         _bestScore = PlayerPrefs.GetInt("Best Score", 0);

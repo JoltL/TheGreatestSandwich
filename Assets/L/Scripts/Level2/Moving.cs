@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
+using static Unity.VisualScripting.Member;
 
 public class Moving : MonoBehaviour
 {
@@ -48,6 +49,8 @@ public class Moving : MonoBehaviour
 
     [SerializeField] private GameObject _fx;
 
+    private GameObject _wrongPanel;
+
 
 
 
@@ -58,6 +61,8 @@ public class Moving : MonoBehaviour
         _animator = GetComponent<Animator>();
         _camera = FindObjectOfType<CameraController>();
         _spawner = FindObjectOfType<Spawner>();
+
+        _wrongPanel = _uiManager._wrongPanel;
 
         MoveDifficulty();
 
@@ -187,9 +192,6 @@ public class Moving : MonoBehaviour
         if (!_isStacked)
         {
 
-            //if(GameManager.Instance)
-            //GameManager.Instance.CameraOne.OscillateShake(5, false, true);
-
             _animator.SetTrigger("Squish");
 
             if (SoundManager.Instance)
@@ -202,6 +204,9 @@ public class Moving : MonoBehaviour
                 _fx.SetActive(true);
 
             }
+
+            if (GameManager.Instance)
+                GameManager.Instance.CameraOne.OscillateShakeRotate(20f);
 
             //Spawn with tag Finish
             if (other.gameObject.CompareTag("Finish"))
@@ -224,8 +229,12 @@ public class Moving : MonoBehaviour
 
             else if (other.gameObject.CompareTag("Respawn"))
             {
+                StartCoroutine(Wrong());
+                print("wrong respaxn");
+
                 if (GameManager.Instance)
-                    GameManager.Instance.CameraOne.OscillateShake(10, true, false);
+                GameManager.Instance.CameraOne.OscillateShake(3, true, false);
+
                 _isRotten = true;
                 _spawner._stackedIngredient.Remove(this.gameObject);
 
@@ -247,12 +256,14 @@ public class Moving : MonoBehaviour
 
             else
             {
+                StartCoroutine(Wrong());
+                print("wrong notag");
                 if (GameManager.Instance)
-                    GameManager.Instance.CameraOne.OscillateShake(10, true, false);
+                    GameManager.Instance.CameraOne.OscillateShake(3, true, false);
 
                 if (SoundManager.Instance)
                 {
-                    SoundManager.Instance.PlaySFX("Baad");
+                    SoundManager.Instance.PlaySFX("WrongII");
                 }
 
                 _isRotten = true;
@@ -279,6 +290,15 @@ public class Moving : MonoBehaviour
         }
 
 
+    }
+
+    IEnumerator Wrong()
+    {
+        _wrongPanel.SetActive(true);
+
+        yield return new WaitForSeconds(0.4f);
+
+        _wrongPanel.SetActive(false);
     }
 
     IEnumerator StayStable()
@@ -309,7 +329,7 @@ public class Moving : MonoBehaviour
                 if (_bonus < 0)
                 {
 
-                    SoundManager.Instance.PlaySFX("Baad");
+                    SoundManager.Instance.PlaySFX("WrongII");
 
                 }
                 else if (_bonus > 0)
@@ -335,7 +355,7 @@ public class Moving : MonoBehaviour
 
             if (SoundManager.Instance)
             {
-                SoundManager.Instance.PlaySFX("Baad");
+                SoundManager.Instance.PlaySFX("WrongII");
             }
         }
 
@@ -434,9 +454,12 @@ public class Moving : MonoBehaviour
         {
             if (!_once)
             {
+                StartCoroutine(Wrong());
+                print("wrong triggerxit");
 
-                //if (GameManager.Instance)
-                //    GameManager.Instance.CameraOne.OscillateShake(10, true, false);
+                if (GameManager.Instance)
+                    GameManager.Instance.CameraOne.OscillateShake(3, true, false);
+                print("camera");
 
                 _camera.RemoveTarget(gameObject.transform);
                 gameObject.GetComponent<BoxCollider2D>().isTrigger = false;
@@ -445,7 +468,7 @@ public class Moving : MonoBehaviour
 
                 if (SoundManager.Instance)
                 {
-                    SoundManager.Instance.PlaySFX("Baad");
+                    SoundManager.Instance.PlaySFX("WrongII");
                 }
 
                 _spawner.TopIngredient();

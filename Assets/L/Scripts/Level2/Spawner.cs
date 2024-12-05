@@ -68,6 +68,10 @@ public class Spawner : MonoBehaviour
 
     private void Start()
     {
+        if (SoundManager.Instance)
+            SoundManager.Instance.PlayMusic("this-jazz-cafe-245261");
+
+
         _posY = -2;
 
         _canClick = false;
