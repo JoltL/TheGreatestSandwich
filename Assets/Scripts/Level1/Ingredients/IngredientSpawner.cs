@@ -46,7 +46,7 @@ public class IngredientSpawner : MonoBehaviour
     {
         int selectedIndex = GetWeightedRandomIndex();
         //Instantiate the ingredient
-        IngredientEntity newIngredient = Instantiate(m_ingredientPref, transform.position+new Vector3(50,0,0),transform.rotation).gameObject.GetComponent<IngredientEntity>();       
+        IngredientEntity newIngredient = Instantiate(m_ingredientPref, transform.position+new Vector3(5,0,0),transform.rotation).gameObject.GetComponent<IngredientEntity>();       
         //Change the ingredient prent
         newIngredient.transform.parent = transform;
         //Set ingredient data
@@ -78,6 +78,7 @@ public class IngredientSpawner : MonoBehaviour
             }
         }
         else { // If is not the correct direction
+            SoundManager.Instance.PlaySFX("Cat-003");
             SoundManager.Instance.PlaySFX("WrongII");
             GameManager.Instance.GetCutPhaseManager().CutMissed();
             GameManager.Instance.CameraOne.OscillateShakeRotate(850);
