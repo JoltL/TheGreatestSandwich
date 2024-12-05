@@ -62,7 +62,7 @@ public class UIManager_l2 : MonoBehaviour
 
     private void Start()
     {
-        _maxnbIngredientText.gameObject.SetActive(false);   
+        _maxnbIngredientText.gameObject.SetActive(false);
 
         _bestScore = PlayerPrefs.GetInt("Best Score", 0);
 
@@ -73,13 +73,13 @@ public class UIManager_l2 : MonoBehaviour
         _slider.maxValue = 10f;
 
         _maxnbIngredientText.text = _spawner._AllIngredient.Count.ToString();
-        
+
     }
     private void Update()
     {
-        if(_timerIsActive)
-        StartCoroutine(Countdown());
-        
+        if (_timerIsActive)
+            StartCoroutine(Countdown());
+
 
         //+1 for bread // int maxing = _spawner._maxIngredients + 1;+ "/" + maxing.ToString()
         _maxnbIngredientText.text = _spawner._AllIngredient.Count.ToString();
@@ -101,7 +101,6 @@ public class UIManager_l2 : MonoBehaviour
                 //IstheEnd();
 
                 _spawner._isTheEnd = true;
-                StopAllCoroutines();
 
             }
             else if (_sliderScore <= 5f && !_isPreventing)
@@ -134,7 +133,7 @@ public class UIManager_l2 : MonoBehaviour
             _countdownText.GetComponent<OscillatorRotation>().StartOscillator(150);
 
             yield return new WaitForSeconds(0.8f);
-            i--; 
+            i--;
             if (SoundManager.Instance)
                 SoundManager.Instance.PlaySFX("Woo");
 
@@ -184,17 +183,17 @@ public class UIManager_l2 : MonoBehaviour
 
         if (!_once)
         {
-        if (SoundManager.Instance)
-            SoundManager.Instance.PlaySFX("Bell");
-         _slider.gameObject.GetComponent<Slider>().enabled = false;
+            if (SoundManager.Instance)
+                SoundManager.Instance.PlaySFX("Bell");
+            _slider.gameObject.GetComponent<Slider>().enabled = false;
 
-        _dissapearBeforePhoto.SetActive(false);
+            _dissapearBeforePhoto.SetActive(false);
 
-        yield return new WaitForSeconds(1f);
+            _once = true;
+            yield return new WaitForSeconds(1f);
 
             _takeScreenshot.Screenshot();
 
-            _once = true;
         }
 
     }
@@ -251,7 +250,7 @@ public class UIManager_l2 : MonoBehaviour
                 _baseLossRate = 0.3f;
 
             }
-            else if (_nbOfMaxSlider > _spawner._maxIngredients/7)
+            else if (_nbOfMaxSlider > _spawner._maxIngredients / 7)
             {
 
                 //_sliderScore -= 1;
@@ -278,7 +277,7 @@ public class UIManager_l2 : MonoBehaviour
                 SoundManager.Instance.PlaySFX("Bloop");
             }
             yield return new WaitForSeconds(0.25f);
-            _frontSlider.GetComponent<Image>().color = _colors[1] ;
+            _frontSlider.GetComponent<Image>().color = _colors[1];
             if (SoundManager.Instance)
             {
                 SoundManager.Instance.PlaySFX("Baad");
