@@ -41,6 +41,7 @@ public class CutPhaseManager : MonoBehaviour
         m_ingredientSpawner.OnIngredientCut += IncreaseScore;
         m_timer = m_time;
         StartCoroutine(StartCoolDown());
+        SoundManager.Instance.PlayMusic("kitchen-blog-positive-travel-happy-187696");
     }
 
 
@@ -67,6 +68,7 @@ public class CutPhaseManager : MonoBehaviour
             GameManager.Instance.SetIngredientDict(GetCutIngredients());
             //transform.SetParent(GameManager.Instance.transform);
             m_cuttedIngredients.Clear();
+            SoundManager.Instance.StopMusic();
             StartCoroutine(FinishCoolDown());
            
         }
