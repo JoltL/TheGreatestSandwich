@@ -27,11 +27,6 @@ public class Oscillator : MonoBehaviour
         float force = -m_spring * m_displacement - m_damp * m_velocity;
         m_velocity += force * Time.deltaTime;
         m_displacement += m_velocity * Time.deltaTime;
-
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            SetVelocity(10);
-        }
     }
 
 
