@@ -4874,8 +4874,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_target: {fileID: 328853624}
-  m_spring: 75
-  m_damp: 4
+  m_spring: 500
+  m_damp: 10
   m_mulitiplier: 3
   m_OscillateX: 0
   m_OscillateY: 0

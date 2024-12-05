@@ -1161,7 +1161,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &885185017
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1463,7 +1463,7 @@ MonoBehaviour:
   _catAnimator: {fileID: 2031540255}
   _playAnimator: {fileID: 2098187340}
   _pause: {fileID: 0}
-  _text: {fileID: 0}
+  _text: {fileID: 147532041}
 --- !u!1 &1041627642
 GameObject:
   m_ObjectHideFlags: 0
@@ -2639,6 +2639,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6477706152028897637, guid: ef8520c7d09eca644a254301ce4ac210, type: 3}
+      propertyPath: m_musicClips.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6477706152028897637, guid: ef8520c7d09eca644a254301ce4ac210, type: 3}
+      propertyPath: m_musicClips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 3f664cc4bb729bc48b53b883dac60fe7, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
