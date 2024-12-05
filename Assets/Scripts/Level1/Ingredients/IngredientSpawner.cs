@@ -72,8 +72,13 @@ public class IngredientSpawner : MonoBehaviour
         if ((Vector3)cutVector == m_currentIngredient.Sign)
         {
             CutIngredient();
+            var rand = UnityEngine.Random.Range(1,10);
+            if (rand < 2) {
+                SoundManager.Instance.PlaySFXArray(new string[]{"Cat-001","Cat-002"});
+            }
         }
         else { // If is not the correct direction
+            SoundManager.Instance.PlaySFX("WrongII");
             GameManager.Instance.GetCutPhaseManager().CutMissed();
             GameManager.Instance.CameraOne.OscillateShakeRotate(850);
             GameManager.Instance.CameraOne.OscillateShake(5, true,false);

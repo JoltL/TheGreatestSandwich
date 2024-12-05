@@ -41,6 +41,10 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         m_cameraOne = Camera.main.gameObject.GetComponent<CutPhaseCameraManager>();
+        if (!m_sceneTransition.gameObject.activeInHierarchy)
+        {
+            m_sceneTransition.gameObject.SetActive(true);
+        }
     }
 
     public void LoadScene(int scene)

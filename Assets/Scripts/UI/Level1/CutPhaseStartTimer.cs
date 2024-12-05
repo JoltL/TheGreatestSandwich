@@ -18,9 +18,11 @@ public class CutPhaseStartTimer : MonoBehaviour
     {
         GetComponent<OscillatorScale>().StartOscillator(10);
         GetComponent<OscillatorRotation>().StartOscillator(150);
+        SoundManager.Instance.PlaySFX("Woo");
         if (time == 0)
         {
             m_timerText.text = "GO !";
+            SoundManager.Instance.PlaySFX("Bell");
             Destroy(gameObject, 1f);
         }
         else

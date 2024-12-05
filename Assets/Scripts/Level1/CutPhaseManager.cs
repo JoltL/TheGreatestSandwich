@@ -63,6 +63,7 @@ public class CutPhaseManager : MonoBehaviour
             m_timerIsActive = false;
             m_fingerInputs.enabled = false;
             SortIngredients();
+            SoundManager.Instance.PlaySFX("Bell");
             GameManager.Instance.SetIngredientDict(GetCutIngredients());
             //transform.SetParent(GameManager.Instance.transform);
             m_cuttedIngredients.Clear();
