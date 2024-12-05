@@ -150,11 +150,11 @@ public class UIManager_l2 : MonoBehaviour
             if (SoundManager.Instance)
                 SoundManager.Instance.PlaySFX("Bell");
 
-            _maxnbIngredientText.gameObject.SetActive(true);
 
             yield return new WaitForSeconds(0.8f);
             _spawner._canClick = true;
             _countdownText.gameObject.SetActive(false);
+            _maxnbIngredientText.gameObject.SetActive(true);
         }
 
     }

@@ -13639,7 +13639,7 @@ MonoBehaviour:
   _distanceCount: 0
   _isTheEnd: 0
   _canClick: 0
-  _useLevel1: 0
+  _useLevel1: 1
   _takeBread: 0
   _whiskerIcon: {fileID: 1291145480}
   _whiskerSpriteIcon: {fileID: -561645381, guid: 070bf26bd6346684a9b2117b6e42a3c9, type: 3}
@@ -13676,7 +13676,6 @@ MonoBehaviour:
   - {r: 0.74509805, g: 0.20000002, b: 0.4156863, a: 1}
   - {r: 0.53333336, g: 0.33333334, b: 0.9490197, a: 1}
   _countdownText: {fileID: 1824831731}
-  _audioClip: {fileID: 0}
 --- !u!114 &998522336
 MonoBehaviour:
   m_ObjectHideFlags: 0
