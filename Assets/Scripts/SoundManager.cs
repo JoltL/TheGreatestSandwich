@@ -105,6 +105,23 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    public void PlaySFXArray(string[] sfxName)
+    {
+        var randSfx = UnityEngine.Random.Range(0, sfxName.Length);
+        AudioClip clip = m_sfxClips.Find(sfx => sfx.name == sfxName[randSfx]);
+        float pitch = Random.Range(m_minPitch, m_maxPitch);
+        if (clip != null)
+        {
+            if (m_sfxSource.clip == clip && m_sfxSource.isPlaying) return;
+            m_sfxSource.pitch = pitch;
+            m_sfxSource.PlayOneShot(clip, m_sfxVolume);
+        }
+        else
+        {
+            Debug.LogWarning($"Effet sonore '{sfxName}' non trouvé !");
+        }
+    }
+
     public void SetMusicVolume(float volume)
     {
         m_musicVolume = Mathf.Clamp01(volume);

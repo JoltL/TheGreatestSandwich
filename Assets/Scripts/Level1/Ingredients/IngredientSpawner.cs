@@ -74,7 +74,6 @@ public class IngredientSpawner : MonoBehaviour
             CutIngredient();
         }
         else { // If is not the correct direction
-            SoundManager.Instance.PlaySFX("WrongII");
             GameManager.Instance.GetCutPhaseManager().CutMissed();
             GameManager.Instance.CameraOne.OscillateShakeRotate(850);
             GameManager.Instance.CameraOne.OscillateShake(5, true,false);
