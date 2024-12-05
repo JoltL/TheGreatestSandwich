@@ -20,7 +20,6 @@ public class MainMenu : MonoBehaviour
        _bestScore = PlayerPrefs.GetInt("Best Score", _bestScore);
 
         _text.text = _bestScore.ToString();
-
         }
     }
     public void Slash()

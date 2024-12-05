@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
         {
             m_sceneTransition.gameObject.SetActive(true);
         }
+        SoundManager.Instance.PlayMusic("swing-with-me-201404");
     }
 
     public void LoadScene(int scene)
