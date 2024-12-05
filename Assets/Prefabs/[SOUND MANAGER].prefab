@@ -48,7 +48,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_musicSource: {fileID: 39546628184339389}
   m_sfxSource: {fileID: 1626219760461731167}
-  m_musicClips: []
+  m_musicClips:
+  - {fileID: 8300000, guid: 9f08e15862e2c2d418433f2444d3594e, type: 3}
+  - {fileID: 8300000, guid: 5fd7d58232a58ba4bbcbafaeb3f8bf99, type: 3}
   m_minPitch: 1
   m_maxPitch: 1.1
   m_sfxClips:
@@ -70,7 +72,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d903fcbdaf11e0d4d99000d141724e4a, type: 3}
   - {fileID: 8300000, guid: 784ff8d233be23d45bbc4f9eaf509749, type: 3}
   - {fileID: 8300000, guid: f8dcad753d8b8a34197735c6fcb63af1, type: 3}
-  m_musicVolume: 0.5
+  - {fileID: 8300000, guid: 70d5da494f2a5a34e96e0050c5f05b9f, type: 3}
+  - {fileID: 8300000, guid: 8846e3a2aac68dc49a5141299a936699, type: 3}
+  - {fileID: 8300000, guid: da4e36cd2663141478b63eb3fb7de796, type: 3}
+  - {fileID: 8300000, guid: 74ac78713abd90e4185e20355f01e632, type: 3}
+  m_musicVolume: 0.179
   m_sfxVolume: 0.5
 --- !u!82 &39546628184339389
 AudioSource:
