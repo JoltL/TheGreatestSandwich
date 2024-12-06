@@ -1405,7 +1405,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_finishedMessage: {fileID: 2101190601}
-  m_time: 15
+  m_time: 25
   m_timeToFinish: 2
 --- !u!114 &1149450289
 MonoBehaviour:
