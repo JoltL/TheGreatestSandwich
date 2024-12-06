@@ -51,6 +51,7 @@ MonoBehaviour:
   m_musicClips:
   - {fileID: 8300000, guid: 9f08e15862e2c2d418433f2444d3594e, type: 3}
   - {fileID: 8300000, guid: 5fd7d58232a58ba4bbcbafaeb3f8bf99, type: 3}
+  - {fileID: 8300000, guid: 3f664cc4bb729bc48b53b883dac60fe7, type: 3}
   m_minPitch: 1
   m_maxPitch: 1.1
   m_sfxClips:

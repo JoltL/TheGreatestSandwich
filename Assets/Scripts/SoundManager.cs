@@ -32,6 +32,10 @@ public class SoundManager : MonoBehaviour
     [Range(0, 1)] public float m_sfxVolume = 0.5f;
 
 
+    public bool m_musicEnabled = true;
+    public bool m_sfxEnabled = true;  
+
+
     
 
     private void Awake()
@@ -120,6 +124,19 @@ public class SoundManager : MonoBehaviour
         {
             Debug.LogWarning($"Effet sonore '{sfxName}' non trouvé !");
         }
+    }
+
+
+    public void CutMusic()
+    {
+        m_musicEnabled = !m_musicEnabled;
+        m_musicSource.volume = m_musicEnabled ? m_musicVolume : 0;
+    }
+
+    public void CutSfx()
+    {
+        m_sfxEnabled = !m_sfxEnabled;
+        m_sfxSource.volume = m_sfxEnabled ? m_sfxVolume : 0;
     }
 
     public void SetMusicVolume(float volume)
