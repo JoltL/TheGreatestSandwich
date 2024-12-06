@@ -240,6 +240,8 @@ public class Moving : MonoBehaviour
 
                 _isStacked = true;
 
+                _once = true;
+
                 _camera.RemoveTarget(gameObject.transform);
 
                 //this.gameObject.GetComponent<Moving>().enabled = false;
@@ -265,6 +267,7 @@ public class Moving : MonoBehaviour
                 {
                     SoundManager.Instance.PlaySFX("WrongII");
                 }
+                _once = true;
 
                 _isRotten = true;
                 _spawner._stackedIngredient.Remove(this.gameObject);
