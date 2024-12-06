@@ -289,19 +289,20 @@ public class UIManager_l2 : MonoBehaviour
             if (_nbOfMaxSlider > _spawner._maxIngredients / 6)
             {
                 //_sliderScore -= 2;
-                _baseLossRate = 0.3f;
+                _baseLossRate = 0.2f;
 
             }
             else if (_nbOfMaxSlider > _spawner._maxIngredients / 7)
             {
 
                 //_sliderScore -= 1;
-                _baseLossRate = 0.2f;
+                _baseLossRate = 0.15f;
             }
             else
             {
                 _sliderScore -= 0;
             }
+            print(_baseLossRate);
         }
 
     }

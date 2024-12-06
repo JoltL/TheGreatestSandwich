@@ -13727,7 +13727,7 @@ MonoBehaviour:
   _distanceCount: 0
   _isTheEnd: 0
   _canClick: 0
-  _useLevel1: 1
+  _useLevel1: 0
   _takeBread: 0
   _whiskerIcon: {fileID: 1291145480}
   _whiskerSpriteIcon: {fileID: -561645381, guid: 070bf26bd6346684a9b2117b6e42a3c9, type: 3}
