@@ -83,7 +83,7 @@ public class IngredientSpawner : MonoBehaviour
             GameManager.Instance.GetCutPhaseManager().CutMissed();
             GameManager.Instance.CameraOne.OscillateShakeRotate(850);
             GameManager.Instance.CameraOne.OscillateShake(5, true,false);
-            FeedBackManager.Instance.FreezeFrame(0,0.1f, 0.01f);
+            FeedBackManager.Instance.FreezeFrame(0,0.05f, 0.05f);
         }
        
     }
