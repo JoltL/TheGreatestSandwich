@@ -61,6 +61,8 @@ public class UIManager_l2 : MonoBehaviour
 
     private bool _timerIsActive = true;
 
+    private bool _sliderStop = true;
+
 
     private void Start()
     {
@@ -74,6 +76,8 @@ public class UIManager_l2 : MonoBehaviour
         _once = false;
 
         _slider.maxValue = 10f;
+        _sliderScore = 5f;
+        _slider.value = 5f;
 
         _maxnbIngredientText.text = _spawner._AllIngredient.Count.ToString();
 
@@ -83,15 +87,29 @@ public class UIManager_l2 : MonoBehaviour
         if (_timerIsActive)
             StartCoroutine(Countdown());
 
+        if (!_timerIsActive)
+        {
 
-        //+1 for bread // int maxing = _spawner._maxIngredients + 1;+ "/" + maxing.ToString()
-        _maxnbIngredientText.text = _spawner._AllIngredient.Count.ToString();
-        _slider.value = Mathf.Lerp(_slider.value, _sliderScore, 5 * Time.deltaTime);
-        _sliderScore = Mathf.Clamp(_sliderScore, 0f, _slider.maxValue);
+            //+1 for bread // int maxing = _spawner._maxIngredients + 1;+ "/" + maxing.ToString()
+            _maxnbIngredientText.text = _spawner._AllIngredient.Count.ToString();
 
-        _nbIngredientText[0].text = _spawner._stackedIngredient.Count.ToString();
+            if (_sliderScore > 5)
+            {
+                _sliderStop = false;
 
-        _scoreText[0].text = _score.ToString();
+            }
+            if (!_sliderStop)
+            {
+
+                _slider.value = Mathf.Lerp(_slider.value, _sliderScore, 5 * Time.deltaTime);
+                _sliderScore = Mathf.Clamp(_sliderScore, 0f, _slider.maxValue);
+
+                _nbIngredientText[0].text = _spawner._stackedIngredient.Count.ToString();
+
+                _scoreText[0].text = _score.ToString();
+
+            }
+        }
 
 
         if (_hardMode && !_spawner._isTheEnd)
@@ -227,6 +245,10 @@ public class UIManager_l2 : MonoBehaviour
 
     public void AddScore(int points)
     {
+
+        if (points > 0 && _sliderStop)
+        { 
+        
         _score += points;
         _nbIngredientText[0].gameObject.GetComponent<OscillatorScale>().StartOscillator(10);
         _nbIngredientText[0].gameObject.GetComponent<OscillatorRotation>().StartOscillator(150);
@@ -238,6 +260,23 @@ public class UIManager_l2 : MonoBehaviour
         MinScore();
 
         DifficultySlider();
+        }
+        else if (!_sliderStop) 
+        {
+
+            _score += points;
+            _nbIngredientText[0].gameObject.GetComponent<OscillatorScale>().StartOscillator(10);
+            _nbIngredientText[0].gameObject.GetComponent<OscillatorRotation>().StartOscillator(150);
+
+            _sliderScore += points;
+
+            _help.SetActive(false);
+
+            MinScore();
+
+            DifficultySlider();
+
+        }
     }
 
     void DifficultySlider()

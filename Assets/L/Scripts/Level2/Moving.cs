@@ -477,6 +477,7 @@ public class Moving : MonoBehaviour
                 _spawner.TopIngredient();
 
                 _once = true;
+                //gameObject.SetActive(false);
             }
 
         }
