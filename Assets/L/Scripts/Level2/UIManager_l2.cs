@@ -66,6 +66,7 @@ public class UIManager_l2 : MonoBehaviour
 
     private void Start()
     {
+        _baseLossRate = 0.05f;
 
         _maxnbIngredientText.gameObject.SetActive(false);
 
@@ -135,6 +136,8 @@ public class UIManager_l2 : MonoBehaviour
                 _isPreventing = false;
 
             }
+
+            print(_spawner._isTheEnd);
         }
 
         if (_spawner._isTheEnd)
@@ -255,8 +258,6 @@ public class UIManager_l2 : MonoBehaviour
 
         _sliderScore += points;
 
-        _help.SetActive(false);
-
         MinScore();
 
         DifficultySlider();
@@ -269,8 +270,11 @@ public class UIManager_l2 : MonoBehaviour
             _nbIngredientText[0].gameObject.GetComponent<OscillatorRotation>().StartOscillator(150);
 
             _sliderScore += points;
+            if (_nbOfMaxSlider>0)
+            {
 
             _help.SetActive(false);
+            }
 
             MinScore();
 
@@ -285,23 +289,27 @@ public class UIManager_l2 : MonoBehaviour
         //Difficulty : be more precise
         if (_hardMode)
         {
-
-            if (_nbOfMaxSlider > _spawner._maxIngredients / 6)
+            if(_nbOfMaxSlider > _spawner._maxIngredients / 1.5f)
+            {
+                _baseLossRate = 0.2f;
+            }
+            else if (_nbOfMaxSlider > _spawner._maxIngredients / 3)
             {
                 //_sliderScore -= 2;
-                _baseLossRate = 0.3f;
+                _baseLossRate = 0.15f;
 
             }
-            else if (_nbOfMaxSlider > _spawner._maxIngredients / 7)
+            else if (_nbOfMaxSlider > _spawner._maxIngredients / 6)
             {
 
                 //_sliderScore -= 1;
-                _baseLossRate = 0.2f;
+                _baseLossRate = 0.1f;
             }
             else
             {
                 _sliderScore -= 0;
             }
+            print(_baseLossRate);
         }
 
     }

@@ -123,22 +123,22 @@ public class Moving : MonoBehaviour
 
         if (_spawner._ingredientCount >= _spawner._maxIngredients * 0.75f)
         {
-            randomSpeed = Random.Range(8, 11);
+            randomSpeed = Random.Range(7, 10);
             print("4 :" + randomSpeed);
         }
         else if (_spawner._ingredientCount >= _spawner._maxIngredients * 0.5f)
         {
-            randomSpeed = Random.Range(7, 10);
+            randomSpeed = Random.Range(6, 9);
             print("3 :" + randomSpeed);
         }
         else if (_spawner._ingredientCount >= _spawner._maxIngredients * 0.25f)
         {
-            randomSpeed = Random.Range(6, 9);
+            randomSpeed = Random.Range(5, 8);
             print("2 :" + randomSpeed);
         }
         else
         {
-            randomSpeed = Random.Range(5, 8);
+            randomSpeed = Random.Range(4, 7);
             print("1 :" + randomSpeed);
         }
         _moveSpeed = randomSpeed;
@@ -188,6 +188,7 @@ public class Moving : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if(_spawner._isTheEnd) return;
 
         if (!_isStacked)
         {
@@ -469,10 +470,10 @@ public class Moving : MonoBehaviour
                 //_spawner.Stacked(-1);
                 _isRotten = true;
 
-                if (SoundManager.Instance)
-                {
-                    SoundManager.Instance.PlaySFX("WrongII");
-                }
+                //if (SoundManager.Instance)
+                //{
+                //    SoundManager.Instance.PlaySFX("WrongII");
+                //}
 
                 _spawner.TopIngredient();
 
